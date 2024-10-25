@@ -1,20 +1,8 @@
 <?php
-include_once "head.php";
+include_once "header.php";
+include_once "nav.php";
 ?>
- <!--<nav>
-        <img src="" alt="">
-
-        <ul>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
-        </ul>
-    </nav>
-    <header>
-        <img src="" alt="">-->
+ 
         <h1>TechLimp</h1>
         <h2>Quem somos</h2>
     </header>
