@@ -53,8 +53,13 @@ section{
     font-size: 1.25rem;
     border-radius: 10px;
     text-decoration: none;
+<<<<<<< HEAD
     color: rgb(0, 0, 0);
     box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.1);
+=======
+    color: rgb(250, 249, 249);
+    box-shadow: 0px 0px 12px 4px rgba(0,0,0,0.1);
+>>>>>>> 07f80bf7bdf0af45a91606f752c3e577f2b7c4ba
     transition: box-shadow .3s ease;
 }
 .social_media_btn a:hover{
