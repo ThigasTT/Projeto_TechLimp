@@ -28,8 +28,9 @@ header{
     font-weight: 600;
 }
 .nav_item.active a{
-    color: black;
-    border-bottom: 3px solid #ffe100;
+    color: rgb(255, 255, 255);
+    background-color: #090a08;
+    border-bottom: 3px solid #24db37;
 }
 #mobile_btn{
     display: none;
