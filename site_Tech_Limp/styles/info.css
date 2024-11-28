@@ -7,10 +7,10 @@
     
 }
 html, body {
-    height: 100%; /* Define 100% de altura para o body e html */
-    margin: 0; /* Remove margens padrão */
-    display: flex; /* Torna o body um container flex */
-    flex-direction: column; /* Organiza os itens de cima para baixo */
+    height: 100%; 
+    margin: 0; 
+    display: flex; 
+    flex-direction: column; 
 }
 
 .container{
@@ -25,6 +25,7 @@ html, body {
     letter-spacing: 3px;
      margin: 1.5rem 0;
      text-align: center;
+     overflow: auto;
 }
 
 .btn-class{
@@ -41,6 +42,14 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: bold;
+    
+}
+h4{
+    color: #000;
+}
+span{
+    color: #000;
     font-weight: bold;
 }
 
@@ -66,7 +75,7 @@ html, body {
 
 .infos-text p{
 color: rgba(0, 0, 0, 0.7);
-font-size: 1.5rem;
+font-size: 1.2rem;
 line-height: 1.4;
 }
 

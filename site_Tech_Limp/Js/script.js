@@ -54,12 +54,7 @@ ScrollReveal().reveal('.shoe',{
         
         });
 
-        ScrollReveal().reveal('#banner',{
-            origin: 'right',
-            duration :2000,
-            distance:'20%'
-            
-            });
+       
 
             ScrollReveal().reveal('.feedback',{
                 origin: 'right',

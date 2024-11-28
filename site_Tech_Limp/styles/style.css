@@ -16,10 +16,10 @@
 
 
 html, body {
-    height: 100%; /* Define 100% de altura para o body e html */
-    margin: 0; /* Remove margens padrão */
-    display: flex; /* Torna o body um container flex */
-    flex-direction: column; /* Organiza os itens de cima para baixo */
+    height: 100%; 
+    margin: 0; 
+    display: flex; 
+    flex-direction: column; 
     scroll-behavior: smooth;
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(57,108,36,1) 100%, rgba(0,212,255,1) 100%);
