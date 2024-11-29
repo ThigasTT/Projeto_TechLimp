@@ -21,14 +21,14 @@ html, body {
     display: flex; 
     flex-direction: column; 
     scroll-behavior: smooth;
-    background: rgb(2,0,36);
+
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(57,108,36,1) 100%, rgba(0,212,255,1) 100%);
 }
 
 
 section{
     padding: 28px 8%;
-    flex-grow: 1;
+
 }
 .btn{
     border: none;
@@ -46,27 +46,7 @@ section{
 .btn:hover{
 filter: brightness(30%);
 }
-.social_media_btn{
-    display: flex;
-    gap: 18px;
-}
-.social_media_btn a{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 20px;
-   
-    font-size: 1.25rem;
-    border-radius: 10px;
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-    box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow .3s ease;
-}
-.social_media_btn a:hover{
-    box-shadow: 0px 0px 12px 11px rgba(0,0,0,0.1);
-}
+
 #banner{
     display: flex;
     align-items: start;
