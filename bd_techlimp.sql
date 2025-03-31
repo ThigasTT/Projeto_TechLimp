@@ -7,7 +7,8 @@ cep char(8) not null unique,
 logradouro varchar (255) not null,
 bairro varchar (100) ,
 cidade varchar (100) default 'São Paulo',
-uf char(2) default 'SP'
+uf char(2) default 'SP',
+primary key(id_cep)
 );
 create table if not exists Usuario(
 id_user int auto_increment,
@@ -23,8 +24,7 @@ foreign key (id_cep) references CEP (id_cep)
 
 create table if not exists Ponto_Descarte(
 id_ponto int auto_increment,
-id_cep int auto_increment unique,
+id_cep int unique,
 primary key (id_ponto),
-
 foreign key (id_cep) references CEP (id_cep)
 );
