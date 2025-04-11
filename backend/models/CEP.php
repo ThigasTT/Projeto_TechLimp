@@ -3,6 +3,7 @@ class CEP {
     private $conn;
     private $table = "CEP";
 
+    public $id_cep;
     public $cep;
     public $logradouro;
     public $bairro;
