@@ -62,20 +62,21 @@ class User {
     }
 
     // Atualizar um usuário existente
-    public function update() {
+    public function updateUser() {
         $query = "
-            UPDATE " . $this->table . " 
+            UPDATE usuario 
             SET 
-                id_cep = :id_cep, 
-                nome_user = :nome_user, 
-                telefone_celular_user = :telefone_celular_user, 
-                email_user = :email_user, 
-                senha_user = :senha_user, 
+                id_cep = :id_cep,
+                nome_user = :nome_user,
+                telefone_celular_user = :telefone_celular_user,
+                email_user = :email_user,
+                senha_user = :senha_user,
                 complemento = :complemento
             WHERE id_user = :id_user
         ";
+    
         $stmt = $this->conn->prepare($query);
-
+    
         // Bind dos parâmetros
         $stmt->bindParam(":id_user", $this->id_user);
         $stmt->bindParam(":id_cep", $this->id_cep);
@@ -84,24 +85,21 @@ class User {
         $stmt->bindParam(":email_user", $this->email_user);
         $stmt->bindParam(":senha_user", $this->senha_user);
         $stmt->bindParam(":complemento", $this->complemento);
-
+    
         // Executar a query
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
+        return $stmt->execute();
     }
 
     // Excluir um usuário
     public function delete() {
-        $query = "DELETE FROM " . $this->table . " WHERE id_user = :id_user";
+        $query = "DELETE FROM usuario WHERE id_user = :id_user";
+    
         $stmt = $this->conn->prepare($query);
-
+    
+        // Bind do parâmetro
         $stmt->bindParam(":id_user", $this->id_user);
-
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
+    
+        // Executar a query e retornar o resultado
+        return $stmt->execute();
     }
 }

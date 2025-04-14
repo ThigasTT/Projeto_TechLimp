@@ -38,8 +38,8 @@ if ($path[0] === "users") {
     } elseif ($requestMethod === "PUT") {
         $controller->updateUser();
     } elseif ($requestMethod === "DELETE") {
-        $controller->deleteUser();
-    } else {
+            $controller->deleteUser();
+        } else {
         echo json_encode(["message" => "Método não suportado para usuários."]);
     }
 }

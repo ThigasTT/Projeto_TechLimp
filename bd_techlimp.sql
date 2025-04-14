@@ -12,7 +12,7 @@ primary key(id_cep)
 );
 create table if not exists Usuario(
 id_user int auto_increment,
-id_cep int not null unique,
+id_cep int not null,
 nome_user varchar (50) not null,
 telefone_celular_user char(11) not null,
 email_user varchar (50) not null,
@@ -24,7 +24,7 @@ foreign key (id_cep) references CEP (id_cep)
 
 create table if not exists Ponto_Descarte(
 id_ponto int auto_increment,
-id_cep int unique,
+id_cep int,
 primary key (id_ponto),
 foreign key (id_cep) references CEP (id_cep)
 );
