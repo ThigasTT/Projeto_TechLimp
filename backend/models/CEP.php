@@ -14,6 +14,7 @@ class CEP {
         $this->conn = $db;
     }
 
+
     public function save() {
         // Remove o hífen do CEP antes de salvar
         $this->cep = str_replace("-", "", $this->cep);
@@ -36,5 +37,20 @@ class CEP {
         $stmt->bindParam(':uf', $this->uf);
 
         return $stmt->execute();
+    }
+
+    public function getAll() {
+        $query = "
+            SELECT
+                cep, 
+                logradouro, 
+                bairro, 
+                cidade, 
+                uf 
+            FROM " . $this->table . "
+        ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
     }
 }?>

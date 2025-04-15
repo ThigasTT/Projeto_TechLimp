@@ -1,6 +1,7 @@
 <?php
 include_once '../services/ViaCEPService.php';
 include_once '../models/CEP.php';
+include_once '../config/database.php';
 
 class CEPController {
     private $db;
@@ -55,4 +56,28 @@ class CEPController {
             echo json_encode(["error" => "Erro ao salvar CEP no banco de dados"]);
         }
     }
-}
+
+    public function buscarCEPs() {
+        $stmt = $this->cepModel->getAll();
+        $num = $stmt->rowCount();
+    
+        if ($num > 0) {
+            $ceps = array();
+    
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $ceps_item = array(
+                    "cep" => $row['cep'],
+                    "logradouro" => $row['logradouro'],
+                    "bairro" => $row['bairro'],
+                    "cidade" => $row['cidade'],
+                    "uf" => $row['uf']
+                );
+                array_push($ceps, $ceps_item);
+            }
+    
+            echo json_encode($ceps);
+        } else {
+            echo json_encode(["message" => "Nenhum cep encontrado."]);
+        }
+    }
+    }
