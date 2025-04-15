@@ -15,6 +15,9 @@ class CEP {
     }
 
     public function save() {
+        // Remove o hífen do CEP antes de salvar
+        $this->cep = str_replace("-", "", $this->cep);
+
         $query = "
             INSERT INTO " . $this->table . " (cep, logradouro, bairro, cidade, uf)
             VALUES (:cep, :logradouro, :bairro, :cidade, :uf)
@@ -34,4 +37,4 @@ class CEP {
 
         return $stmt->execute();
     }
-}
+}?>

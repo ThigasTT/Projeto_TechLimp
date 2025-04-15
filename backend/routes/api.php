@@ -45,18 +45,34 @@ if ($path[0] === "users") {
 }
 
 // Rotas para CEPs
+// Rotas para CEPs
 elseif ($path[0] === "ceps") {
-    $controller = new CEPController();
+    // Inclui os arquivos necessários
+    include_once '../controllers/CEPController.php';
+    include_once '../config/Database.php';
 
+    // Cria a conexão com o banco de dados
+    $database = new Database();
+    $dbConnection = $database->getConnection();
+
+    // Instancia o CEPController com a conexão do banco
+    $controller = new CEPController($dbConnection);
+
+    // Verifica o método da requisição
     if ($requestMethod === "GET") {
-        $controller->getAllCEPs();
+        // Verifica se o usuário passou um CEP específico na URL
+        if (isset($path[1]) && !empty($path[1])) {
+            $cep = $path[1]; // Obtém o CEP da URL
+            $controller->getCepById($cep); // Busca o CEP específico
+        } else {
+            $controller->buscarCEPs(); // Busca todos os CEPs
+        }
     } elseif ($requestMethod === "POST") {
-        $controller->createCep();
+        $controller->salvarCep(); // Salva o CEP enviado
     } else {
-        echo json_encode(["message" => "Método não suportado para CEPs."]);
+        echo json_encode(["message" => "Método não suportado para CEPs."]); // Mensagem para método não suportado
     }
 }
-
 // Rota não encontrada
 else {
     echo json_encode(["message" => "Rota não encontrada."]);
