@@ -10,7 +10,7 @@ class PontoDescarte {
     public function __construct($db) {
         $this->conn = $db;
     }
-
+// buscar pontos de descarte
     public function getAll() {
         $query = "
             SELECT 
@@ -30,7 +30,7 @@ class PontoDescarte {
         $stmt->execute();
         return $stmt;
     }
-
+// criar pontos de descarte
     public function save() {
         $query = "
             INSERT INTO " . $this->table . " (id_cep, nome_ponto, contato_ponto)
@@ -47,4 +47,28 @@ class PontoDescarte {
 
         return $stmt->execute();
     }
+
+    //atualizar o ponto de descarte
+    public function update() {
+        $query = "
+            UPDATE ".this->table. " 
+            SET 
+                id_cep = :id_cep,
+                nome_ponto = :nome_ponto,
+                contato_ponto = :contato_ponto,
+            WHERE id_ponto = :id_ponto
+        ";
+    
+        $stmt = $this->conn->prepare($query);
+    
+        // Bind dos parâmetros
+        $stmt->bindParam(":id_ponto", $this->id_ponto);
+        $stmt->bindParam(":id_cep", $this->id_cep);
+        $stmt->bindParam(":nome_ponto", $this->nome_ponto);
+        $stmt->bindParam(":contato_ponto", $this->contato_ponto);
+    
+        // Executar a query
+        return $stmt->execute();
+    }
+
 }

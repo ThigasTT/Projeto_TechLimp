@@ -42,6 +42,7 @@ class CEP {
     public function getAll() {
         $query = "
             SELECT
+                id_cep,
                 cep, 
                 logradouro, 
                 bairro, 

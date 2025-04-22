@@ -72,6 +72,8 @@ elseif ($path[0] === "points") {
         $controller->getPontosDescarte();
     } elseif ($requestMethod === "POST") {
         $controller->createPontoDescarte();
+    }elseif($requestMethod === "PUT");{
+        $controller->updatePontoDescarte();
     }
 }
 // Rota não encontrada

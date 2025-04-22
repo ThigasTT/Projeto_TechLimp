@@ -23,7 +23,7 @@ class pontoDescarteController {
                 extract($row);
                 $ponto_item = array(
                     "id_ponto" => $id_ponto,
-                    "id_cep" => $id_cep,
+                    "id_ponto" => $id_ponto,
                     "nome_ponto" => $nome_ponto,
                     "contato_ponto" => $contato_ponto,
                 );
@@ -39,6 +39,7 @@ class pontoDescarteController {
     public function createPontoDescarte() {
         $data = json_decode(file_get_contents('php://input'), true);
 
+        //verifica se as variaveis estão vazias
         if (!isset($data['id_cep'], $data['nome_ponto'], $data['contato_ponto'])) {
             echo json_encode(["success" => false, "message" => "Dados incompletos para criar o ponto de descarte."]);
             return;

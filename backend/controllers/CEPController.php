@@ -56,7 +56,8 @@ class CEPController {
             echo json_encode(["error" => "Erro ao salvar CEP no banco de dados"]);
         }
     }
-
+    
+//função que busva
     public function buscarCEPs() {
         $stmt = $this->cepModel->getAll();
         $num = $stmt->rowCount();
@@ -66,6 +67,7 @@ class CEPController {
     
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $ceps_item = array(
+                    "id_cep" => $row['id_cep'],
                     "cep" => $row['cep'],
                     "logradouro" => $row['logradouro'],
                     "bairro" => $row['bairro'],
