@@ -22,6 +22,7 @@ if (empty($path) || !isset($path[0]) || $path[0] === "") {
 // Incluir controladores
 include_once '../controllers/UserController.php';
 include_once '../controllers/CEPController.php';
+include_once'../controllers/pontoDescarteController.php';
 include_once '../config/Database.php';
 
 // Obter o método HTTP
@@ -62,6 +63,17 @@ elseif ($path[0] === "ceps") {
     }
 }
 
+//Rotas para pontos de descarte
+
+elseif ($path[0] === "points") {
+    $controller = new PontoDescarteController();
+
+    if ($requestMethod === "GET") {
+        $controller->getPontosDescarte();
+    } elseif ($requestMethod === "POST") {
+        $controller->createPontoDescarte();
+    }
+}
 // Rota não encontrada
 else {
     echo json_encode(["message" => "Rota não encontrada."]);
