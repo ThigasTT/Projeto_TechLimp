@@ -51,8 +51,7 @@ public function createUser() {
         echo json_encode(["success" => false, "message" => "Dados incompletos para criar usuário."]);
         return;
     }
-
-    // Atribuir os dados recebidos ao modelo
+    
     $this->user->id_cep = $data['id_cep'];
     $this->user->nome_user = $data['nome_user'];
     $this->user->telefone_celular_user = $data['telefone_celular_user'];
@@ -60,7 +59,7 @@ public function createUser() {
     $this->user->senha_user = password_hash($data['senha_user'], PASSWORD_DEFAULT); // Criptografar a senha
     $this->user->complemento = $data['complemento'];
 
-    // Tentar criar o usuário no banco de dados
+
     if ($this->user->create()) {
         echo json_encode(["success" => true, "message" => "Usuário criado com sucesso!"]);
     } else {
@@ -72,16 +71,16 @@ public function createUser() {
     public function updateUser() {
         $data = json_decode(file_get_contents("php://input"));
     
-        // Log para depurar os dados recebidos
+        
         error_log("Dados recebidos no updateUser: " . json_encode($data));
     
-        // Verificar se o ID do usuário foi fornecido
+    
         if (!isset($data->id_user)) {
             echo json_encode(["error" => "ID do usuário não fornecido."]);
             return;
         }
     
-        // Atribuir os parâmetros ao modelo
+
         $this->user->id_user = $data->id_user;
         $this->user->id_cep = $data->id_cep;
         $this->user->nome_user = $data->nome_user;
@@ -90,7 +89,7 @@ public function createUser() {
         $this->user->senha_user = $data->senha_user;
         $this->user->complemento = $data->complemento;
     
-        // Atualizar o usuário no banco
+     
         if ($this->user->updateUser()) {
             echo json_encode(["message" => "Usuário atualizado com sucesso."]);
         } else {
@@ -98,22 +97,22 @@ public function createUser() {
         }
     }
 
-  // Deletar um usuário
+
 // Deletar um usuário
 public function deleteUser() {
-    // Obter os dados enviados no corpo da requisição
+
     $data = json_decode(file_get_contents("php://input"));
 
-    // Verificar se o ID do usuário foi fornecido
+
     if (!isset($data->id_user)) {
         echo json_encode(["success" => false, "message" => "ID do usuário não fornecido."]);
         return;
     }
 
-    // Atribuir o ID do usuário ao modelo
+ 
     $this->user->id_user = $data->id_user;
 
-    // Tentar deletar o usuário no banco de dados
+ 
     if ($this->user->delete()) {
         echo json_encode(["success" => true, "message" => "Usuário deletado com sucesso."]);
     } else {

@@ -23,7 +23,7 @@ class pontoDescarteController {
                 extract($row);
                 $ponto_item = array(
                     "id_ponto" => $id_ponto,
-                    "id_ponto" => $id_ponto,
+                    "id_cep" => $id_cep,
                     "nome_ponto" => $nome_ponto,
                     "contato_ponto" => $contato_ponto,
                 );
@@ -56,27 +56,29 @@ class pontoDescarteController {
         }
     }
 
-    // Atualizar um ponto de descarte
     public function updatePontoDescarte() {
-        $data = json_decode(file_get_contents("php://input"));
-
-        if (!isset($data->id_ponto)) {
-            echo json_encode(["error" => "ID do ponto de descarte não fornecido."]);
+        // Obter os dados enviados na requisição
+        $data = json_decode(file_get_contents("php://input"), true);
+    
+        // Verificar se os dados necessários foram fornecidos
+        if (!isset($data['id_ponto'], $data['id_cep'], $data['nome_ponto'], $data['contato_ponto'])) {
+            echo json_encode(["error" => "Dados incompletos para atualização do ponto de descarte."]);
             return;
         }
-
-        $this->pontoDescarte->id_ponto = $data->id_ponto;
-        $this->pontoDescarte->id_cep = $data->id_cep;
-        $this->pontoDescarte->nome_ponto = $data->nome_ponto;
-        $this->pontoDescarte->contato_ponto = $data->contato_ponto;
-
+    
+        // Atribuir os dados recebidos ao modelo
+        $this->pontoDescarte->id_ponto = $data['id_ponto'];
+        $this->pontoDescarte->id_cep = $data['id_cep'];
+        $this->pontoDescarte->nome_ponto = $data['nome_ponto'];
+        $this->pontoDescarte->contato_ponto = $data['contato_ponto'];
+    
+        // Tentar atualizar o ponto de descarte
         if ($this->pontoDescarte->update()) {
-            echo json_encode(["message" => "Ponto de descarte atualizado com sucesso."]);
+            echo json_encode(["success" => true, "message" => "Ponto de descarte atualizado com sucesso."]);
         } else {
             echo json_encode(["error" => "Erro ao atualizar o ponto de descarte."]);
         }
     }
-
     // Deletar um ponto de descarte
     public function deletePontoDescarte() {
         $data = json_decode(file_get_contents("php://input"));

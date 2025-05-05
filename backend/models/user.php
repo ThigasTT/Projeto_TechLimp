@@ -29,7 +29,7 @@ class User {
                 c.bairro, 
                 c.cidade, 
                 c.uf 
-            FROM " . $this->table . " u
+            FROM usuario u
             JOIN CEP c ON u.id_cep = c.id_cep
         ";
         $stmt = $this->conn->prepare($query);
@@ -40,7 +40,7 @@ class User {
     // Criar um novo usuário
     public function create() {
         $query = "
-            INSERT INTO " . $this->table . " 
+            INSERT INTO usuario
             (id_cep, nome_user, telefone_celular_user, email_user, senha_user, complemento) 
             VALUES (:id_cep, :nome_user, :telefone_celular_user, :email_user, :senha_user, :complemento)
         ";
