@@ -25,6 +25,10 @@ foreign key (id_cep) references CEP (id_cep)
 create table if not exists Ponto_Descarte(
 id_ponto int auto_increment,
 id_cep int,
+nome_ponto varchar(45),
+contato_ponto varchar(45),
+latitude decimal(10,8),
+longitude decimal(11,8),
 primary key (id_ponto),
 foreign key (id_cep) references CEP (id_cep)
 );
