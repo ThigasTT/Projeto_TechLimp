@@ -54,4 +54,19 @@ class CEP {
         $stmt->execute();
         return $stmt;
     }
+
+    public function getById($id) {
+        $query = "
+        SELECT id_cep,
+        cep,
+        logradouro,
+        bairro,
+        cidade,
+        uf FROM ".$this->table . " WHERE id_cep = :id_cep";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id_cep",$id);
+        $stmt->execute();
+        return $stmt;
+    }
 }?>

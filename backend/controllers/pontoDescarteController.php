@@ -1,6 +1,7 @@
 <?php
 include_once '../config/database.php';
 include_once '../models/PontoDescarte.php';
+include_once '../models/CEP.php';
 
 class pontoDescarteController {
     private $db;
@@ -64,8 +65,12 @@ class pontoDescarteController {
             return;
         }
 
+        $cepModel = new CEP($this->db);
+        $cep = $cepModel->getById($data['id_cep']);
+
+
             // Obter latitude e longitude com base no CEP
-    $coordenadas = obterCoordenadasPorCEP($data['id_cep']);
+    $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
     if (!$coordenadas) {
         echo json_encode(["success" => false, "message" => "Não foi possível obter as coordenadas para o CEP informado."]);
         return;
@@ -93,6 +98,8 @@ class pontoDescarteController {
             echo json_encode(["error" => "Dados incompletos para atualização do ponto de descarte."]);
             return;
         }
+
+        
     
         // Atribuir os dados recebidos ao modelo
         $this->pontoDescarte->id_ponto = $data['id_ponto'];
