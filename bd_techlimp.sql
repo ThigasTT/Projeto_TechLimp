@@ -1,3 +1,4 @@
+
 create database TechLimp;
 use TechLimp;
 
@@ -10,6 +11,8 @@ cidade varchar (100) default 'São Paulo',
 uf char(2) default 'SP',
 primary key(id_cep)
 );
+
+
 create table if not exists Usuario(
 id_user int auto_increment,
 id_cep int not null,
@@ -22,9 +25,25 @@ complemento varchar(20),
 foreign key (id_cep) references CEP (id_cep)
 );
 
+desc Usuario;
+
+insert into Usuario values(1,1,'josefa','11981981981','josefa@gmail.com','12345678','casa 2');
+
+
 create table if not exists Ponto_Descarte(
 id_ponto int auto_increment,
 id_cep int,
+nome_ponto varchar(255),
+contato_ponto varchar(255),
+latitude decimal(10,8),
+longitude decimal(11,8),
+
 primary key (id_ponto),
 foreign key (id_cep) references CEP (id_cep)
 );
+
+desc Ponto_Descarte;
+insert into Ponto_Descarte values(1,2,'magazineLuisa','11981981982');
+
+/*desc Usuario;
+insert into CEP values (1,'11111111','rua2','snata maria','sp','sp');*/

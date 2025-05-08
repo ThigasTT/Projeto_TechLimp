@@ -3,9 +3,12 @@ class PontoDescarte {
     private $conn;
     private $table = "Ponto_Descarte";
 
+    public $id_ponto;
     public $id_cep;
     public $nome_ponto;
     public $contato_ponto;
+    public $latitude;
+    public $longitude;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -18,7 +21,9 @@ class PontoDescarte {
                 p.id_cep,
                 p.nome_ponto,
                 p.contato_ponto,
-                c.cep, 
+                p.latitude,
+                p.longitude,
+                c.cep,
                 c.logradouro, 
                 c.bairro, 
                 c.cidade, 
