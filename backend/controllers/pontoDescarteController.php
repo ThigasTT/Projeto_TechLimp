@@ -45,11 +45,8 @@ class pontoDescarteController {
                     "nome_ponto" => $nome_ponto,
                     "contato_ponto" => $contato_ponto,
                     "latitude" => $latitude,
-<<<<<<< HEAD
                     "longitude" => $longitude
-=======
-                    "longitude" => $$longitude
->>>>>>> bce6f3c9ac0883b2d2204f6f5adb0dc0771dda2c
+
                 );
                 array_push($pontos, $ponto_item);
             }
