@@ -45,7 +45,11 @@ class pontoDescarteController {
                     "nome_ponto" => $nome_ponto,
                     "contato_ponto" => $contato_ponto,
                     "latitude" => $latitude,
+<<<<<<< HEAD
                     "longitude" => $longitude
+=======
+                    "longitude" => $$longitude
+>>>>>>> bce6f3c9ac0883b2d2204f6f5adb0dc0771dda2c
                 );
                 array_push($pontos, $ponto_item);
             }
@@ -65,6 +69,7 @@ class pontoDescarteController {
             return;
         }
 
+<<<<<<< HEAD
 
         $cepModel = new CEP($this->db);
         $cep = $cepModel->getById($data['id_cep']);
@@ -77,6 +82,18 @@ class pontoDescarteController {
             }
             
             $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
+=======
+        $cepModel = new CEP($this->db);
+        $cep = $cepModel->getById($data['id_cep']);
+
+
+            // Obter latitude e longitude com base no CEP
+    $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
+    if (!$coordenadas) {
+        echo json_encode(["success" => false, "message" => "Não foi possível obter as coordenadas para o CEP informado."]);
+        return;
+    }
+>>>>>>> bce6f3c9ac0883b2d2204f6f5adb0dc0771dda2c
 
         $this->pontoDescarte->id_cep = $data['id_cep'];
         $this->pontoDescarte->nome_ponto = $data['nome_ponto'];
@@ -100,6 +117,8 @@ class pontoDescarteController {
             echo json_encode(["error" => "Dados incompletos para atualização do ponto de descarte."]);
             return;
         }
+
+        
     
         // Atribuir os dados recebidos ao modelo
         $this->pontoDescarte->id_ponto = $data['id_ponto'];

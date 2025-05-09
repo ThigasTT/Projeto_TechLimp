@@ -54,6 +54,10 @@ class CEP {
         $stmt->execute();
         return $stmt;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> bce6f3c9ac0883b2d2204f6f5adb0dc0771dda2c
     public function getById($id) {
         $query = "
         SELECT id_cep,
@@ -68,5 +72,9 @@ class CEP {
         $stmt->execute();
         return $stmt;
     }
+<<<<<<< HEAD
 }
 ?>
+=======
+}?>
+>>>>>>> bce6f3c9ac0883b2d2204f6f5adb0dc0771dda2c
