@@ -13,22 +13,36 @@ class pontoDescarteController {
         $this->pontoDescarte = new PontoDescarte($this->db);
     }
 
-    function obterCoordenadasPorCEP($cep) {
-        $apiKey = "6121245f691f42e097ad7cefe3942557"; // Substitua pela sua chave do OpenCage
-        $url = "https://api.opencagedata.com/geocode/v1/json?q=$cep&key=$apiKey";
+   function obterCoordenadasPorCEP($cep) {
+    // Obter a chave da API de uma variável de ambiente
+    $apiKey = "6121245f691f42e097ad7cefe3942557";
     
-        $response = file_get_contents($url);
-        $data = json_decode($response, true);
-    
-        if (isset($data['results'][0]['geometry'])) {
-            return [
-                'latitude' => $data['results'][0]['geometry']['lat'],
-                'longitude' => $data['results'][0]['geometry']['lng']
-            ];
-        } else {
-            return null; // CEP inválido ou não encontrado
-        }
+    if (!$apiKey) {
+        echo json_encode(["success" => false, "message" => "Chave da API não configurada."]);
+        return null;
     }
+
+    $url = "https://api.opencagedata.com/geocode/v1/json?q=" . $cep . "&key=" . $apiKey;
+
+    $response = @file_get_contents($url);
+    if ($response === false) {
+        echo json_encode(["success" => false, "message" => "Erro ao comunicar com a API de geocodificação."]);
+        return null;
+    }
+
+    $data = json_decode($response, true);
+
+    
+    if (isset($data['results'][0]['geometry'])) {
+        return [
+            'latitude' => $data['results'][0]['geometry']['lat'],
+            'longitude' => $data['results'][0]['geometry']['lng']
+        ];
+    } else {
+        echo json_encode(["success" => false, "message" => "CEP inválido ou não encontrado."]);
+        return null;
+    }
+}
 
     // Obter todos os pontos de descarte
     public function getPontosDescarte() {
@@ -58,49 +72,40 @@ class pontoDescarteController {
 
     // Criar um novo ponto de descarte
     public function createPontoDescarte() {
-        $data = json_decode(file_get_contents('php://input'), true);
+    $data = json_decode(file_get_contents('php://input'), true);
 
-        //verifica se as variaveis estão vazias
-        if (!isset($data['id_cep'], $data['nome_ponto'], $data['contato_ponto'])) {
-            echo json_encode(["success" => false, "message" => "Dados incompletos para criar o ponto de descarte."]);
-            return;
-        }
-
-        $cepModel = new CEP($this->db);
-        $cep = $cepModel->getById($data['id_cep']);
-        $cep = $cep->fetch(PDO::FETCH_ASSOC);
-
-            // Obter latitude e longitude com base no CEP
-            if (!$cep) {
-                echo json_encode(["success" => false, "message" => "CEP não encontrado."]);
-                return;
-            }
-            
-            $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
-        $cepModel = new CEP($this->db);
-        $cep = $cepModel->getById($data['id_cep']);
-
-
-            // Obter latitude e longitude com base no CEP
-    $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
-    if (!$coordenadas) {
-        echo json_encode(["success" => false, "message" => "Não foi possível obter as coordenadas para o CEP informado."]);
+    // Verificar se os dados necessários foram enviados
+    if (empty($data['id_cep']) || empty($data['nome_ponto']) || empty($data['contato_ponto'])) {
+        echo json_encode(["success" => false, "message" => "Dados incompletos ou inválidos para criar o ponto de descarte."]);
         return;
     }
->>>>>>> bce6f3c9ac0883b2d2204f6f5adb0dc0771dda2c
 
-        $this->pontoDescarte->id_cep = $data['id_cep'];
-        $this->pontoDescarte->nome_ponto = $data['nome_ponto'];
-        $this->pontoDescarte->contato_ponto = $data['contato_ponto'];
-        $this->pontoDescarte->latitude = $coordenadas['latitude'];
-        $this->pontoDescarte->longitude = $coordenadas['longitude'];
 
-        if ($this->pontoDescarte->save()) {
-            echo json_encode(["success" => true, "message" => "Ponto de descarte criado com sucesso!"]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Erro ao criar o ponto de descarte."]);
-        }
+    $cepModel = new CEP($this->db);
+    $cep = $cepModel->getById($data['id_cep'])->fetch(PDO::FETCH_ASSOC);
+
+    if (!$cep) {
+        echo json_encode(["success" => false, "message" => "CEP não encontrado."]);
+        return;
     }
+
+ 
+    $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
+
+
+    $this->pontoDescarte->id_cep = $data['id_cep'];
+    $this->pontoDescarte->nome_ponto = $data['nome_ponto'];
+    $this->pontoDescarte->contato_ponto = $data['contato_ponto'];
+    $this->pontoDescarte->latitude = $coordenadas['latitude'];
+    $this->pontoDescarte->longitude = $coordenadas['longitude'];
+
+
+    if ($this->pontoDescarte->save()) {
+        echo json_encode(["success" => true, "message" => "Ponto de descarte criado com sucesso!"]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Erro ao criar o ponto de descarte."]);
+    }
+}
 
     public function updatePontoDescarte() {
         // Obter os dados enviados na requisição
@@ -112,13 +117,24 @@ class pontoDescarteController {
             return;
         }
 
-        
+         $cepModel = new CEP($this->db);
+    $cep = $cepModel->getById($data['id_cep'])->fetch(PDO::FETCH_ASSOC);
+
+    if (!$cep) {
+        echo json_encode(["success" => false, "message" => "CEP não encontrado."]);
+        return;
+    }
+
+ 
+    $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
     
         // Atribuir os dados recebidos ao modelo
         $this->pontoDescarte->id_ponto = $data['id_ponto'];
         $this->pontoDescarte->id_cep = $data['id_cep'];
         $this->pontoDescarte->nome_ponto = $data['nome_ponto'];
         $this->pontoDescarte->contato_ponto = $data['contato_ponto'];
+        $this->pontoDescarte->latitude = $coordenadas['latitude'];
+        $this->pontoDescarte->longitude = $coordenadas['longitude'];
     
         // Tentar atualizar o ponto de descarte
         if ($this->pontoDescarte->update()) {

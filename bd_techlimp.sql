@@ -33,13 +33,6 @@ insert into Usuario values(1,1,'josefa','11981981981','josefa@gmail.com','123456
 create table if not exists Ponto_Descarte(
 id_ponto int auto_increment,
 id_cep int,
-<<<<<<< HEAD
-nome_ponto varchar(255),
-contato_ponto varchar(255),
-latitude decimal(10,8),
-longitude decimal(11,8),
-
-=======
 nome_ponto varchar(45),
 contato_ponto varchar(45),
 latitude decimal(10,8),

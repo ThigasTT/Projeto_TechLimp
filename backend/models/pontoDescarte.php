@@ -38,8 +38,8 @@ class PontoDescarte {
 // criar pontos de descarte
     public function save() {
         $query = "
-            INSERT INTO " . $this->table . " (id_cep, nome_ponto, contato_ponto)
-            VALUES (:id_cep, :nome_ponto, :contato_ponto)
+            INSERT INTO " . $this->table . " (id_cep, nome_ponto, contato_ponto,latitude,longitude)
+            VALUES (:id_cep, :nome_ponto, :contato_ponto,:latitude,:longitude)
             ON DUPLICATE KEY UPDATE 
                 nome_ponto = VALUES(nome_ponto),
                 contato_ponto = VALUES(contato_ponto)
@@ -49,6 +49,8 @@ class PontoDescarte {
         $stmt->bindParam(':id_cep', $this->id_cep);
         $stmt->bindParam(':nome_ponto', $this->nome_ponto);
         $stmt->bindParam(':contato_ponto', $this->contato_ponto);
+        $stmt->bindParam(':latitude',$this->latitude);
+        $stmt->bindParam(':longitude',$this->longitude);
 
         return $stmt->execute();
     }
@@ -58,9 +60,11 @@ class PontoDescarte {
         $query = "
             UPDATE " . $this->table . " 
             SET 
-                id_cep = :id_cep,
-                nome_ponto = :nome_ponto,
-                contato_ponto = :contato_ponto
+            id_cep = :id_cep,
+            nome_ponto = :nome_ponto,
+            contato_ponto = :contato_ponto,
+            latitude = :latitude,
+            longitude = :longitude
             WHERE id_ponto = :id_ponto
         ";
     
@@ -71,6 +75,8 @@ class PontoDescarte {
         $stmt->bindParam(":id_cep", $this->id_cep);
         $stmt->bindParam(":nome_ponto", $this->nome_ponto);
         $stmt->bindParam(":contato_ponto", $this->contato_ponto);
+        $stmt->bindParam(":latitude", $this->latitude);
+        $stmt->bindParam(":longitude", $this->longitude);
     
      
         if ($stmt->execute()) {
