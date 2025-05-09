@@ -66,8 +66,6 @@ class pontoDescarteController {
             return;
         }
 
-<<<<<<< HEAD
-
         $cepModel = new CEP($this->db);
         $cep = $cepModel->getById($data['id_cep']);
         $cep = $cep->fetch(PDO::FETCH_ASSOC);
@@ -79,7 +77,6 @@ class pontoDescarteController {
             }
             
             $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
-=======
         $cepModel = new CEP($this->db);
         $cep = $cepModel->getById($data['id_cep']);
 
