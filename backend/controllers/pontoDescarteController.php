@@ -13,16 +13,28 @@ class pontoDescarteController {
         $this->pontoDescarte = new PontoDescarte($this->db);
     }
 
-   function obterCoordenadasPorCEP($cep) {
-    // Obter a chave da API de uma variável de ambiente
+
+ function obterCoordenadasPorEndereco($logradouro, $cidade) {
+ 
     $apiKey = "6121245f691f42e097ad7cefe3942557";
+
+
+
     
+
     if (!$apiKey) {
         echo json_encode(["success" => false, "message" => "Chave da API não configurada."]);
         return null;
     }
 
-    $url = "https://api.opencagedata.com/geocode/v1/json?q=" . $cep . "&key=" . $apiKey;
+
+    
+    $endereco = urlencode($logradouro . ", " . $cidade . ",Brasil");
+    $url = "https://api.opencagedata.com/geocode/v1/json?q=" . $endereco . "&key=" . $apiKey;
+
+    
+
+
 
     $response = @file_get_contents($url);
     if ($response === false) {
@@ -39,12 +51,19 @@ class pontoDescarteController {
             'longitude' => $data['results'][0]['geometry']['lng']
         ];
     } else {
+        echo json_encode(["success" => false, "message" => "Endereço inválido ou não encontrado."]);
+
         echo json_encode(["success" => false, "message" => "CEP inválido ou não encontrado."]);
+
         return null;
     }
 }
 
+
+    
+
     // Obter todos os pontos de descarte
+
     public function getPontosDescarte() {
         $stmt = $this->pontoDescarte->getAll();
         $num = $stmt->rowCount();
@@ -70,11 +89,14 @@ class pontoDescarteController {
         }
     }
 
-    // Criar um novo ponto de descarte
+   
     public function createPontoDescarte() {
     $data = json_decode(file_get_contents('php://input'), true);
 
+    
+
     // Verificar se os dados necessários foram enviados
+
     if (empty($data['id_cep']) || empty($data['nome_ponto']) || empty($data['contato_ponto'])) {
         echo json_encode(["success" => false, "message" => "Dados incompletos ou inválidos para criar o ponto de descarte."]);
         return;
@@ -90,7 +112,11 @@ class pontoDescarteController {
     }
 
  
-    $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
+
+    $coordenadas = $this->obterCoordenadasPorEndereco($cep['logradouro'],$cep['cidade']);
+
+ 
+
 
 
     $this->pontoDescarte->id_cep = $data['id_cep'];
@@ -126,7 +152,11 @@ class pontoDescarteController {
     }
 
  
-    $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
+
+    $coordenadas = $this->obterCoordenadasPorEndereco($cep['logradouro'],$cep['cidade']);
+
+   // $coordenadas = $this->obterCoordenadasPorCEP($cep['cep']);
+
     
         // Atribuir os dados recebidos ao modelo
         $this->pontoDescarte->id_ponto = $data['id_ponto'];
