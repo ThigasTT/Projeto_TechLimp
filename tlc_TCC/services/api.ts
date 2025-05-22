@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost/api/index.php", // Troque pela URL do seu backend
+  baseURL: "http://192.168.8.126/Projeto_TechLimp/backend/routes/api.php", // Troque pela URL do seu backend
   headers: {
     "Content-Type": "application/json",
   },

@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, KeyboardAvo
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { createUser } from '@/services/userService';
+import { getCeps, createCeps } from '@/services/cepService'; // Você precisa desses serviços
 
 export default function CadastroScreen() {
   const [email, setEmail] = useState('');
@@ -10,18 +11,40 @@ export default function CadastroScreen() {
   const [cep, setCep] = useState('');
   const [numero, setNumero] = useState('');
   const [complemento, setComplemento] = useState('');
+  const [nome, setNome] = useState('');
   const router = useRouter();
 
   const handleSubmit = async () => {
-    const dadosUsuario = {
-      email,
-      senha,
-      telefone,
-      cep,
-      numero,
-      complemento,
-    };
     try {
+      // 1. Buscar id_cep
+      let respostaCep = await getCeps(cep);
+      let id_cep = Array.isArray(respostaCep.data)
+        ? respostaCep.data[0]?.id_cep
+        : respostaCep.data?.id_cep;
+
+      // 2. Se não existir, cadastrar o CEP
+      if (!id_cep) {
+        const novoCep = await createCeps({ cep }); // pode precisar de mais campos, depende do backend
+        id_cep = Array.isArray(novoCep.data)
+          ? novoCep.data[0]?.id_cep
+          : novoCep.data?.id_cep;
+      }
+      if (!id_cep) {
+        Alert.alert('Erro', 'Não foi possível obter o id_cep!');
+        return;
+      }
+
+      // 3. Montar o objeto conforme o backend espera
+      const dadosUsuario = {
+        id_cep,
+        nome_user: nome,
+        telefone_celular_user: telefone,
+        email_user: email,
+        senha_user: senha,
+        complemento,
+        // número: seu backend não espera esse campo
+      };
+
       await createUser(dadosUsuario);
       Alert.alert('Sucesso', 'Usuário criado com sucesso!');
       router.replace('/'); // Volta para a tela de login
@@ -44,7 +67,7 @@ export default function CadastroScreen() {
 
       <Text style={styles.section}>Endereço</Text>
       <TextInput style={styles.input} placeholder="CEP" placeholderTextColor="#228b22" value={cep} onChangeText={setCep} />
-      <TextInput style={styles.input} placeholder="Número" placeholderTextColor="#228b22" value={numero} onChangeText={setNumero} />
+      <TextInput style={styles.input} placeholder="Nome" placeholderTextColor="#228b22" value={nome} onChangeText={setNome} />
       <TextInput style={styles.input} placeholder="Complemento (Opcional)" placeholderTextColor="#228b22" value={complemento} onChangeText={setComplemento} />
 
       <Text style={styles.signupText}>

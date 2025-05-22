@@ -1,10 +1,14 @@
 <?php
-// Habilitar CORS e configurar cabeçalhos
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+// Responder imediatamente a requisições OPTIONS (preflight)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit();
+}
 // Log para verificar requisições
 error_log("Método: " . $_SERVER["REQUEST_METHOD"]);
 error_log("Caminho: " . (isset($_GET['url']) ? $_GET['url'] : "Nenhum caminho"));

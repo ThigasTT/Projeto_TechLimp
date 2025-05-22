@@ -58,8 +58,8 @@ class CEPController {
     }
     
 
-    public function buscarCEPs($cep) {
-        $stmt = $this->cepModel->getByCep($cep);
+    public function buscarCEPs() {
+        $stmt = $this->cepModel->getAll();
         $num = $stmt->rowCount();
     
         if ($num > 0) {
