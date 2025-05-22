@@ -2,7 +2,6 @@
 class CEP {
     private $conn;
     private $table = "CEP";
-
     public $id_cep;
     public $cep;
     public $logradouro;
@@ -16,7 +15,7 @@ class CEP {
 
 
     public function save() {
-        // Remove o hífen do CEP antes de salvar
+      
         $this->cep = str_replace("-", "", $this->cep);
 
         $query = "
@@ -66,6 +65,22 @@ class CEP {
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id_cep",$id);
+        $stmt->execute();
+        return $stmt;
+    }
+
+
+     public function getByCep($cep) {
+        $query = "
+        SELECT id_cep,
+        cep,
+        logradouro,
+        bairro,
+        cidade,
+        uf FROM ".$this->table . " WHERE cep = :cep";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":cep",$cep);
         $stmt->execute();
         return $stmt;
     }
