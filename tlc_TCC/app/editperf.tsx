@@ -1,16 +1,16 @@
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router'; // Alterado para useRouter
 import React, { useState } from 'react';
 import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function EditProfileScreen() {
-  const navigation = useNavigation();
+  const router = useRouter(); // Substitui useNavigation por useRouter
   const [name, setName] = useState('Seu nome');
   const [email, setEmail] = useState('user@example.com');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -45,7 +45,7 @@ export default function EditProfileScreen() {
 
   const handleSave = () => {
     // Lógica para salvar as alterações
-    navigation.goBack();
+    router.back(); // Alterado para router.back()
   };
 
   return (
@@ -55,9 +55,12 @@ export default function EditProfileScreen() {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          {/* Cabeçalho */}
+          {/* Cabeçalho Personalizado */}
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <TouchableOpacity 
+              onPress={() => router.back()}
+              style={styles.backButton}
+            >
               <Feather name="arrow-left" size={24} color="#29e263" />
             </TouchableOpacity>
             <Text style={styles.title}>Editar Perfil</Text>

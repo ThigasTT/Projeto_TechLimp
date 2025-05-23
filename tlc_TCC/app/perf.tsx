@@ -20,7 +20,12 @@ export default function SideMenu() {
       {/* Itens do menu */}
       <View style={styles.menuItems}>
         <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}><Link href={'/editperf'}>Editar Perfil</Link></Text>
+          <Text style={styles.menuText}><Link href="/editperf" asChild>
+          <TouchableOpacity style={styles.editButton}>
+          <Text>Editar Perfil</Text>
+          </TouchableOpacity>
+          </Link>
+        </Text>
           <Feather name="chevron-right" size={18} color="#29e263" />
         </TouchableOpacity>
 
@@ -89,5 +94,10 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#333',
     marginVertical: 5,
+  },
+  editButton: {
+    backgroundColor: 'transparent',
+    padding: 0,
+    color: '#fff',
   },
 });
