@@ -1,67 +1,93 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Link } from 'expo-router';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function perf() {
+export default function SideMenu() {
   return (
     <View style={styles.container}>
-      
-      {/* Ícone de voltar */}
-      <TouchableOpacity style={styles.backButton}>
-        <Feather name="arrow-left" size={24} color="#29e263" />
-      </TouchableOpacity>
-
-      {/* Avatar */}
-      <View style={styles.avatar}>
-        <Feather name="user" size={64} color="#29e263" />
+      {/* Seção do perfil */}
+      <View style={styles.profileSection}>
+        <View style={styles.avatar}>
+          <Feather name="user" size={36} color="#29e263" />
+        </View>
+        <View style={styles.profileText}>
+          <Text style={styles.name}>Seu nome</Text>
+          <Text style={styles.email}>user@example.com</Text>
+        </View>
       </View>
 
-      {/* Nome */}
-      <Text style={styles.nome}>Seu nome</Text>
+      {/* Itens do menu */}
+      <View style={styles.menuItems}>
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}><Link href={'/editperf'}>Editar Perfil</Link></Text>
+          <Feather name="chevron-right" size={18} color="#29e263" />
+        </TouchableOpacity>
 
-      {/* Editar perfil */}
-      <TouchableOpacity style={styles.editarContainer}>
-        <Link href={"/atualizar"}><Text style={styles.editarTexto}>Editar Perfil</Text></Link>
-        <Feather name="edit-2" size={16} color="#29e263" style={{ marginLeft: 6 }} />
-      </TouchableOpacity>
+        <View style={styles.divider} />
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Sair</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2b2b2b',
-    alignItems: 'center',
-    paddingTop: 60,
+    backgroundColor: '#1e1e1e',
+    width: 250,
+    paddingTop: 40,
+    paddingHorizontal: 20,
   },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#1f1f1f',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  nome: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#29e263',
-    marginBottom: 8,
-  },
-  editarContainer: {
+  profileSection: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 30,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
   },
-  editarTexto: {
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#2b2b2b',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  profileText: {
+    flex: 1,
+  },
+  name: {
     color: '#29e263',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  email: {
+    color: '#888',
     fontSize: 14,
-    fontWeight: '600',
+  },
+  menuItems: {
+    marginTop: 10,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+  },
+  menuText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#333',
+    marginVertical: 5,
   },
 });
