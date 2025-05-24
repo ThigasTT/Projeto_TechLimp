@@ -1,4 +1,3 @@
-import { createUser } from '@/services/userService';
 import * as Google from 'expo-auth-session/providers/google';
 import { Link, useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
@@ -6,6 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { createUser } from '../services/userService';
 
 // Configuração necessária para o Expo
 WebBrowser.maybeCompleteAuthSession();
@@ -38,7 +38,7 @@ export default function CadastroScreen() {
 
   // Configuração do Login com Google
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',
+    /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
     webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
   });
 

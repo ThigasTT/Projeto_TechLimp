@@ -49,7 +49,7 @@ export default function LoginScreen() {
 
   // Configuração do Login com Google
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',
+    /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
     webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
   });
 
