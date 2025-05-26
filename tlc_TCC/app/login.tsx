@@ -1,9 +1,7 @@
 import * as Google from 'expo-auth-session/providers/google';
 import { Link, useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { initializeApp } from 'firebase/app';
 import {
-  getAuth,
   GoogleAuthProvider,
   signInWithCredential,
   signInWithEmailAndPassword
@@ -22,24 +20,10 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { auth } from '../firebaseConfig';
 
-// Configuração necessária para o Expo
+
 WebBrowser.maybeCompleteAuthSession();
-
-// Configure Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyBLL9WWIWgPpNNFzvTH4Y-zrd6IaGcPElw",
-  authDomain: "auth-e3708.firebaseapp.com",
-  projectId: "auth-e3708",
-  storageBucket: "auth-e3708.firebasestorage.app",
-  messagingSenderId: "756468624869",
-  appId: "1:756468624869:web:c6e35c27b19bf2860d930c",
-  measurementId: "G-BHRM0MH6QF"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -48,16 +32,39 @@ export default function LoginScreen() {
   const router = useRouter();
 
   // Configuração do Login com Google
+<<<<<<< HEAD
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
+    scopes: ['openid', 'profile', 'email'],
+=======
   const [request, response, promptAsync] = Google.useAuthRequest({
     /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
     webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
+>>>>>>> d998d35c9a61d2b6829b66e057a8169ec78f809d
   });
 
   // Efeito para lidar com a resposta do Google
   useEffect(() => {
     if (response?.type === 'success') {
-      const { id_token } = response.params;
-      handleGoogleAuth(id_token);
+      const id_token = response.params.id_token || response.authentication?.idToken;
+
+      console.log('Google Auth Success Response (with useIdTokenAuthRequest):', JSON.stringify(response, null, 2));
+      console.log('Received id_token:', id_token);
+
+      if (id_token) {
+        handleGoogleAuth(id_token);
+      } else {
+        Alert.alert('Erro de Autenticação', 'Não foi possível obter o id_token do Google mesmo com useIdTokenAuthRequest.');
+        console.error('id_token still missing:', response);
+        setLoading(false);
+      }
+    } else if (response?.type === 'error') {
+      console.error('Google Auth Error Response:', JSON.stringify(response, null, 2));
+      Alert.alert('Erro Google', 'Falha na autenticação com Google: ' + (response.error?.message || 'Erro desconhecido'));
+      setLoading(false);
+    } else if (response?.type === 'cancel' || response?.type === 'dismiss') {
+      console.log('Google Auth Canceled/Dismissed by User');
+      setLoading(false);
     }
   }, [response]);
 
@@ -66,11 +73,10 @@ export default function LoginScreen() {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
     }
-    
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, senha);
-      router.replace('/perf');
+      router.push('/notc');
     } catch (error) {
       Alert.alert('Erro', 'Email ou senha incorretos!');
       console.error(error);
@@ -84,11 +90,25 @@ export default function LoginScreen() {
     try {
       const credential = GoogleAuthProvider.credential(idToken);
       await signInWithCredential(auth, credential);
-      router.replace('/perf');
-    } catch (error) {
-      Alert.alert('Erro', 'Falha na autenticação com Google');
-      console.error(error);
+      router.push('/notc');
+    } catch (error: any) {
+      Alert.alert('Erro Firebase', 'Falha na autenticação com Google via Firebase.');
+      console.error('Firebase signInWithCredential error:', error);
+      console.error('Firebase error code:', error.code);
+      console.error('Firebase error message:', error.message);
     } finally {
+      setLoading(false);
+    }
+  };
+
+  // Função para iniciar o login com Google
+  const startGoogleLogin = async () => {
+    try {
+      setLoading(true);
+      await promptAsync();
+    } catch (e) {
+      console.error("Erro ao iniciar autenticação Google:", e);
+      Alert.alert("Erro", "Não foi possível iniciar a autenticação com Google.");
       setLoading(false);
     }
   };
@@ -99,12 +119,15 @@ export default function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
     >
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.innerContainer}>
-          <Text style={styles.logo}>TechLimp</Text>
+          <Image
+            source={require('../assets/images/Logo.png')}
+            style={styles.logo}
+          />
 
           <TextInput
             style={styles.input}
@@ -115,7 +138,7 @@ export default function LoginScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
           />
-          
+
           <TextInput
             style={styles.input}
             placeholder="Senha"
@@ -129,8 +152,8 @@ export default function LoginScreen() {
             Não tem uma conta? <Link href="/register" style={styles.signupLink}>Crie uma!</Link>
           </Text>
 
-          <TouchableOpacity 
-            style={styles.button} 
+          <TouchableOpacity
+            style={styles.button}
             onPress={handleLogin}
             disabled={loading}
           >
@@ -142,15 +165,16 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <Text style={styles.altText}>Você também pode entrar com...</Text>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={styles.googleButton}
-            onPress={() => promptAsync()}
+            // Mude para startGoogleLogin
+            onPress={startGoogleLogin}
             disabled={!request || loading}
           >
-            <Image 
-              source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }} 
-              style={styles.googleIcon} 
+            <Image
+              source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }}
+              style={styles.googleIcon}
             />
             <Text style={styles.googleButtonText}>Cadastre-se com Google</Text>
           </TouchableOpacity>
@@ -159,6 +183,7 @@ export default function LoginScreen() {
     </KeyboardAvoidingView>
   );
 }
+
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
@@ -169,26 +194,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    minHeight: '100%', // Garante que o container ocupe toda a tela
+    minHeight: '100%',
   },
   logo: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#5cff9b',
-    marginBottom: 40,
-    fontFamily: 'monospace',
+    width: 300,
+    height: 150,
+    marginBottom: 20,
   },
   input: {
     width: '100%',
     borderWidth: 2,
     borderColor: '#5cff9b',
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 12,
-    color: '#fff',
-    fontSize: 16,
-    marginBottom: 15,
+    color: '#5cff9b',
+    fontSize: 20,
+    marginBottom: 10,
+    fontFamily: 'MadimiOne',
   },
-    googleButton: {
+  googleButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -212,10 +236,12 @@ const styles = StyleSheet.create({
   signupText: {
     color: '#ccc',
     marginBottom: 20,
+    fontFamily: 'MadimiOne',
   },
   signupLink: {
     color: '#5cff9b',
     fontWeight: 'bold',
+    fontFamily: 'MadimiOne',
   },
   button: {
     backgroundColor: '#29e263',
@@ -227,10 +253,12 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'MadimiOne',
   },
   altText: {
     color: '#ccc',
     marginBottom: 10,
+    fontFamily: 'MadimiOne',
   },
   socialIcons: {
     flexDirection: 'row',

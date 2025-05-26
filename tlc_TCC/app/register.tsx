@@ -1,10 +1,13 @@
 import * as Google from 'expo-auth-session/providers/google';
 import { Link, useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+<<<<<<< HEAD
+import { auth } from '../firebaseConfig';
+=======
+>>>>>>> d998d35c9a61d2b6829b66e057a8169ec78f809d
 import { createUser } from '../services/userService';
 
 // Configuração necessária para o Expo
@@ -22,8 +25,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+
 
 export default function CadastroScreen() {
   const [nome, setNome] = useState('');
@@ -36,11 +38,18 @@ export default function CadastroScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+<<<<<<< HEAD
+  // Configuração do notc com Google
+const [request, response, promptAsync] = Google.useAuthRequest({
+  clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
+});
+=======
   // Configuração do Login com Google
   const [request, response, promptAsync] = Google.useAuthRequest({
     /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
     webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
   });
+>>>>>>> d998d35c9a61d2b6829b66e057a8169ec78f809d
 
   // Efeito para lidar com a resposta do Google
   useEffect(() => {
@@ -69,7 +78,7 @@ export default function CadastroScreen() {
     try {
       await createUser(dadosUsuario);
       Alert.alert('Sucesso', 'Usuário criado com sucesso!');
-      router.replace('/login');
+      router.replace('/notc');
     } catch (error) {
       let errorMessage = 'Erro ao criar usuário!';
       if (error instanceof Error) {
@@ -86,8 +95,8 @@ export default function CadastroScreen() {
     try {
       const credential = GoogleAuthProvider.credential(null, token);
       await signInWithCredential(auth, credential);
-      Alert.alert('Sucesso', 'Login com Google realizado!');
-      router.replace('/login');
+      Alert.alert('Sucesso', 'notc com Google realizado!');
+      router.replace('/notc');
     } catch (error) {
       Alert.alert('Erro', 'Falha na autenticação com Google');
       console.error(error);
@@ -107,9 +116,13 @@ export default function CadastroScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.innerContainer}>
-          <Text style={styles.logo}>TechLimp</Text>
+          <Image
+            source={require('../assets/images/Logo.png')} // Substitua pelo caminho da sua logo
+            style={styles.logo}
+          />
 
           <Text style={styles.section}>Cadastro</Text>
+          <Text style={styles.txt}>Nome</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Nome *" 
@@ -117,6 +130,7 @@ export default function CadastroScreen() {
             value={nome} 
             onChangeText={setNome}
           />
+          <Text style={styles.txt}>Email</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Email *" 
@@ -126,6 +140,7 @@ export default function CadastroScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
           />
+          <Text style={styles.txt}>Senha</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Senha *" 
@@ -134,6 +149,7 @@ export default function CadastroScreen() {
             value={senha} 
             onChangeText={setSenha} 
           />
+          <Text style={styles.txt}>Telefone</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Telefone" 
@@ -142,6 +158,7 @@ export default function CadastroScreen() {
             onChangeText={setTelefone}
             keyboardType="phone-pad"
           />
+          <Text style={styles.txt}>CEP</Text>  
           <TextInput 
             style={styles.input} 
             placeholder="CEP" 
@@ -150,6 +167,7 @@ export default function CadastroScreen() {
             onChangeText={setCep}
             keyboardType="numeric"
           />
+          <Text style={styles.txt}>Número</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Número" 
@@ -158,6 +176,7 @@ export default function CadastroScreen() {
             onChangeText={setNumero}
             keyboardType="numeric"
           />
+          <Text style={styles.txt}>Complemento</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Complemento (Opcional)" 
@@ -214,43 +233,18 @@ const styles = StyleSheet.create({
     minHeight: '100%',
   },
   logo: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#5cff9b',
-    marginBottom: 30,
-    fontFamily: 'monospace',
-  },
-  section: {
-    color: '#5cff9b',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 15,
-    alignSelf: 'flex-start',
-    width: '100%',
-  },
-  input: {
-    width: '100%',
-    borderWidth: 2,
-    borderColor: '#5cff9b',
-    borderRadius: 10,
-    padding: 12,
-    color: '#5cff9b',
-    fontSize: 16,
-    marginBottom: 15,
+    width: 300,
+    height: 150,
+    marginBottom: 20,
   },
   button: {
     backgroundColor: '#29e263',
     paddingVertical: 12,
     borderRadius: 12,
-    marginBottom: 15,
+    marginTop: 30,
+    marginBottom: 5,
     width: '100%',
     alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-
   },
   googleButton: {
     flexDirection: 'row',
@@ -269,24 +263,64 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 10,
   },
+  signupLink: {
+    color: '#5cff9b',
+    fontWeight: 'bold',
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'MadimiOne',
+  },
   googleButtonText: {
     color: '#333',
     fontWeight: '600',
-  },
-  divider: {
-    color: '#ccc',
-    marginVertical: 15,
-    textAlign: 'center',
-    width: '100%',
   },
   signupText: {
     color: '#ccc',
     marginBottom: 15,
     width: '100%',
     textAlign: 'center',
+    fontFamily: 'MadimiOne',
   },
-  signupLink: {
+  divider: {
+    color: '#ccc',
+    marginVertical: 15,
+    textAlign: 'center',
+    width: '100%',
+    fontFamily: 'MadimiOne',
+  },
+  section: {
     color: '#5cff9b',
+    fontSize: 32,
     fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 15,
+    alignSelf: 'flex-start',
+    textAlign: 'center',
+    width: '100%',
+    fontFamily: 'MadimiOne',
+  },
+  input: {
+    width: '100%',
+    borderWidth: 2,
+    borderColor: '#5cff9b',
+    borderRadius: 10,
+    padding: 12,
+    color: '#5cff9b',
+    fontSize: 20,
+    marginBottom: 5,
+    fontFamily: 'MadimiOne',
+  },
+  txt: {
+    color: '#5cff9b',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 15,
+    alignSelf: 'flex-start',
+    textAlign: 'left',
+    width: '100%',
+    fontFamily: 'MadimiOne',
   },
 });
