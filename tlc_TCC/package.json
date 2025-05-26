@@ -52,17 +52,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-<<<<<<< HEAD
     "@types/expo": "^32.0.13",
     "@types/node": "^22.15.21",
     "@types/react": "~19.0.10",
     "@types/react-native-maps": "^0.24.1",
     "babel-plugin-module-resolver": "^5.0.2",
-=======
     "@types/jest": "^29.5.14",
-    "@types/react": "~19.0.10",
     "@types/react-native": "^0.72.8",
->>>>>>> d998d35c9a61d2b6829b66e057a8169ec78f809d
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
     "typescript": "^5.8.3"

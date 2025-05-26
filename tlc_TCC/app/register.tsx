@@ -4,10 +4,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-<<<<<<< HEAD
 import { auth } from '../firebaseConfig';
-=======
->>>>>>> d998d35c9a61d2b6829b66e057a8169ec78f809d
 import { createUser } from '../services/userService';
 
 // Configuração necessária para o Expo
@@ -38,18 +35,11 @@ export default function CadastroScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-<<<<<<< HEAD
-  // Configuração do notc com Google
+// Configuração do Login com Google
 const [request, response, promptAsync] = Google.useAuthRequest({
-  clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
+  /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
+  webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
 });
-=======
-  // Configuração do Login com Google
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
-    webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
-  });
->>>>>>> d998d35c9a61d2b6829b66e057a8169ec78f809d
 
   // Efeito para lidar com a resposta do Google
   useEffect(() => {

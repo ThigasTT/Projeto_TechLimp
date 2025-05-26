@@ -32,15 +32,9 @@ export default function LoginScreen() {
   const router = useRouter();
 
   // Configuração do Login com Google
-<<<<<<< HEAD
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
     scopes: ['openid', 'profile', 'email'],
-=======
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
-    webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
->>>>>>> d998d35c9a61d2b6829b66e057a8169ec78f809d
   });
 
   // Efeito para lidar com a resposta do Google
