@@ -6,8 +6,8 @@ import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, T
 
 export default function EditProfileScreen() {
   const router = useRouter(); // Substitui useNavigation por useRouter
-  const [name, setName] = useState('Seu nome');
-  const [email, setEmail] = useState('user@example.com');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
