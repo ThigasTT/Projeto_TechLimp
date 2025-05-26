@@ -1,11 +1,11 @@
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { useRouter } from 'expo-router'; // Alterado para useRouter
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function EditProfileScreen() {
-  const router = useRouter(); // Substitui useNavigation por useRouter
+  const router = useRouter(); 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -45,7 +45,7 @@ export default function EditProfileScreen() {
 
   const handleSave = () => {
     // Lógica para salvar as alterações
-    router.back(); // Alterado para router.back()
+    router.back(); 
   };
 
   return (
@@ -55,7 +55,6 @@ export default function EditProfileScreen() {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          {/* Cabeçalho Personalizado */}
           <View style={styles.header}>
             <TouchableOpacity 
               onPress={() => router.back()}
@@ -66,7 +65,6 @@ export default function EditProfileScreen() {
             <Text style={styles.title}>Editar Perfil</Text>
           </View>
 
-          {/* Avatar com opções de imagem */}
           <View style={styles.avatarContainer}>
             <TouchableOpacity onPress={pickImage}>
               <View style={styles.avatar}>
@@ -92,7 +90,6 @@ export default function EditProfileScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Formulário */}
           <View style={styles.formContainer}>
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Nome</Text>
@@ -153,7 +150,6 @@ export default function EditProfileScreen() {
             </View>
           </View>
 
-          {/* Botão Salvar */}
           <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
             <Text style={styles.saveButtonText}>Salvar Alterações</Text>
           </TouchableOpacity>

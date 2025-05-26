@@ -33,6 +33,7 @@ export default function LoginScreen() {
 
   // Configuração do Login com Google
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    androidClientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
     clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
     scopes: ['openid', 'profile', 'email'],
   });

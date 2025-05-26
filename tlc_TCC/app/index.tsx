@@ -13,21 +13,14 @@ export default function IndexScreen() {
       />
 
       {/* Slogan */}
-      <Text style={styles.section}>
-        Transformando tecnologia em soluções sustentáveis.
+      <Text style={{...styles.section, color: 'white'}}>
+        O APP QUE VAI MUDAR O FUTURO.
       </Text>
 
       {/* Botão Entrar */}
       <Link href="/login" asChild>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#4ADE80',
-            paddingVertical: 12,
-            paddingHorizontal: 50,
-            borderRadius: 10,
-          }}
-        >
-          <Text style={styles.section}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>
             Entrar
           </Text>
         </TouchableOpacity>
@@ -42,12 +35,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   section: {
-    color: '#fff',
+    color: 'BLACK',
     fontSize: 20,
     marginBottom: 10,
     alignSelf: 'flex-start',
     textAlign: 'center',
     width: '100%',
+    fontFamily: 'MadimiOne',
+  },
+  button: {
+    backgroundColor: '#29e263',
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 12,
+    marginBottom: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
     fontFamily: 'MadimiOne',
   },
   container: {

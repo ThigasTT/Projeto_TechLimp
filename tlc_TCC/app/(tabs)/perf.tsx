@@ -1,12 +1,12 @@
 import { Feather } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import { auth } from 'firebaseConfig';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function SideMenu() {
   return (
     <View style={styles.container}>
-      {/* Seção do perfil */}
       <View style={styles.profileSection}>
         <View style={styles.avatar}>
           <Feather name="user" size={36} color="#29e263" />
@@ -17,21 +17,31 @@ export default function SideMenu() {
         </View>
       </View>
 
-      {/* Itens do menu */}
       <View style={styles.menuItems}>
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}><Link href="/editperf" asChild>
-          <TouchableOpacity style={styles.editButton}>
-          <Text>Editar Perfil</Text>
+        <Link href="/(tabs)/editperf" asChild>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuText}>Editar Perfil</Text>
+            <Feather name="chevron-right" size={18} color="#29e263" />
           </TouchableOpacity>
-          </Link>
-        </Text>
-          <Feather name="chevron-right" size={18} color="#29e263" />
-        </TouchableOpacity>
+        </Link>
 
         <View style={styles.divider} />
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={async () => {
+            // Exemplo usando Firebase Auth:
+            await auth.signOut();
+            router.replace('/login');
+
+            // Exemplo genérico:
+            // Limpe o token/autenticação aqui
+            // Navegue para a tela de login
+            // Se estiver usando expo-router:
+            // Faça o logout aqui (ex: limpar AsyncStorage, etc.)
+            router.replace('/login');
+          }}
+        >
           <Text style={styles.menuText}>Sair</Text>
         </TouchableOpacity>
       </View>

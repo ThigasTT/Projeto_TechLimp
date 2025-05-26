@@ -19,10 +19,8 @@ export default function RootLayout() {
 
   return (
     <Stack>
-      {/* Garante que a tela de login seja a primeira a ser considerada */}
       <Stack.Screen name="login" options={{ headerShown: false }} />
 
-      {/* Opcional: Para desativar outras telas e focar no login */}
       {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
       {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
       {/* <Stack.Screen name="register" options={{ headerShown: false }} /> */}
