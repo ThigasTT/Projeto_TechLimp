@@ -6,9 +6,12 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { createUser } from '../services/userService';
+import { createCeps, getCeps } from 'services/cepService';
 
+// Configuração necessária para o Expo
 WebBrowser.maybeCompleteAuthSession();
 
+// Configure Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBLL9WWIWgPpNNFzvTH4Y-zrd6IaGcPElw",
   authDomain: "auth-e3708.firebaseapp.com",
@@ -19,6 +22,7 @@ const firebaseConfig = {
   measurementId: "G-BHRM0MH6QF"
 };
 
+// Initialize Firebase
 
 
 export default function CadastroScreen() {
@@ -27,17 +31,17 @@ export default function CadastroScreen() {
   const [senha, setSenha] = useState('');
   const [telefone, setTelefone] = useState('');
   const [cep, setCep] = useState('');
+  const [id_cep,SetIdCep] = useState(''); 
   const [numero, setNumero] = useState('');
   const [complemento, setComplemento] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
 // Configuração do Login com Google
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    androidClientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
-    clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
-    scopes: ['openid', 'profile', 'email'],
-  });
+const [request, response, promptAsync] = Google.useAuthRequest({
+  /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
+  webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
+});
 
   // Efeito para lidar com a resposta do Google
   useEffect(() => {
@@ -47,24 +51,42 @@ export default function CadastroScreen() {
   }, [response]);
 
   const handleSubmit = async () => {
-    if (!nome || !email || !senha || !cep || !numero || !telefone) {
+    if (!nome || !email || !senha) {
       Alert.alert('Atenção', 'Preencha todos os campos obrigatórios!');
       return;
     }
 
     setLoading(true);
+   
+try {
+  let idCepFinal = '';
+  const respostaCep = await getCeps(cep);
+
+  if (Array.isArray(respostaCep.data) && respostaCep.data.length > 0) {
+    idCepFinal = respostaCep.data[0].id_cep;
+    SetIdCep(idCepFinal); // opcional, só para manter o estado atualizado
+  } else if (respostaCep.data.message) {
+    const respostaNovoCep = await createCeps({cep});
+    console.log('resposta novo cep:',respostaNovoCep);
+    const novoCep = await getCeps(cep);
+    idCepFinal = novoCep.data[0].id_cep;
+    SetIdCep(idCepFinal); // opcional, só para manter o estado atualizado
+  } else {
+    throw new Error('Erro ao buscar ou criar o CEP');
+  }
+
     const dadosUsuario = {
-      nome,
-      email,
-      senha,
-      telefone,
-      cep,
-      numero,
+      nome_user:nome,
+      email_user:email,
+      senha_user:senha,
+      telefone_celular_user:telefone,
+      id_cep: idCepFinal,
       complemento,
     };
 
-    try {
-      await createUser(dadosUsuario);
+      const resposta = await createUser(dadosUsuario);
+      console.log('Dados enviados:', dadosUsuario);
+      console.log('resposta do back para criacao:',resposta)
       Alert.alert('Sucesso', 'Usuário criado com sucesso!');
       router.replace('/notc');
     } catch (error) {
@@ -105,7 +127,7 @@ export default function CadastroScreen() {
       >
         <View style={styles.innerContainer}>
           <Image
-            source={require('../assets/images/Logo.png')} 
+            source={require('../assets/images/Logo.png')} // Substitua pelo caminho da sua logo
             style={styles.logo}
           />
 
@@ -155,7 +177,7 @@ export default function CadastroScreen() {
             onChangeText={setCep}
             keyboardType="numeric"
           />
-          <Text style={styles.txt}>Número</Text>
+         {/*<Text style={styles.txt}>Número</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Número" 
@@ -163,7 +185,7 @@ export default function CadastroScreen() {
             value={numero} 
             onChangeText={setNumero}
             keyboardType="numeric"
-          />
+          />*/}
           <Text style={styles.txt}>Complemento</Text>
           <TextInput 
             style={styles.input} 
@@ -253,14 +275,16 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     color: '#5cff9b',
+    fontWeight: 'bold',
   },
   buttonText: {
     fontSize: 18,
+    fontWeight: 'bold',
     fontFamily: 'MadimiOne',
   },
   googleButtonText: {
     color: '#333',
-    fontFamily: 'MadimiOne',
+    fontWeight: '600',
   },
   signupText: {
     color: '#ccc',
@@ -279,6 +303,7 @@ const styles = StyleSheet.create({
   section: {
     color: '#5cff9b',
     fontSize: 32,
+    fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 15,
     alignSelf: 'flex-start',
@@ -300,6 +325,7 @@ const styles = StyleSheet.create({
   txt: {
     color: '#5cff9b',
     fontSize: 20,
+    fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 15,
     alignSelf: 'flex-start',
