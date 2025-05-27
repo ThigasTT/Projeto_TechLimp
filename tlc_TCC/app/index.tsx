@@ -1,33 +1,25 @@
 import { Link } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { UserProvider } from './userContext'; 
 
-export default function IndexScreen() {
+function IndexScreen() {
   return (
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}>
       {/* Logo */}
       <Image
-        source={require('../assets/images/Logo.png')} // Substitua pelo caminho da sua logo
+        source={require('../assets/images/Logo.png')} 
         style={styles.logo}
       />
 
       {/* Slogan */}
-      <Text style={styles.section}>
-        Transformando tecnologia em soluções sustentáveis.
+      <Text style={{...styles.section, color: 'white'}}>
+        O APP QUE VAI MUDAR O FUTURO.
       </Text>
 
       {/* Botão Entrar */}
       <Link href="/login" asChild>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#4ADE80',
-            paddingVertical: 12,
-            paddingHorizontal: 50,
-            borderRadius: 10,
-          }}
-        >
-          <Text style={styles.section}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>
             Entrar
           </Text>
         </TouchableOpacity>
@@ -35,6 +27,15 @@ export default function IndexScreen() {
     </View>
   );
 }
+
+export default function App() {
+  return (
+    <UserProvider>
+      <IndexScreen />
+    </UserProvider>
+  );
+}
+
 const styles = StyleSheet.create({
   logo: {
     width: 300,
@@ -42,12 +43,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   section: {
-    color: '#fff',
+    color: 'BLACK',
     fontSize: 20,
     marginBottom: 10,
     alignSelf: 'flex-start',
     textAlign: 'center',
     width: '100%',
+    fontFamily: 'MadimiOne',
+  },
+  button: {
+    backgroundColor: '#29e263',
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 12,
+    marginBottom: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
     fontFamily: 'MadimiOne',
   },
   container: {

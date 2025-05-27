@@ -8,10 +8,8 @@ import { auth } from '../firebaseConfig';
 import { createUser } from '../services/userService';
 import { createCeps, getCeps } from 'services/cepService';
 
-// Configuração necessária para o Expo
 WebBrowser.maybeCompleteAuthSession();
 
-// Configure Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBLL9WWIWgPpNNFzvTH4Y-zrd6IaGcPElw",
   authDomain: "auth-e3708.firebaseapp.com",
@@ -22,7 +20,6 @@ const firebaseConfig = {
   measurementId: "G-BHRM0MH6QF"
 };
 
-// Initialize Firebase
 
 
 export default function CadastroScreen() {
@@ -38,10 +35,11 @@ export default function CadastroScreen() {
   const router = useRouter();
 
 // Configuração do Login com Google
-const [request, response, promptAsync] = Google.useAuthRequest({
-  /*expoClientId: 'SEU_CLIENT_ID_EXPO.apps.googleusercontent.com',*/
-  webClientId: '78635470984-847crapsjqdr5fvn4gdci0ib5ubc56db.apps.googleusercontent.com',
-});
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    androidClientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
+    clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
+    scopes: ['openid', 'profile', 'email'],
+  });
 
   // Efeito para lidar com a resposta do Google
   useEffect(() => {
@@ -51,7 +49,7 @@ const [request, response, promptAsync] = Google.useAuthRequest({
   }, [response]);
 
   const handleSubmit = async () => {
-    if (!nome || !email || !senha) {
+    if (!nome || !email || !senha || !cep || !numero || !telefone) {
       Alert.alert('Atenção', 'Preencha todos os campos obrigatórios!');
       return;
     }
@@ -127,7 +125,7 @@ try {
       >
         <View style={styles.innerContainer}>
           <Image
-            source={require('../assets/images/Logo.png')} // Substitua pelo caminho da sua logo
+            source={require('../assets/images/Logo.png')} 
             style={styles.logo}
           />
 
@@ -275,16 +273,14 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     color: '#5cff9b',
-    fontWeight: 'bold',
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
     fontFamily: 'MadimiOne',
   },
   googleButtonText: {
     color: '#333',
-    fontWeight: '600',
+    fontFamily: 'MadimiOne',
   },
   signupText: {
     color: '#ccc',
@@ -303,7 +299,6 @@ const styles = StyleSheet.create({
   section: {
     color: '#5cff9b',
     fontSize: 32,
-    fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 15,
     alignSelf: 'flex-start',
@@ -325,7 +320,6 @@ const styles = StyleSheet.create({
   txt: {
     color: '#5cff9b',
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 15,
     alignSelf: 'flex-start',

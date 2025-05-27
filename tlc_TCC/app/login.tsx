@@ -33,6 +33,7 @@ export default function LoginScreen() {
 
   // Configuração do Login com Google
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    androidClientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
     clientId: '78635470984-crdg5idi19851blv1chq8aqa4e9jq93t.apps.googleusercontent.com',
     scopes: ['openid', 'profile', 'email'],
   });
@@ -162,7 +163,6 @@ export default function LoginScreen() {
 
           <TouchableOpacity
             style={styles.googleButton}
-            // Mude para startGoogleLogin
             onPress={startGoogleLogin}
             disabled={!request || loading}
           >
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   googleButtonText: {
     color: '#333',
-    fontWeight: '600',
+    fontFamily: 'MadimiOne',
   },
   signupText: {
     color: '#ccc',
@@ -234,7 +234,6 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     color: '#5cff9b',
-    fontWeight: 'bold',
     fontFamily: 'MadimiOne',
   },
   button: {
@@ -246,7 +245,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
     fontFamily: 'MadimiOne',
   },
   altText: {

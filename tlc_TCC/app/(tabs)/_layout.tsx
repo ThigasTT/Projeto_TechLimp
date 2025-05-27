@@ -18,43 +18,56 @@ export default function TabLayout() {
 
   if (isAuthenticated === null) {
     // Tela de carregamento enquanto verifica a autenticação
-    return null; // Ou um <ActivityIndicator />
+    return null; 
   }
 
   // Se o usuário NÃO estiver autenticado, redireciona para a tela de login
   if (!isAuthenticated) {
-    return <Redirect href="/login" />; // <<< MUDANÇA CRÍTICA AQUI!
-                                      // Aponta para sua rota de login real
+    return <Redirect href="/login" />; 
   }
 
   return (
-    <Tabs>
-      {/* Aqui você define cada aba. Os "name" devem corresponder aos nomes dos arquivos dentro de (tabs) */}
+    <Tabs
+      screenOptions={{
+      tabBarActiveTintColor: '#29e263', // Cor do ícone/texto ativo
+      tabBarInactiveTintColor: '#8e8e93', // Cor do ícone/texto inativo
+      tabBarStyle: { backgroundColor: '#2b2b2b' }, // Cor de fundo da barra
+      }}
+    >
       <Tabs.Screen
-        name="notc" // Corresponde a app/(tabs)/notc.tsx
-        options={{
-          title: 'Notícias',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="newspaper-o" color={color} />,
-          headerShown: false // Opcional: Oculta o header nesta tela
-        }}
+      name="notc"
+      options={{
+        title: 'Notícias',
+        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="newspaper-o" color={color} />,
+        headerShown: false 
+      }}
       />
       <Tabs.Screen
-        name="perf" // Corresponde a app/(tabs)/perf.tsx
-        options={{
-          title: 'Perfil',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
-          headerShown: false // Opcional: Oculta o header nesta tela
-        }}
+      name="sidebar"
+      options={{
+        title: 'Barra Lateral',
+        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="bars" color={color} />,
+        headerShown: false
+      }}
       />
-      {/* Adicione outras abas conforme necessário, por exemplo, editperf */}
       <Tabs.Screen
-        name="editperf" // Corresponde a app/(tabs)/editperf.tsx
-        options={{
-          title: 'Editar Perfil',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="edit" color={color} />,
-          headerShown: false,
-          href: null // Opcional: Para ocultar esta aba da tab bar mas ainda poder navegar para ela
-        }}
+      name="editperf"
+      options={{
+        title: 'Editar Perfil',
+        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="edit" color={color} />,
+        headerShown: false,
+        href: null 
+      }}
+      />
+      <Tabs.Screen
+      name="map"
+      options={{
+        title: 'Mapa',
+        tabBarIcon: ({ color }) => (
+        <FontAwesome size={28} name="map" color={color} />
+        ),
+        headerShown: false,
+      }}
       />
     </Tabs>
   );

@@ -1,13 +1,13 @@
+import { useUser } from '@/userContext';
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { useRouter } from 'expo-router'; // Alterado para useRouter
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function EditProfileScreen() {
-  const router = useRouter(); // Substitui useNavigation por useRouter
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+   const router = useRouter();
+  const { name, setName, email, setEmail } = useUser(); // Usa o contexto
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -25,27 +25,16 @@ export default function EditProfileScreen() {
     }
   };
 
-  const removeImage = () => {
-    Alert.alert(
-      'Remover foto',
-      'Tem certeza que deseja remover sua foto de perfil?',
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
-        {
-          text: 'Remover',
-          onPress: () => setProfileImage(null),
-          style: 'destructive',
-        },
-      ]
-    );
-  };
+
+const removeImage = () => {
+  
+  setProfileImage(null); // Remove a imagem ao definir o estado como null
+
+};
 
   const handleSave = () => {
     // Lógica para salvar as alterações
-    router.back(); // Alterado para router.back()
+    router.back(); 
   };
 
   return (
@@ -55,7 +44,6 @@ export default function EditProfileScreen() {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          {/* Cabeçalho Personalizado */}
           <View style={styles.header}>
             <TouchableOpacity 
               onPress={() => router.back()}
@@ -66,7 +54,6 @@ export default function EditProfileScreen() {
             <Text style={styles.title}>Editar Perfil</Text>
           </View>
 
-          {/* Avatar com opções de imagem */}
           <View style={styles.avatarContainer}>
             <TouchableOpacity onPress={pickImage}>
               <View style={styles.avatar}>
@@ -92,7 +79,6 @@ export default function EditProfileScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Formulário */}
           <View style={styles.formContainer}>
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Nome</Text>
@@ -153,7 +139,6 @@ export default function EditProfileScreen() {
             </View>
           </View>
 
-          {/* Botão Salvar */}
           <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
             <Text style={styles.saveButtonText}>Salvar Alterações</Text>
           </TouchableOpacity>
@@ -183,8 +168,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#29e263',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 20, 
+    fontFamily: 'MadimiOne',
   },
   avatarContainer: {
     alignItems: 'center',
@@ -222,6 +207,7 @@ const styles = StyleSheet.create({
   changePhotoText: {
     color: '#29e263',
     fontSize: 14,
+    fontFamily: 'MadimiOne',
   },
   formContainer: {
     marginBottom: 30,
@@ -247,6 +233,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     paddingVertical: 12,
+    fontFamily: 'MadimiOne',
   },
   editIcon: {
     marginLeft: 10,
@@ -261,6 +248,6 @@ const styles = StyleSheet.create({
   saveButtonText: {
     color: '#000',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'MadimiOne',
   },
 });

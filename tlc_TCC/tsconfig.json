@@ -8,7 +8,8 @@
       "@/*": ["./app/*"],
       "@components/*": ["./app/components/*"],
       "@services/*": ["./app/services/*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
     },
     "types": ["node"],
     "esModuleInterop": true,

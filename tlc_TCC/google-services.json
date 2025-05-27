@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "756468624869-50d06jva99fle3erdf7ens6pm0giv9cp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techlimp.tlctcc",
+            "certificate_hash": "51fb12a218b2511c0f02ebf06b59e8f982babb88"
+          }
+        },
+        {
           "client_id": "756468624869-ff6ud85540s92hal8lj6869dssd4adp6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
