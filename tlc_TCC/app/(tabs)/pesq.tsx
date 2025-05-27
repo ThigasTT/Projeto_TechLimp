@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function SearchScreen() {
   const [search, setSearch] = useState('');
-  const [recent, setRecent] = useState([]);
+  const [recent, setRecent] = useState<string[]>([]);
 
   const handleSearch = () => {
     if (search.trim() === '') return;
 
-    // Adiciona no topo dos recentes, sem duplicados
+    const newRecent = [search, ...recent.filter((item) => item !== search)];
+    setRecent(newRecent);
+    setSearch('');
   };
 
   return (
     <View style={styles.container}>
-
       {/* Barra de pesquisa */}
       <View style={styles.searchBar}>
         <Feather name="search" size={20} color="#2cc56f" />
@@ -28,12 +36,12 @@ export default function SearchScreen() {
           returnKeyType="search"
         />
         <TouchableOpacity onPress={handleSearch}>
-          <Feather name="plus-circle" size={24} color="#2cc56f" />
+          <Feather name="send" size={24} color="#2cc56f" />
         </TouchableOpacity>
       </View>
 
-      {/* Texto "Recente" */}
-      <Text style={styles.recentTitle}>Recente</Text>
+      {/* Texto "Pesquisa Recente" */}
+      <Text style={styles.recentTitle}>Pesquisa Recente</Text>
 
       {/* Lista dos recentes */}
       <FlatList
@@ -52,6 +60,7 @@ export default function SearchScreen() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -74,12 +83,13 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#fff',
     marginLeft: 8,
+    fontFamily: 'MadimiOne',
   },
   recentTitle: {
     color: '#2cc56f',
     fontSize: 16,
-    fontWeight: 'bold',
     marginBottom: 10,
+    fontFamily: 'MadimiOne',
   },
   item: {
     flexDirection: 'row',
@@ -93,10 +103,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginLeft: 10,
     fontSize: 16,
+    fontFamily: 'MadimiOne',
   },
   empty: {
     color: '#777',
     textAlign: 'center',
     marginTop: 20,
+    fontFamily: 'MadimiOne',
   },
 });

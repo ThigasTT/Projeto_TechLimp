@@ -27,9 +27,15 @@ export default function TabLayout() {
   }
 
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+      tabBarActiveTintColor: '#29e263', // Cor do ícone/texto ativo
+      tabBarInactiveTintColor: '#8e8e93', // Cor do ícone/texto inativo
+      tabBarStyle: { backgroundColor: '#2b2b2b' }, // Cor de fundo da barra
+      }}
+    >
       <Tabs.Screen
-      name="notc" // Corresponde a app/(tabs)/notc.tsx
+      name="notc"
       options={{
         title: 'Notícias',
         tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="newspaper-o" color={color} />,
@@ -37,15 +43,15 @@ export default function TabLayout() {
       }}
       />
       <Tabs.Screen
-      name="perf" // Corresponde a app/(tabs)/perf.tsx
+      name="sidebar"
       options={{
-        title: 'Perfil',
-        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="user" color={color} />,
+        title: 'Barra Lateral',
+        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="bars" color={color} />,
         headerShown: false
       }}
       />
       <Tabs.Screen
-      name="editperf" // Corresponde a app/(tabs)/editperf.tsx
+      name="editperf"
       options={{
         title: 'Editar Perfil',
         tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="edit" color={color} />,
@@ -54,15 +60,15 @@ export default function TabLayout() {
       }}
       />
       <Tabs.Screen
-      name="map" // deve ser igual ao nome do arquivo: map.tsx
+      name="map"
       options={{
         title: 'Mapa',
         tabBarIcon: ({ color }) => (
         <FontAwesome size={28} name="map" color={color} />
-    ),
-    headerShown: false,
-  }}
-/>
+        ),
+        headerShown: false,
+      }}
+      />
     </Tabs>
   );
 }

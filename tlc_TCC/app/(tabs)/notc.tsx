@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import React, { useRef } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -16,14 +16,13 @@ export default function App() {
         {/* PESQUISAS RECENTES */}
         <Text style={styles.titulo}>Pesquisas recentes</Text>
 
+
 <View style={styles.pesquisaContainer}>
-  <Link href="/pesq">
-    <TouchableOpacity>
-      <Text style={{ color: '#a9a9a9', fontSize: 16, fontWeight: 'bold' }}>
-        Pesquisa Recente
-      </Text>
-    </TouchableOpacity>
-  </Link>
+  <TouchableOpacity onPress={() => router.push('/pesq')}>
+    <Text style={{ color: '#a9a9a9', fontSize: 16, fontWeight: 'bold' }}>
+      Pesquisa Recente
+    </Text>
+  </TouchableOpacity>
 </View>
 
         {/* FEED DE NOTÍCIAS */}
@@ -98,9 +97,7 @@ export default function App() {
   );
 }
 
-// ====================
-// ESTILOS
-// ====================
+
 
 const styles = StyleSheet.create({
   container: {
@@ -134,7 +131,7 @@ const styles = StyleSheet.create({
   imagem: {
     width: '100%',
     height: 160,
-    borderRadius: 0, // Imagem sem borda arredondada
+    borderRadius: 0, 
   },
   textoContainer: {
     backgroundColor: '#006400',

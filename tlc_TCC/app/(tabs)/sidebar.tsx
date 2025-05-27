@@ -30,15 +30,8 @@ export default function SideMenu() {
         <TouchableOpacity
           style={styles.menuItem}
           onPress={async () => {
-            // Exemplo usando Firebase Auth:
             await auth.signOut();
             router.replace('/login');
-
-            // Exemplo genérico:
-            // Limpe o token/autenticação aqui
-            // Navegue para a tela de login
-            // Se estiver usando expo-router:
-            // Faça o logout aqui (ex: limpar AsyncStorage, etc.)
             router.replace('/login');
           }}
         >
@@ -56,6 +49,7 @@ const styles = StyleSheet.create({
     width: 250,
     paddingTop: 40,
     paddingHorizontal: 20,
+    fontFamily: 'MadimiOne',
   },
   profileSection: {
     flexDirection: 'row',
@@ -64,6 +58,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#333',
+    fontFamily: 'MadimiOne',
   },
   avatar: {
     width: 50,
@@ -76,16 +71,18 @@ const styles = StyleSheet.create({
   },
   profileText: {
     flex: 1,
+    fontFamily: 'MadimiOne',
   },
   name: {
     color: '#29e263',
     fontSize: 18,
-    fontWeight: 'bold',
     marginBottom: 4,
+    fontFamily: 'MadimiOne',
   },
   email: {
     color: '#888',
     fontSize: 14,
+    fontFamily: 'MadimiOne',
   },
   menuItems: {
     marginTop: 10,
@@ -99,6 +96,7 @@ const styles = StyleSheet.create({
   menuText: {
     color: '#fff',
     fontSize: 16,
+    fontFamily: 'MadimiOne',
   },
   divider: {
     height: 1,
@@ -109,5 +107,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     padding: 0,
     color: '#fff',
+    fontFamily: 'MadimiOne',
   },
 });

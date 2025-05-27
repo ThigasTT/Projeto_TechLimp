@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#29e263',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 20, 
+    fontFamily: 'MadimiOne',
   },
   avatarContainer: {
     alignItems: 'center',
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
   changePhotoText: {
     color: '#29e263',
     fontSize: 14,
+    fontFamily: 'MadimiOne',
   },
   formContainer: {
     marginBottom: 30,
@@ -243,6 +244,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     paddingVertical: 12,
+    fontFamily: 'MadimiOne',
   },
   editIcon: {
     marginLeft: 10,
@@ -257,6 +259,6 @@ const styles = StyleSheet.create({
   saveButtonText: {
     color: '#000',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'MadimiOne',
   },
 });

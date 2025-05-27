@@ -8,7 +8,7 @@ export default function IndexScreen() {
     >
       {/* Logo */}
       <Image
-        source={require('../assets/images/Logo.png')} // Substitua pelo caminho da sua logo
+        source={require('../assets/images/Logo.png')} 
         style={styles.logo}
       />
 
