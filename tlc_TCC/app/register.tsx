@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { createUser } from '../services/userService';
+import { createCeps, getCeps } from 'services/cepService';
 
 // Configuração necessária para o Expo
 WebBrowser.maybeCompleteAuthSession();
@@ -30,6 +31,7 @@ export default function CadastroScreen() {
   const [senha, setSenha] = useState('');
   const [telefone, setTelefone] = useState('');
   const [cep, setCep] = useState('');
+  const [id_cep,SetIdCep] = useState(''); 
   const [numero, setNumero] = useState('');
   const [complemento, setComplemento] = useState('');
   const [loading, setLoading] = useState(false);
@@ -55,18 +57,36 @@ const [request, response, promptAsync] = Google.useAuthRequest({
     }
 
     setLoading(true);
+   
+try {
+  let idCepFinal = '';
+  const respostaCep = await getCeps(cep);
+
+  if (Array.isArray(respostaCep.data) && respostaCep.data.length > 0) {
+    idCepFinal = respostaCep.data[0].id_cep;
+    SetIdCep(idCepFinal); // opcional, só para manter o estado atualizado
+  } else if (respostaCep.data.message) {
+    const respostaNovoCep = await createCeps({cep});
+    console.log('resposta novo cep:',respostaNovoCep);
+    const novoCep = await getCeps(cep);
+    idCepFinal = novoCep.data[0].id_cep;
+    SetIdCep(idCepFinal); // opcional, só para manter o estado atualizado
+  } else {
+    throw new Error('Erro ao buscar ou criar o CEP');
+  }
+
     const dadosUsuario = {
-      nome,
-      email,
-      senha,
-      telefone,
-      cep,
-      numero,
+      nome_user:nome,
+      email_user:email,
+      senha_user:senha,
+      telefone_celular_user:telefone,
+      id_cep: idCepFinal,
       complemento,
     };
 
-    try {
-      await createUser(dadosUsuario);
+      const resposta = await createUser(dadosUsuario);
+      console.log('Dados enviados:', dadosUsuario);
+      console.log('resposta do back para criacao:',resposta)
       Alert.alert('Sucesso', 'Usuário criado com sucesso!');
       router.replace('/notc');
     } catch (error) {
@@ -157,7 +177,7 @@ const [request, response, promptAsync] = Google.useAuthRequest({
             onChangeText={setCep}
             keyboardType="numeric"
           />
-          <Text style={styles.txt}>Número</Text>
+         {/*<Text style={styles.txt}>Número</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Número" 
@@ -165,7 +185,7 @@ const [request, response, promptAsync] = Google.useAuthRequest({
             value={numero} 
             onChangeText={setNumero}
             keyboardType="numeric"
-          />
+          />*/}
           <Text style={styles.txt}>Complemento</Text>
           <TextInput 
             style={styles.input} 

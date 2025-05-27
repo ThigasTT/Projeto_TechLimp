@@ -27,8 +27,6 @@ foreign key (id_cep) references CEP (id_cep)
 
 desc Usuario;
 
-insert into Usuario values(1,1,'josefa','11981981981','josefa@gmail.com','12345678','casa 2');
-
 
 create table if not exists Ponto_Descarte(
 id_ponto int auto_increment,
@@ -37,13 +35,12 @@ nome_ponto varchar(45),
 contato_ponto varchar(45),
 latitude decimal(10,8),
 longitude decimal(11,8),
->>>>>>> bce6f3c9ac0883b2d2204f6f5adb0dc0771dda2c
 primary key (id_ponto),
 foreign key (id_cep) references CEP (id_cep)
 );
 
 desc Ponto_Descarte;
-insert into Ponto_Descarte values(1,2,'magazineLuisa','11981981982');
+
 
 /*desc Usuario;
 insert into CEP values (1,'11111111','rua2','snata maria','sp','sp');*/
