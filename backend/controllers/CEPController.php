@@ -59,7 +59,13 @@ class CEPController {
     
 
     public function buscarCEPs() {
-        $stmt = $this->cepModel->getAll();
+        $cep = $_GET['cep'] ?? null;
+    if (!$cep) {
+        echo json_encode(["error" => "O campo 'cep' é obrigatório."]);
+        return;
+    }
+    
+        $stmt = $this->cepModel->getByCep($cep);
         $num = $stmt->rowCount();
     
         if ($num > 0) {
