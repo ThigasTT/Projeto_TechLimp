@@ -3,8 +3,11 @@ import { Link, router } from 'expo-router';
 import { auth } from 'firebaseConfig';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useUser } from '../userContext'; // Importa o contexto
 
 export default function SideMenu() {
+  const { name, email } = useUser(); // Usa o contexto
+
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}>
@@ -12,11 +15,10 @@ export default function SideMenu() {
           <Feather name="user" size={36} color="#29e263" />
         </View>
         <View style={styles.profileText}>
-          <Text style={styles.name}>Seu nome</Text>
-          <Text style={styles.email}>user@example.com</Text>
+          <Text style={styles.name}>{name || 'Seu nome'}</Text>
+          <Text style={styles.email}>{email || 'user@example.com'}</Text>
         </View>
       </View>
-
       <View style={styles.menuItems}>
         <Link href="/(tabs)/editperf" asChild>
           <TouchableOpacity style={styles.menuItem}>
@@ -31,7 +33,6 @@ export default function SideMenu() {
           style={styles.menuItem}
           onPress={async () => {
             await auth.signOut();
-            router.replace('/login');
             router.replace('/login');
           }}
         >

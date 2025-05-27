@@ -1,3 +1,4 @@
+import { useUser } from '@/userContext';
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
@@ -5,9 +6,8 @@ import { useState } from 'react';
 import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function EditProfileScreen() {
-  const router = useRouter(); 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+   const router = useRouter();
+  const { name, setName, email, setEmail } = useUser(); // Usa o contexto
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -25,23 +25,12 @@ export default function EditProfileScreen() {
     }
   };
 
-  const removeImage = () => {
-    Alert.alert(
-      'Remover foto',
-      'Tem certeza que deseja remover sua foto de perfil?',
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
-        {
-          text: 'Remover',
-          onPress: () => setProfileImage(null),
-          style: 'destructive',
-        },
-      ]
-    );
-  };
+
+const removeImage = () => {
+  
+  setProfileImage(null); // Remove a imagem ao definir o estado como null
+
+};
 
   const handleSave = () => {
     // Lógica para salvar as alterações

@@ -1,11 +1,10 @@
 import { Link } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { UserProvider } from './userContext'; 
 
-export default function IndexScreen() {
+function IndexScreen() {
   return (
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}>
       {/* Logo */}
       <Image
         source={require('../assets/images/Logo.png')} 
@@ -28,6 +27,15 @@ export default function IndexScreen() {
     </View>
   );
 }
+
+export default function App() {
+  return (
+    <UserProvider>
+      <IndexScreen />
+    </UserProvider>
+  );
+}
+
 const styles = StyleSheet.create({
   logo: {
     width: 300,
