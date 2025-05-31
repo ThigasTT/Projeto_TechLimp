@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Dimensions, Alert, ActivityIndicator } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
 import SearchBar from "../../components/SearchBar";
 import BottomSheetContent from "../../components/BottomSheetContent";
 import SideDrawerContent from "../../components/SideDrawerContent";
+import * as Location from "expo-location";
 import axios from "axios";
 
 const DEFAULT_LOCATION = { latitude: -23.6815319, longitude: -46.6209645 };
@@ -23,6 +24,9 @@ export default function MapScreen() {
     }
   ]);
   const [loading, setLoading] = useState(false);
+  const [lastLocation, setLastLocation] = useState(DEFAULT_LOCATION);
+
+  const mapRef = useRef<MapView>(null);
   const sheetRef = useRef(null);
 
   async function handleSearch() {
@@ -34,7 +38,7 @@ export default function MapScreen() {
         params: {
           engine: "google_maps",
           q: search,
-          api_key: "478dbbc3eec15887e53738ab44693ace3e951e72f171a46b022c7da518d8a328" 
+          api_key: "478dbbc3eec15887e53738ab44693ace3e951e72f171a46b022c7da518d8a328"
         }
       });
 
@@ -53,11 +57,44 @@ export default function MapScreen() {
             description: address
           }
         ]);
+        setLastLocation({ latitude: location.latitude, longitude: location.longitude });
+        mapRef.current?.animateToRegion({
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.012,
+          longitudeDelta: 0.012,
+        });
       } else {
         Alert.alert("Nenhum resultado", "Não foi possível encontrar o local pesquisado.");
       }
     } catch (err) {
       Alert.alert("Erro", "Erro ao buscar localização no SerpAPI.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Função para centralizar no usuário
+  async function handleCenterOnUser() {
+    try {
+      setLoading(true);
+      // Pede permissão
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert("Permissão negada", "Não foi possível obter permissão para acessar a localização.");
+        return;
+      }
+      // Pega localização atual
+      let location = await Location.getCurrentPositionAsync({});
+      mapRef.current?.animateToRegion({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.012,
+        longitudeDelta: 0.012,
+      });
+      setLastLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+    } catch (e) {
+      Alert.alert("Erro", "Não foi possível obter sua localização.");
     } finally {
       setLoading(false);
     }
@@ -82,7 +119,8 @@ export default function MapScreen() {
       />
 
       <MapView
-        style={styles.map}
+        ref={mapRef}
+        style={StyleSheet.absoluteFillObject}
         initialRegion={{
           latitude: DEFAULT_LOCATION.latitude,
           longitude: DEFAULT_LOCATION.longitude,
@@ -110,7 +148,8 @@ export default function MapScreen() {
         </View>
       )}
 
-      <TouchableOpacity style={styles.fabLeft}>
+      {/* Agora o botão chama a função de centralização na localização do usuário */}
+      <TouchableOpacity style={styles.fabLeft} onPress={handleCenterOnUser}>
         <MaterialIcons name="location-pin" size={30} color="#39A28D" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.fabRight} onPress={() => setDrawerOpen(true)}>
@@ -132,15 +171,6 @@ export default function MapScreen() {
 }
 
 const styles = StyleSheet.create({
-  map: {
-    width: "100%",
-    height: Dimensions.get("window").height * 0.53,
-    borderBottomLeftRadius: 32,
-    borderBottomRightRadius: 32,
-    overflow: "hidden",
-    marginBottom: -22,
-    zIndex: 1,
-  },
   fabLeft: {
     position: "absolute", right: 60, top: 86, backgroundColor: "#222", borderRadius: 18, width: 36, height: 36, alignItems: "center", justifyContent: "center", zIndex: 10,
   },

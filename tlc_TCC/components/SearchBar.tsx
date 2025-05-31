@@ -23,7 +23,7 @@ export default function SearchBar({ value, onChange, onSearch }: Props) {
       />
       <Image
         style={styles.logo}
-        source={require("../assets/logo_tlclimp.png")}
+        source={require("../assets/images/Logo.png")}
         resizeMode="contain"
       />
     </View>

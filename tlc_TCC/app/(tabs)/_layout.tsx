@@ -23,7 +23,7 @@ export default function TabLayout() {
 
   // Se o usuário NÃO estiver autenticado, redireciona para a tela de login
   if (!isAuthenticated) {
-    return <Redirect href="/login" />; 
+    return <Redirect href="./login" />; 
   }
 
   return (
