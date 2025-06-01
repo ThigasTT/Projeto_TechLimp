@@ -11,6 +11,10 @@ footer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 2rem 2.5rem;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 5px;
 }
 
 #footer-contacts {
