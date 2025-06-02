@@ -4,12 +4,9 @@ class User {
     private $table = "Usuario";
 
     public $id_user;
-    public $id_cep; 
     public $nome_user;
-    public $telefone_celular_user;
     public $email_user;
     public $senha_user;
-    public $complemento;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -19,18 +16,10 @@ class User {
     public function getAll() {
         $query = "
             SELECT 
-                u.id_user, 
-                u.nome_user, 
-                u.telefone_celular_user, 
-                u.email_user, 
-                u.complemento,
-                c.cep, 
-                c.logradouro, 
-                c.bairro, 
-                c.cidade, 
-                c.uf 
-            FROM usuario u
-            JOIN CEP c ON u.id_cep = c.id_cep
+                id_user, 
+                nome_user, 
+                email_user,  
+            FROM usuario 
         ";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -41,18 +30,15 @@ class User {
     public function create() {
         $query = "
             INSERT INTO usuario
-            (id_cep, nome_user, telefone_celular_user, email_user, senha_user, complemento) 
-            VALUES (:id_cep, :nome_user, :telefone_celular_user, :email_user, :senha_user, :complemento)
+            (nome_user, email_user, senha_user) 
+            VALUES (:nome_user, :email_user, :senha_user,)
         ";
         $stmt = $this->conn->prepare($query);
 
-        // Bind dos parâmetros
-        $stmt->bindParam(":id_cep", $this->id_cep);
+   
         $stmt->bindParam(":nome_user", $this->nome_user);
-        $stmt->bindParam(":telefone_celular_user", $this->telefone_celular_user);
         $stmt->bindParam(":email_user", $this->email_user);
         $stmt->bindParam(":senha_user", $this->senha_user);
-        $stmt->bindParam(":complemento", $this->complemento);
 
         // Executar a query
         if ($stmt->execute()) {
@@ -66,12 +52,9 @@ class User {
         $query = "
             UPDATE usuario 
             SET 
-                id_cep = :id_cep,
                 nome_user = :nome_user,
-                telefone_celular_user = :telefone_celular_user,
                 email_user = :email_user,
                 senha_user = :senha_user,
-                complemento = :complemento
             WHERE id_user = :id_user
         ";
     
@@ -79,12 +62,10 @@ class User {
     
         // Bind dos parâmetros
         $stmt->bindParam(":id_user", $this->id_user);
-        $stmt->bindParam(":id_cep", $this->id_cep);
+
         $stmt->bindParam(":nome_user", $this->nome_user);
-        $stmt->bindParam(":telefone_celular_user", $this->telefone_celular_user);
         $stmt->bindParam(":email_user", $this->email_user);
         $stmt->bindParam(":senha_user", $this->senha_user);
-        $stmt->bindParam(":complemento", $this->complemento);
     
         // Executar a query
         return $stmt->execute();

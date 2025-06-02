@@ -26,12 +26,6 @@ class UserController {
                     "nome_user" => $nome_user,
                     "telefone_celular_user" => $telefone_celular_user,
                     "email_user" => $email_user,
-                    "complemento" => $complemento,
-                    "cep" => $cep,
-                    "logradouro" => $logradouro,
-                    "bairro" => $bairro,
-                    "cidade" => $cidade,
-                    "uf" => $uf
                 );
                 array_push($users, $user_item);
             }
@@ -54,10 +48,9 @@ public function createUser() {
     
     $this->user->id_cep = $data['id_cep'];
     $this->user->nome_user = $data['nome_user'];
-    $this->user->telefone_celular_user = $data['telefone_celular_user'];
     $this->user->email_user = $data['email_user'];
     $this->user->senha_user = password_hash($data['senha_user'], PASSWORD_DEFAULT); // Criptografar a senha
-    $this->user->complemento = $data['complemento'];
+
 
 
     if ($this->user->create()) {
@@ -82,12 +75,10 @@ public function createUser() {
     
 
         $this->user->id_user = $data->id_user;
-        $this->user->id_cep = $data->id_cep;
         $this->user->nome_user = $data->nome_user;
-        $this->user->telefone_celular_user = $data->telefone_celular_user;
         $this->user->email_user = $data->email_user;
         $this->user->senha_user = $data->senha_user;
-        $this->user->complemento = $data->complemento;
+    
     
      
         if ($this->user->updateUser()) {

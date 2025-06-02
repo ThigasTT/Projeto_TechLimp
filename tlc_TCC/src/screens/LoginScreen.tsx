@@ -181,7 +181,7 @@ export default function LoginScreen() {
               source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }}
               style={styles.googleIcon}
             />
-            <Text style={styles.googleButtonText}>Cadastre-se com Google</Text>
+            <Text style={styles.googleButtonText}>Conecte-se com Google</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
