@@ -15,7 +15,9 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
-import type { RootStackParamList } from '../../Navigation'; // Adjust path if needed
+import type { RootStackParamList } from '../../Navigation'; 
+import { createUser } from '../../services/userService';
+import { createCeps, getCeps } from '../../services/cepService';
 
 type RegisterScreenProps = StackScreenProps<RootStackParamList, 'Register'>;
 
@@ -27,10 +29,9 @@ export default function CadastroScreen() {
   const [cep, setCep] = useState('');
   const [numero, setNumero] = useState('');
   const [complemento, setComplemento] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation<StackNavigationProp<any>>();
 
-  // Importa métodos do contexto
-  const { loading, signUpWithEmail } = useAuth();
 
   const handleSubmit = async () => {
     if (!nome || !email || !senha || !cep || !numero || !telefone) {
@@ -38,24 +39,46 @@ export default function CadastroScreen() {
       return;
     }
 
-    try {
-      await signUpWithEmail({
-        nome,
-        email,
-        senha,
-        telefone,
-        cep,
-        numero,
-        complemento,
-      });
+   
+try {
+  let idCepFinal = '';
+  const respostaCep = await getCeps(cep);
+
+  if (Array.isArray(respostaCep.data) && respostaCep.data.length > 0) {
+    idCepFinal = respostaCep.data[0].id_cep;
+    setCep(idCepFinal); 
+  } else if (respostaCep.data.message) {
+    const respostaNovoCep = await createCeps({cep});
+    console.log('resposta novo cep:',respostaNovoCep);
+    const novoCep = await getCeps(cep);
+    idCepFinal = novoCep.data[0].id_cep;
+    setCep(idCepFinal); 
+  } else {
+    throw new Error('Erro ao buscar ou criar o CEP');
+  }
+
+    const dadosUsuario = {
+      nome_user:nome,
+      email_user:email,
+      senha_user:senha,
+      telefone_celular_user:telefone,
+      id_cep: idCepFinal,
+      complemento,
+    };
+
+      const resposta = await createUser(dadosUsuario);
+      console.log('Dados enviados:', dadosUsuario);
+      console.log('resposta do back para criacao:',resposta)
       Alert.alert('Sucesso', 'Usuário criado com sucesso!');
       navigation.navigate('Map');
-    } catch (error: any) {
+    } catch (error) {
       let errorMessage = 'Erro ao criar usuário!';
       if (error instanceof Error) {
         errorMessage = error.message;
       }
       Alert.alert('Erro', errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -5,12 +5,12 @@ import { getReactNativePersistence, initializeAuth } from 'firebase/auth';
 ;
 
 const firebaseConfig = {
-  apiKey: "YOUR_STUFF_HERE",
-  authDomain: "YOUR_STUFF_HERE.firebaseapp.com",
-  projectId: "YOUR_STUFF_HERE",
-  storageBucket: "YOUR_STUFF_HERE.appspot.com",
-  messagingSenderId: "YOUR_STUFF_HERE",
-  appId: "YOUR_STUFF_HERE"
+  apiKey: "AIzaSyBroxfZenEK8yS82OwtzoByg3-ptNUgNTI",
+  authDomain: "techlimp.firebaseapp.com",
+  projectId: "techlimp",
+  storageBucket: "techlimp.firebasestorage.app",
+  messagingSenderId: "1017515796520",
+  appId: "1:1017515796520:web:cbff73d7f993b8fdfbed1d"
 };
 
 const app = initializeApp(firebaseConfig);

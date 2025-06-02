@@ -2,15 +2,17 @@ import { useUser } from '../../services/userContext';
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
 import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function EditProfileScreen() {
   const navigation = useNavigation();
-  const { name, setName, email, setEmail } = useUser(); // Usa o contexto
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const {
+    name, setName,
+    email, setEmail,
+    phone, setPhone,
+    address, setAddress,
+    profileImage, setProfileImage
+  } = useUser(); // Usa o contexto para tudo
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,15 +27,12 @@ export default function EditProfileScreen() {
     }
   };
 
-
-const removeImage = () => {
-  
-  setProfileImage(null); // Remove a imagem ao definir o estado como null
-
-};
+  const removeImage = () => {
+    setProfileImage(null);
+  };
 
   const handleSave = () => {
-    // Lógica para salvar as alterações
+    // Todos os dados já estão no contexto, então basta voltar
     navigation.goBack();
   };
 

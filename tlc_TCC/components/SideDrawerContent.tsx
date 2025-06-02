@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-// import Navigation from "@/Navigation";
 import { useNavigation } from "@react-navigation/native";
+import { useUser } from '../services/userContext';
 import type { StackNavigationProp } from "@react-navigation/stack";
 
 type SideDrawerContentProps = {
@@ -13,6 +13,7 @@ type SideDrawerContentProps = {
 
 export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDrawerContentProps) {
   const navigation = useNavigation<StackNavigationProp<any>>();
+  const { name, profileImage } = useUser();
 
   return (
     <View style={styles.drawer}>
@@ -20,8 +21,15 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
         <Ionicons name="arrow-back" size={24} color="#39A28D" />
       </TouchableOpacity>
       <View style={styles.profile}>
-        <Ionicons name="person-circle" size={90} color="#39A28D" />
-        <Text style={styles.name}>Seu nome</Text>
+        {profileImage ? (
+          <Image
+            source={{ uri: profileImage }}
+            style={{ width: 90, height: 90, borderRadius: 45, marginBottom: 10 }}
+          />
+        ) : (
+          <Ionicons name="person-circle" size={90} color="#39A28D" />
+        )}
+        <Text style={styles.name}>{name || "Seu nome"}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={{ marginTop: 8 }}>
           <Text style={styles.edit}>Editar Perfil ✎</Text>
         </TouchableOpacity>
@@ -39,7 +47,6 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   drawer: {

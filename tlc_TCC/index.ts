@@ -1,4 +1,4 @@
-import { registerRootComponent } from 'expo'; // se for projeto Expo
+import { registerRootComponent } from 'expo'; 
 import App from './App';
 
 registerRootComponent(App);

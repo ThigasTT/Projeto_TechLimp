@@ -5,6 +5,12 @@ interface UserContextType {
   setName: (name: string) => void;
   email: string;
   setEmail: (email: string) => void;
+  phone: string;
+  setPhone: (phone: string) => void;
+  address: string;
+  setAddress: (address: string) => void;
+  profileImage: string | null;
+  setProfileImage: (image: string | null) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -12,9 +18,25 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   return (
-    <UserContext.Provider value={{ name, setName, email, setEmail }}>
+    <UserContext.Provider
+      value={{
+        name,
+        setName,
+        email,
+        setEmail,
+        phone,
+        setPhone,
+        address,
+        setAddress,
+        profileImage,
+        setProfileImage,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

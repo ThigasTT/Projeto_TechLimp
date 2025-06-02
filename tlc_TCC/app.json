@@ -39,7 +39,7 @@
       "typedRoutes": true
     },
     "extra": {
-      "googleMapsApiKey": "YOUR_GOOGLE_MAPS_API_KEY",
+      "googleMapsApiKey": "AIzaSyCuDnr5yC3bqZhwqvF2nZLfkTPDlNBGm-Y",
       "router": {},
       "eas": {
         "projectId": "fe3fa9d8-62ee-4e56-b3b1-ebd39a25047d"

@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, TextInput, Button } from "react-native";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackgroundProps} from "@gorhom/bottom-sheet";
 
 const dicas = [
   { titulo: 'Descarte em Locais Apropriados', texto: 'Procure pontos de coleta específicos para lixo eletrônico em sua cidade. Nunca descarte eletrônicos no lixo comum.' },
@@ -8,6 +8,21 @@ const dicas = [
   { titulo: 'Doe ou Reaproveite', texto: 'Se o aparelho ainda funciona, considere doar para instituições ou pessoas que possam utilizá-lo.' },
   { titulo: 'Separe Pilhas e Baterias', texto: 'Pilhas e baterias devem ser descartadas separadamente em pontos de coleta específicos devido ao risco de contaminação.' },
 ];
+
+const CustomBackground = (props: BottomSheetBackgroundProps) => (
+  <View
+    style={[
+      {
+        backgroundColor: "#222",
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        flex: 1,
+      },
+      props.style,
+    ]}
+  />
+);
+
 
 type SheetMode = "DICAS" | "DETAIL" | "SEARCH" | "LIST";
 
@@ -67,7 +82,7 @@ export default function BottomSheetContent({ onFetchNearby }: { onFetchNearby: (
       index={0}
       snapPoints={snapPoints}
       enablePanDownToClose={false}
-      backgroundStyle={{ backgroundColor: "#222" }}
+      backgroundComponent={CustomBackground}
       handleIndicatorStyle={{ backgroundColor: "#00A86B" }}
     >
       {/* Dicas iniciais */}

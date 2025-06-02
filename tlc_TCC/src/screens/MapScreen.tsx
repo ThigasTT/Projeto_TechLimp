@@ -4,7 +4,7 @@ import axios from "axios";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import React, { useRef, useState } from "react";
-import { ActivityIndicator, Alert, Dimensions, Image, PixelRatio, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { ActivityIndicator, Alert, Dimensions, Image, PixelRatio, StyleSheet, TouchableOpacity, View, Text, Linking } from 'react-native';
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
 import BottomSheetContent from "../../components/BottomSheetContent";
@@ -141,7 +141,7 @@ export default function MapScreen() {
     try {
       const loc = locationParam || lastLocation;
 
-      // Função auxiliar para buscar pontos em determinado raio
+      // Função para buscar pontos em um raio específico
       const fetchPointsInRadius = async (radius: number) => {
         const response = await axios.get(
           "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
@@ -174,13 +174,11 @@ export default function MapScreen() {
           description: place.vicinity,
           type: "coleta"
         }));
-        // Remove antigos do tipo coleta e adiciona novos, mantém marcador do usuário
         setMarkers((prev) => [
           ...prev.filter((m) => m.type !== "coleta"),
           ...newMarkers
         ]);
 
-        // Se solicitado, ajusta mapa para mostrar todos
         if (mapFitMarkers && mapRef.current) {
           setTimeout(() => {
             mapRef.current?.fitToCoordinates(
@@ -226,7 +224,6 @@ export default function MapScreen() {
         longitudeDelta: 0.012,
       });
       setLastLocation(userLoc);
-      // Atualize ou adicione marcador do usuário
       setMarkers((prev) => [
         ...prev.filter((m) => m.id !== "user"),
         {
@@ -247,7 +244,7 @@ export default function MapScreen() {
     }
   }
 
-  // NOVO: Botão para buscar ecopontos e ajustar mapa para mostrar todos
+  // Botão para buscar ecopontos e ajustar mapa para mostrar todos
   async function handleFetchNearbyEcopointsAndFit() {
     await fetchNearbyRecyclingPoints(lastLocation, true);
   }
@@ -259,7 +256,7 @@ export default function MapScreen() {
           <SideDrawerContent
             onClose={() => setDrawerOpen(false)}
             onLogout={() => navigation.navigate("Login")}
-            onAbout={() => {/* lógica sobre nós */}}
+            onAbout={() => Linking.openURL('http://192.168.0.15:5500/site_Tech_Limp/index%20(1).html')}
           />
         </View>
       )}
