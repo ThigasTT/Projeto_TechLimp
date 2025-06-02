@@ -1,6 +1,6 @@
-import React from "react";
-import { View, TextInput, Image, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Image, StyleSheet, TextInput, View } from "react-native";
 
 type Props = {
   value: string;
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#222",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 32,
+    marginTop: 40,
     marginHorizontal: 18,
     borderRadius: 16,
     height: 44,
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
   logo: {
-    width: 45,
-    height: 35,
+    width: 85,
+    height: 75,
     marginRight: 10,
   },
 });

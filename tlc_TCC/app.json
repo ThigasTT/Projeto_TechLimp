@@ -5,53 +5,41 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "tlctcc",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.techlimp.tlctcc",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "permissions": ["ACCESS_FINE_LOCATION"]
+        "backgroundColor": "#ffffff"
       },
+      "permissions": [
+        "ACCESS_FINE_LOCATION"
+      ],
       "edgeToEdgeEnabled": true,
-      "package": "com.techlimp.tlctcc",
-      "googleServicesFile": "./google-services.json",
-      "config": {
-        "googleSignIn": {
-          "apiKey": "AIzaSyBLL9WWIWgPpNNFzvTH4Y-zrd6IaGcPElw",
-          "androidClientId": "756468624869-50d06jva99fle3erdf7ens6pm0giv9cp.apps.googleusercontent.com"
-        }
-      }
+      "package": "com.techlimp.tlctcc"
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+    "scheme": "techlimp",
     "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ],
       "expo-web-browser",
       "expo-secure-store",
-      "expo-font",
-      "expo-maps"
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
+      "googleMapsApiKey": "AIzaSyCuDnr5yC3bqZhwqvF2nZLfkTPDlNBGm-Y",
       "router": {},
       "eas": {
         "projectId": "fe3fa9d8-62ee-4e56-b3b1-ebd39a25047d"

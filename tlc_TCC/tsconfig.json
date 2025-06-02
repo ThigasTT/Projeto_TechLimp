@@ -5,9 +5,9 @@
     "jsx": "react-native",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./app/*"],
-      "@components/*": ["./app/components/*"],
-      "@services/*": ["./app/services/*"],
+      "@/*": ["./*"],
+      "@components/*": ["src/components/*"],
+      "@services/*": ["src/services/*"],
       "@assets/*": ["./assets/*"],
       "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
     },

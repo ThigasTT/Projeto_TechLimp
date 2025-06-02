@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+// import Navigation from "@/Navigation";
+import { useNavigation } from "@react-navigation/native";
+import type { StackNavigationProp } from "@react-navigation/stack";
 
 type SideDrawerContentProps = {
   onClose: () => void;
@@ -9,6 +12,8 @@ type SideDrawerContentProps = {
 };
 
 export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDrawerContentProps) {
+  const navigation = useNavigation<StackNavigationProp<any>>();
+
   return (
     <View style={styles.drawer}>
       <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
@@ -17,7 +22,7 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
       <View style={styles.profile}>
         <Ionicons name="person-circle" size={90} color="#39A28D" />
         <Text style={styles.name}>Seu nome</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={{ marginTop: 8 }}>
           <Text style={styles.edit}>Editar Perfil ✎</Text>
         </TouchableOpacity>
       </View>
@@ -35,6 +40,7 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
   );
 }
 
+
 const styles = StyleSheet.create({
   drawer: {
     flex: 1,
@@ -42,10 +48,10 @@ const styles = StyleSheet.create({
     paddingTop: 36,
     width: 260,
   },
-  closeBtn: { position: "absolute", top: 12, right: 12 },
+  closeBtn: { position: "absolute", top: 60, right: 20, zIndex: 1, padding: 10 },
   profile: { alignItems: "center", marginTop: 32, marginBottom: 32 },
-  name: { color: "#39A28D", fontSize: 22, fontWeight: "bold" },
-  edit: { color: "#39A28D", marginTop: 4, textDecorationLine: "underline" },
+  name: { color: "#39A28D", fontSize: 22, fontFamily: "MadimiOne" },
+  edit: { color: "#39A28D", marginTop: 4, textDecorationLine: "underline", fontFamily: "MadimiOne" },
   footer: { position: "absolute", bottom: 36, left: 10, width: "90%" },
   drawerBtn: {
     flexDirection: "row",
@@ -55,5 +61,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 10,
   },
-  btnText: { color: "#39A28D", marginLeft: 10, fontSize: 17, fontWeight: "bold" },
+  btnText: { color: "#39A28D", marginLeft: 10, fontSize: 17, fontFamily: "MadimiOne" }, 
 });

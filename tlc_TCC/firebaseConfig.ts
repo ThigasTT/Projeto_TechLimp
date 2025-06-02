@@ -1,21 +1,22 @@
-// firebaseConfig.ts (ou onde você decidir colocar)
-import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeApp } from "firebase/app";
+//@ts-ignore
+import { getReactNativePersistence, initializeAuth } from 'firebase/auth';
+;
 
-// Suas configurações do Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBLL9WWIWgPpNNFzvTH4Y-zrd6IaGcPElw",
-  authDomain: "auth-e3708.firebaseapp.com",
-  projectId: "auth-e3708",
-  storageBucket: "auth-e3708.firebasestorage.app",
-  messagingSenderId: "756468624869",
-  appId: "1:756468624869:web:c6e35c27b19bf2860d930c",
-  measurementId: "G-BHRM0MH6QF"
+  apiKey: "AIzaSyBroxfZenEK8yS82OwtzoByg3-ptNUgNTI",
+  authDomain: "techlimp.firebaseapp.com",
+  projectId: "techlimp",
+  storageBucket: "techlimp.firebasestorage.app",
+  messagingSenderId: "1017515796520",
+  appId: "1:1017515796520:web:cbff73d7f993b8fdfbed1d"
 };
 
-// Inicializa o Firebase app apenas uma vez
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
 
-export { app, auth };
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
+
 
