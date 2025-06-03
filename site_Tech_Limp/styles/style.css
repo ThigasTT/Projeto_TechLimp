@@ -43,6 +43,21 @@ body.dark section {
     background: #e4e4e4;
 }
 
+body.dark header{
+    background: #ffffff;
+}
+body.dark header .nav_item a {
+    color: #000;
+}
+
+body.dark header .nav_item.active a{ 
+    color: #070707;
+    background-color: #fff;
+}
+
+body.dark  {
+    color: #000;
+}
 body.dark h1 {
     color: #fff;
 }

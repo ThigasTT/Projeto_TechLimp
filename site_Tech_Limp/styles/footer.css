@@ -12,9 +12,8 @@ footer {
     grid-template-columns: repeat(4, 1fr);
     padding: 2rem 2.5rem;
     flex-wrap: wrap;
-    padding: 20px;
-    margin: 5px;
-    border-radius: 5px;
+    padding: 5px;
+   
 }
 
 #footer-contacts {
@@ -37,6 +36,7 @@ footer {
     justify-content: center;
     height: 2.5rem;
     width: 2.5rem;
+    font-size: 1.9rem;
     color: white;
     border-radius: 50%;
     transition: all 0.4s;
@@ -57,20 +57,30 @@ footer {
 
 #footer_social_media .footer-link i {
     color: rgb(255, 255, 255); 
-    font-size: 1.5rem; 
+    font-size: 1.9rem; 
 }
 
 .footer-list {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    font-size: 1.2rem;
     list-style: none;
+}
+.footer-list h3{
+    font-size: 1.4rem;
+}
+#footer-contacts h1{
+    font-size: 1.6rem;
+    color: rgb(86, 252, 155);
+    margin-bottom: 0.5rem;
 }
 
 .footer-list .footer-link {
     color: white;
     transition: all 0.4s;
     font-weight: 500;
+    font-size: 1.3rem;
 }
 
 .footer-list .footer-link:hover {
