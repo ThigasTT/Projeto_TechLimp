@@ -15,14 +15,10 @@ primary key(id_cep)
 
 create table if not exists Usuario(
 id_user int auto_increment,
-id_cep int not null,
 nome_user varchar (50) not null,
-telefone_celular_user char(11) not null,
 email_user varchar (50) not null,
 senha_user varchar(100) not null,
-primary key (id_user),
-complemento varchar(20),
-foreign key (id_cep) references CEP (id_cep)
+primary key (id_user)
 );
 
 desc Usuario;
@@ -41,6 +37,9 @@ foreign key (id_cep) references CEP (id_cep)
 
 desc Ponto_Descarte;
 
+select * from Usuario;
 
 /*desc Usuario;
 insert into CEP values (1,'11111111','rua2','snata maria','sp','sp');*/
+
+#drop database Techlimp;
