@@ -24,7 +24,7 @@ class UserController {
                 $user_item = array(
                     "id_user" => $id_user,
                     "nome_user" => $nome_user,
-                    "telefone_celular_user" => $telefone_celular_user,
+           //         "telefone_celular_user" => $telefone_celular_user,
                     "email_user" => $email_user,
                 );
                 array_push($users, $user_item);
@@ -41,12 +41,12 @@ public function createUser() {
     $data = json_decode(file_get_contents('php://input'), true);
 
     // Verificar se os dados necessários estão presentes
-    if (!isset($data['id_cep'], $data['nome_user'], $data['telefone_celular_user'], $data['email_user'], $data['senha_user'], $data['complemento'])) {
+    if (!isset($data['nome_user'], $data['email_user'], $data['senha_user'])) {
         echo json_encode(["success" => false, "message" => "Dados incompletos para criar usuário."]);
         return;
     }
     
-    $this->user->id_cep = $data['id_cep'];
+ //   $this->user->id_cep = $data['id_cep'];
     $this->user->nome_user = $data['nome_user'];
     $this->user->email_user = $data['email_user'];
     $this->user->senha_user = password_hash($data['senha_user'], PASSWORD_DEFAULT); // Criptografar a senha
