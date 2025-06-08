@@ -36,7 +36,7 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 $database = new Database();
 $dbConnection = $database->getConnection();
 
-// Rotas para usuários
+// Rotas para usuários: CRUD
 if ($path[0] === "users") {
     $controller = new UserController();
 
@@ -50,6 +50,15 @@ if ($path[0] === "users") {
         $controller->deleteUser();
     } else {
         echo json_encode(["message" => "Método não suportado para usuários."]);
+    }
+}
+//rota para login
+elseif($path[0] === "login"){
+    $controller = new UserController();
+    if($requestMethod === "POST"){
+        $controller->loginUser();
+    }else{
+         echo json_encode(["message" => "Método não suportado para login."]);
     }
 }
 

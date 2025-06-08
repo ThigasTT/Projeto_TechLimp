@@ -60,6 +60,38 @@ public function createUser() {
     }
 }
 
+    //Fazer o login do usuário
+    public function loginUser(){
+        $data = json_decode(file_get_contents("php://input"));
+        error_log("Dados recebidos no loginUser: " . json_encode($data));
+
+        if(!isset($data->email_user, $data->senha_user)){
+             echo json_encode(["error" => "todos os campos devem ser preenchidos"]);
+             return;
+            }
+        $stmt = $this->user->loginUser($data->email_user);
+       if($stmt->rowCount() == 1){
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(password_verify($stmt->senha_user, $data->senha_user)){
+                echo json_encode([
+                    "success"=> true,
+                    "message"=>"Usuario logado com sucesso",
+                    "user"=>[
+                        "id_user"=> $user["id_user"],
+                        "nome_user"=> $user["nome_user"],
+                        "email_user"=> $user["email_user"]                   
+                        ]
+                    ]);
+            }else{
+                echo json_encode([
+                    "sucess"=> false,
+                    "message"=> "Senha incorreta"
+                ]);
+            }
+        }else{
+            echo json_encode(["sucess"=>false,"message"=> "usuario não encontrado"]);
+        }
+    }   
     //Atualizar um usuário
     public function updateUser() {
         $data = json_decode(file_get_contents("php://input"));

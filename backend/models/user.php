@@ -1,8 +1,6 @@
 <?php
 class User {
     private $conn;
-    private $table = "Usuario";
-
     public $id_user;
     public $nome_user;
     public $email_user;
@@ -12,7 +10,7 @@ class User {
         $this->conn = $db;
     }
 
-    // Obter todos os usuários (com informações do CEP)
+    // Obter todos os usuários
     public function getAll() {
         $query = "
             SELECT 
@@ -40,13 +38,23 @@ class User {
         $stmt->bindParam(":email_user", $this->email_user);
         $stmt->bindParam(":senha_user", $this->senha_user);
 
-        // Executar a query
         if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
+    //login do usuario (termine isso ja)
+    public function loginUser($email){
+        $query = "
+        SELECT * FROM usuario where email_user = :email";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+        return $stmt;
+    }
     // Atualizar um usuário existente
     public function updateUser() {
         $query = "
@@ -60,7 +68,6 @@ class User {
     
         $stmt = $this->conn->prepare($query);
     
-        // Bind dos parâmetros
         $stmt->bindParam(":id_user", $this->id_user);
 
         $stmt->bindParam(":nome_user", $this->nome_user);

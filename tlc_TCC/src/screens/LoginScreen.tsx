@@ -23,6 +23,7 @@ import {
 import { auth } from '../../firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import { loginUser } from '../../services/userService';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -74,14 +75,21 @@ export default function LoginScreen() {
     }
   }, [response]);
 
-  const handleLogin = async () => {
+const handleLogin = async () => {
     if (email === '' || senha === '') {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
+    }else{
+
     }
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, senha);
+      const dadosLogin = {
+        email_user:email,
+        senha_user:senha
+      }
+      const resposta = await loginUser(dadosLogin)
+      console.log("resposta do backend:", resposta)
       navigation.navigate('Map');
     } catch (error) {
       Alert.alert('Erro', 'Email ou senha incorretos!');
@@ -90,6 +98,7 @@ export default function LoginScreen() {
       setLoading(false);
     }
   };
+
 
   const handleGoogleAuth = async (idToken: string) => {
     setLoading(true);
