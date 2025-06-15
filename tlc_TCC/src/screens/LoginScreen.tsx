@@ -88,11 +88,17 @@ const handleLogin = async () => {
         email_user:email,
         senha_user:senha
       }
-      const resposta = await loginUser(dadosLogin)
-      console.log("resposta do backend:", resposta)
-      navigation.navigate('Map');
+      const resposta = await loginUser(dadosLogin);
+      console.log("resposta do backend:", resposta);
+       // Verifique se a resposta é sucesso
+    if (resposta.data?.success) {
+     navigation.navigate('Map');
+    } else {
+      Alert.alert('Erro', resposta.data.message || 'Falha ao fazer login');
+    }
+    
     } catch (error) {
-      Alert.alert('Erro', 'Email ou senha incorretos!');
+      Alert.alert('Erro: erro ao logar');
       console.error(error);
     } finally {
       setLoading(false);

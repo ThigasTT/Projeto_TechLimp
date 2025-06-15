@@ -72,7 +72,7 @@ public function createUser() {
         $stmt = $this->user->loginUser($data->email_user);
        if($stmt->rowCount() == 1){
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if(password_verify($stmt->senha_user, $data->senha_user)){
+            if(password_verify($data->senha_user, $user['senha_user'])){
                 echo json_encode([
                     "success"=> true,
                     "message"=>"Usuario logado com sucesso",
@@ -84,12 +84,12 @@ public function createUser() {
                     ]);
             }else{
                 echo json_encode([
-                    "sucess"=> false,
+                    "success"=> false,
                     "message"=> "Senha incorreta"
                 ]);
             }
         }else{
-            echo json_encode(["sucess"=>false,"message"=> "usuario não encontrado"]);
+            echo json_encode(["success"=>false,"message"=> "usuario não encontrado"]);
         }
     }   
     //Atualizar um usuário

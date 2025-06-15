@@ -2,15 +2,15 @@ import { useUser } from '../../services/userContext';
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useEffect } from 'react';
+import { updateUser } from '../../services/userService';
 
 export default function EditProfileScreen() {
   const navigation = useNavigation();
   const {
     name, setName,
     email, setEmail,
-    phone, setPhone,
-    address, setAddress,
     profileImage, setProfileImage
   } = useUser(); // Usa o contexto para tudo
 
@@ -31,8 +31,21 @@ export default function EditProfileScreen() {
     setProfileImage(null);
   };
 
-  const handleSave = () => {
-    // Todos os dados já estão no contexto, então basta voltar
+  const handleSave = async () => {
+    try {
+      const dadosEditar = {
+        nome_user:name,
+        email_user:email
+      }
+
+      const respostaEdit = await updateUser(dadosEditar);
+    } catch (error) {
+      let errorMessage = 'Erro ao criar usuário!';
+            if (error instanceof Error) {
+              errorMessage = error.message;
+            }
+            Alert.alert("Erro: ", errorMessage);
+    }
     navigation.goBack();
   };
 
@@ -108,7 +121,7 @@ export default function EditProfileScreen() {
               </View>
             </View>
 
-            <View style={styles.inputGroup}>
+           {/*<View style={styles.inputGroup}>
               <Text style={styles.label}>Telefone</Text>
               <View style={styles.inputWrapper}>
                 <TextInput
@@ -121,9 +134,9 @@ export default function EditProfileScreen() {
                 />
                 <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
               </View>
-            </View>
+            </View>*/}
 
-            <View style={styles.inputGroup}>
+           {/*<View style={styles.inputGroup}>
               <Text style={styles.label}>Endereço</Text>
               <View style={styles.inputWrapper}>
                 <TextInput
@@ -135,7 +148,7 @@ export default function EditProfileScreen() {
                 />
                 <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
               </View>
-            </View>
+            </View>*/}
           </View>
 
           <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
