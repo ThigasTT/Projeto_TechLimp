@@ -24,6 +24,18 @@ class User {
         return $stmt;
     }
 
+    public function getById($id) {
+        $query =
+            "select
+                nome_user
+            from usuario
+            where id_user = :id_user
+            ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id_user", $id);
+        $stmt->execute();
+        return $stmt;
+    }
     // Criar um novo usuário
     public function create() {
         $query = "
@@ -62,7 +74,6 @@ class User {
             SET 
                 nome_user = :nome_user,
                 email_user = :email_user,
-                senha_user = :senha_user
             WHERE id_user = :id_user
         ";
     
@@ -72,7 +83,7 @@ class User {
 
         $stmt->bindParam(":nome_user", $this->nome_user);
         $stmt->bindParam(":email_user", $this->email_user);
-        $stmt->bindParam(":senha_user", $this->senha_user);
+ //       $stmt->bindParam(":senha_user", $this->senha_user);
     
         // Executar a query
         return $stmt->execute();

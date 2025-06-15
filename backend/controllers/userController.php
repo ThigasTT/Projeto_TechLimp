@@ -35,6 +35,27 @@ class UserController {
         }
     }
 
+     public function GetUsersByID() {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $stmt = $this->user->getById($data['id_user']);
+        $num = $stmt->rowCount();
+
+        if ($num > 0) {
+            $users = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                $user_item = array(
+                    "nome_user" => $nome_user,
+                );
+                array_push($users, $user_item);
+            }
+            echo json_encode($users);
+        } else {
+            echo json_encode(["message" => "Nenhum usuário encontrado."]);
+        }
+    }
+
     // Criar um novo usuário
 public function createUser() {
     // Obter os dados enviados no corpo da requisição
@@ -109,7 +130,7 @@ public function createUser() {
         $this->user->id_user = $data->id_user;
         $this->user->nome_user = $data->nome_user;
         $this->user->email_user = $data->email_user;
-        $this->user->senha_user = $data->senha_user;
+    //    $this->user->senha_user = $data->senha_user;
     
     
      

@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect } from 'react';
 import { updateUser } from '../../services/userService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function EditProfileScreen() {
   const navigation = useNavigation();
@@ -14,6 +15,7 @@ export default function EditProfileScreen() {
     profileImage, setProfileImage
   } = useUser(); // Usa o contexto para tudo
 
+// use id_user no seu update
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -32,15 +34,19 @@ export default function EditProfileScreen() {
   };
 
   const handleSave = async () => {
+    const id_user = await AsyncStorage.getItem('id_user');
     try {
       const dadosEditar = {
+        id_user:id_user,
         nome_user:name,
         email_user:email
       }
 
       const respostaEdit = await updateUser(dadosEditar);
+      console.log("resposta do backend para a edicao: ",respostaEdit);
+      Alert.alert('Atualizado com sucesso')
     } catch (error) {
-      let errorMessage = 'Erro ao criar usuário!';
+      let errorMessage = 'Erro ao atualizar o usuário!';
             if (error instanceof Error) {
               errorMessage = error.message;
             }

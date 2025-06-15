@@ -41,7 +41,7 @@ if ($path[0] === "users") {
     $controller = new UserController();
 
     if ($requestMethod === "GET") {
-        $controller->getUsers();
+        $controller->GetUsersByID();
     } elseif ($requestMethod === "POST") {
         $controller->createUser();
     } elseif ($requestMethod === "PUT") {
@@ -61,6 +61,7 @@ elseif($path[0] === "login"){
          echo json_encode(["message" => "Método não suportado para login."]);
     }
 }
+
 
 // Rotas para CEPs
 elseif ($path[0] === "ceps") {
