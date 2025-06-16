@@ -1,9 +1,11 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useUser } from '../services/userContext';
+import { useUser,UserProvider } from '../services/userContext';
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { getUsers } from "../services/userService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type SideDrawerContentProps = {
   onClose: () => void;
@@ -13,7 +15,50 @@ type SideDrawerContentProps = {
 
 export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDrawerContentProps) {
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const { name, profileImage } = useUser();
+  const { name,setName, profileImage,setProfileImage } = useUser();
+
+  //buscar o nome no bd
+  const handleGetName =  async () => {
+  try {
+    const resposta = await getUsers();
+    setName(resposta.data.nome_user);
+    console.log("resposta do backend:", resposta )
+    if(resposta.data.success){
+      return true;
+    }else{
+      return false;
+    }
+  } catch (error) {
+  let errorMessage = 'Erro ao buscar nome!';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      console.log('Erro', errorMessage);
+      return false;
+    }
+  }
+
+  const getNameGoogle = async () => {
+   const name = await AsyncStorage.getItem('nome_user');
+   console.log(name);
+    setName(name ?? '');
+  }
+
+  const getImage = async () => {
+    const photoURL = await AsyncStorage.getItem('photoURL');
+    setProfileImage(photoURL);
+  }
+
+  useEffect(() => {
+ const handleSubmit = async () => {
+    await getImage();
+    const nomeAPI = await handleGetName();
+    if(!nomeAPI){
+      await getNameGoogle();
+    }
+  };
+  handleSubmit();
+  },[]);
 
   return (
     <View style={styles.drawer}>
@@ -29,7 +74,7 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
         ) : (
           <Ionicons name="person-circle" size={90} color="#39A28D" />
         )}
-        <Text style={styles.name}>{name || "Seu nome"}</Text>
+        <Text style={styles.name}>{name ?? "Seu nome"}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={{ marginTop: 8 }}>
           <Text style={styles.edit}>Editar Perfil ✎</Text>
         </TouchableOpacity>

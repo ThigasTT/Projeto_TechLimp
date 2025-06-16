@@ -24,8 +24,29 @@ class UserController {
                 $user_item = array(
                     "id_user" => $id_user,
                     "nome_user" => $nome_user,
-                    "telefone_celular_user" => $telefone_celular_user,
+           //         "telefone_celular_user" => $telefone_celular_user,
                     "email_user" => $email_user,
+                );
+                array_push($users, $user_item);
+            }
+            echo json_encode($users);
+        } else {
+            echo json_encode(["message" => "Nenhum usuário encontrado."]);
+        }
+    }
+
+     public function GetUsersByID() {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $stmt = $this->user->getById($data['id_user']);
+        $num = $stmt->rowCount();
+
+        if ($num > 0) {
+            $users = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                $user_item = array(
+                    "nome_user" => $nome_user,
                 );
                 array_push($users, $user_item);
             }
@@ -41,12 +62,12 @@ public function createUser() {
     $data = json_decode(file_get_contents('php://input'), true);
 
     // Verificar se os dados necessários estão presentes
-    if (!isset($data['id_cep'], $data['nome_user'], $data['telefone_celular_user'], $data['email_user'], $data['senha_user'], $data['complemento'])) {
+    if (!isset($data['nome_user'], $data['email_user'], $data['senha_user'])) {
         echo json_encode(["success" => false, "message" => "Dados incompletos para criar usuário."]);
         return;
     }
     
-    $this->user->id_cep = $data['id_cep'];
+ //   $this->user->id_cep = $data['id_cep'];
     $this->user->nome_user = $data['nome_user'];
     $this->user->email_user = $data['email_user'];
     $this->user->senha_user = password_hash($data['senha_user'], PASSWORD_DEFAULT); // Criptografar a senha
@@ -60,6 +81,38 @@ public function createUser() {
     }
 }
 
+    //Fazer o login do usuário
+    public function loginUser(){
+        $data = json_decode(file_get_contents("php://input"));
+        error_log("Dados recebidos no loginUser: " . json_encode($data));
+
+        if(!isset($data->email_user, $data->senha_user)){
+             echo json_encode(["error" => "todos os campos devem ser preenchidos"]);
+             return;
+            }
+        $stmt = $this->user->loginUser($data->email_user);
+       if($stmt->rowCount() == 1){
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(password_verify($data->senha_user, $user['senha_user'])){
+                echo json_encode([
+                    "success"=> true,
+                    "message"=>"Usuario logado com sucesso",
+                    "user"=>[
+                        "id_user"=> $user["id_user"],
+                        "nome_user"=> $user["nome_user"],
+                        "email_user"=> $user["email_user"]                   
+                        ]
+                    ]);
+            }else{
+                echo json_encode([
+                    "success"=> false,
+                    "message"=> "Senha incorreta"
+                ]);
+            }
+        }else{
+            echo json_encode(["success"=>false,"message"=> "usuario não encontrado"]);
+        }
+    }   
     //Atualizar um usuário
     public function updateUser() {
         $data = json_decode(file_get_contents("php://input"));
@@ -77,7 +130,7 @@ public function createUser() {
         $this->user->id_user = $data->id_user;
         $this->user->nome_user = $data->nome_user;
         $this->user->email_user = $data->email_user;
-        $this->user->senha_user = $data->senha_user;
+    //    $this->user->senha_user = $data->senha_user;
     
     
      

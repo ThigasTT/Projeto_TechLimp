@@ -25,23 +25,23 @@ export default function CadastroScreen() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [telefone, setTelefone] = useState('');
+  {/*const [telefone, setTelefone] = useState('');
   const [cep, setCep] = useState('');
   const [numero, setNumero] = useState('');
-  const [complemento, setComplemento] = useState('');
+  const [complemento, setComplemento] = useState('');*/}
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation<StackNavigationProp<any>>();
 
 
   const handleSubmit = async () => {
-    if (!nome || !email || !senha || !cep || !numero || !telefone) {
+    if (!nome || !email || !senha) {
       Alert.alert('Atenção', 'Preencha todos os campos obrigatórios!');
       return;
     }
 
    
 try {
-  let idCepFinal = '';
+  {/*let idCepFinal = '';
   const respostaCep = await getCeps(cep);
 
   if (Array.isArray(respostaCep.data) && respostaCep.data.length > 0) {
@@ -55,17 +55,14 @@ try {
     setCep(idCepFinal); 
   } else {
     throw new Error('Erro ao buscar ou criar o CEP');
-  }
+  }*/}
 
     const dadosUsuario = {
       nome_user:nome,
       email_user:email,
       senha_user:senha,
-      telefone_celular_user:telefone,
-      id_cep: idCepFinal,
-      complemento,
     };
-
+      setLoading(true)
       const resposta = await createUser(dadosUsuario);
       console.log('Dados enviados:', dadosUsuario);
       console.log('resposta do back para criacao:',resposta)
@@ -127,7 +124,7 @@ try {
             value={senha} 
             onChangeText={setSenha} 
           />
-          <Text style={styles.txt}>Telefone</Text>
+          {/*<Text style={styles.txt}>Telefone</Text>
           <TextInput 
             style={styles.input} 
             placeholder="Telefone" 
@@ -161,7 +158,7 @@ try {
             placeholderTextColor="#228b22" 
             value={complemento} 
             onChangeText={setComplemento} 
-          />
+          />*/}
 
           <TouchableOpacity 
             style={styles.button} 

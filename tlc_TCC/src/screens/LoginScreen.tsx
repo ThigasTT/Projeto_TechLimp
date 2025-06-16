@@ -23,6 +23,8 @@ import {
 import { auth } from '../../firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import { loginUser } from '../../services/userService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -74,28 +76,58 @@ export default function LoginScreen() {
     }
   }, [response]);
 
-  const handleLogin = async () => {
+const handleLogin = async () => {
     if (email === '' || senha === '') {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
+    }else{
+
     }
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, senha);
-      navigation.navigate('Map');
+      const dadosLogin = {
+        email_user:email,
+        senha_user:senha
+      }
+      const resposta = await loginUser(dadosLogin);
+      console.log("resposta do backend:", resposta);
+       // Verifique se a resposta é sucesso
+    if (resposta.data?.success) {
+       const id_user = resposta.data.user.id_user;
+await AsyncStorage.setItem('id_user', String(id_user));;
+     navigation.navigate('Map');
+    } else {
+      Alert.alert('Erro', resposta.data.message || 'Falha ao fazer login');
+    }
+    
     } catch (error) {
-      Alert.alert('Erro', 'Email ou senha incorretos!');
+      Alert.alert('Erro: erro ao logar');
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
+
   const handleGoogleAuth = async (idToken: string) => {
     setLoading(true);
     try {
       const credential = GoogleAuthProvider.credential(idToken);
       await signInWithCredential(auth, credential);
+      const user = auth.currentUser;
+      if(user){
+        console.log("nome", user.displayName);
+        console.log("email", user.email);
+        console.log("PHOTOurl", user.photoURL);
+        console.log("UID", user.uid);
+
+        await AsyncStorage.setItem('nome_user', user.displayName??'');
+        await AsyncStorage.setItem('email_user', user.email??'');
+        await AsyncStorage.setItem('photoURL', user.photoURL??'');
+        await AsyncStorage.setItem('uid', user.uid??'');
+      }else{
+
+      }
       navigation.navigate('Map');
     } catch (error: any) {
       Alert.alert('Erro Firebase', 'Falha na autenticação com Google via Firebase.');
