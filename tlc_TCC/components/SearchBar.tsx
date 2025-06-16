@@ -5,10 +5,11 @@ import { Image, StyleSheet, TextInput, View } from "react-native";
 type Props = {
   value: string;
   onChange: (t: string) => void;
-  onSearch: () => void; // <-- adiciona aqui
+  onSearch: () => void;
+  onFocus?: () => void; // <-- Adicione essa linha
 };
 
-export default function SearchBar({ value, onChange, onSearch }: Props) {
+export default function SearchBar({ value, onChange, onSearch, onFocus }: Props) {
   return (
     <View style={styles.container}>
       <Ionicons name="search" size={22} color="#39A28D" style={styles.icon} />
@@ -18,8 +19,9 @@ export default function SearchBar({ value, onChange, onSearch }: Props) {
         placeholderTextColor="#A8B8B8"
         value={value}
         onChangeText={onChange}
-        onSubmitEditing={onSearch} // <-- chama ao pressionar "Enter"
+        onSubmitEditing={onSearch}
         returnKeyType="search"
+        onFocus={onFocus} // <-- Adicione essa linha
       />
       <Image
         style={styles.logo}

@@ -10,36 +10,19 @@ class User {
         $this->conn = $db;
     }
 
-<<<<<<< HEAD
-    // Obter todos os usuários (com informações do CEP)
- public function getAll() {
+// Obter todos os usuários
+public function getAll() {
     $query = "
         SELECT 
             id_user, 
             nome_user, 
             email_user
-        FROM Usuario
+        FROM usuario 
     ";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     return $stmt;
 }
-    
-=======
-    // Obter todos os usuários
-    public function getAll() {
-        $query = "
-            SELECT 
-                id_user, 
-                nome_user, 
-                email_user
-            FROM usuario 
-        ";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    }
->>>>>>> 285ac40640628aa73cb637003daee8c540ddae36
 
     public function getById($id) {
         $query =
@@ -91,10 +74,7 @@ class User {
             SET 
                 nome_user = :nome_user,
                 email_user = :email_user,
-<<<<<<< HEAD
                 senha_user = :senha_user
-=======
->>>>>>> 285ac40640628aa73cb637003daee8c540ddae36
             WHERE id_user = :id_user
         ";
     
