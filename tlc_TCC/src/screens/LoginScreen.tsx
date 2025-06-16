@@ -23,7 +23,7 @@ import {
 import { auth } from '../../firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import { loginUser } from '../../services/userService';
+import { createUser, getUsersbyEmail, loginUser } from '../../services/userService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -120,11 +120,40 @@ await AsyncStorage.setItem('id_user', String(id_user));;
         console.log("email", user.email);
         console.log("PHOTOurl", user.photoURL);
         console.log("UID", user.uid);
-
-        await AsyncStorage.setItem('nome_user', user.displayName??'');
-        await AsyncStorage.setItem('email_user', user.email??'');
-        await AsyncStorage.setItem('photoURL', user.photoURL??'');
-        await AsyncStorage.setItem('uid', user.uid??'');
+        let email_user = user.email
+        const usuario = await getUsersbyEmail(email_user);
+        console.log("usuario: ", usuario)
+        if(!usuario || usuario.data.length === 0){
+         try {
+           const dadosUsuario = {
+            nome_user:user.displayName,
+            email_user:user.email,
+            photoURL:user.photoURL,
+            UID_firebase:user.uid
+          }
+          const resposta = await createUser(dadosUsuario)
+        console.log("resposta para criar usuario",resposta)
+          const respostaGet = await getUsersbyEmail(email_user);
+              await AsyncStorage.setItem('id_user', respostaGet.data.id_user??'');
+              await AsyncStorage.setItem('nome_user', user.displayName??'');
+              await AsyncStorage.setItem('email_user', user.email??'');
+              await AsyncStorage.setItem('photoURL', user.photoURL??'');
+              await AsyncStorage.setItem('uid', user.uid??'');
+         } catch (error: any) {
+          console.log("erro")
+         };
+        }else{
+        try {
+          const userData = usuario.data[0]
+        console.log("userData", userData);
+        await AsyncStorage.setItem('nome_user', userData.nome_user??'');
+        await AsyncStorage.setItem('email_user', userData.email_user??'');
+        await AsyncStorage.setItem('photoURL', userData.photoURL??'');
+        await AsyncStorage.setItem('uid', userData.uid_firebase??'');
+        } catch (error:any) {
+          Alert.alert("erro: ", error);
+        }
+      }
       }else{
 
       }

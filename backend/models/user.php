@@ -5,6 +5,8 @@ class User {
     public $nome_user;
     public $email_user;
     public $senha_user;
+    public $uid_firebase;
+    public $photoURL;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -36,12 +38,30 @@ class User {
         $stmt->execute();
         return $stmt;
     }
+
+       public function getByEmail($email) {
+        $query =
+            "select
+                id_user,
+                nome_user,
+                email_user,
+                UID_firebase,
+                photoURL
+            from usuario
+            where email_user = :email_user
+            ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email_user", $email);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result;
+    }
     // Criar um novo usuário
     public function create() {
         $query = "
             INSERT INTO usuario
-            (nome_user, email_user, senha_user) 
-            VALUES (:nome_user, :email_user, :senha_user)
+            (nome_user, email_user, senha_user, UID_firebase, photoURL) 
+            VALUES (:nome_user, :email_user, :senha_user, :uid_firebase, :photoURL)
         ";
         $stmt = $this->conn->prepare($query);
 
@@ -49,6 +69,8 @@ class User {
         $stmt->bindParam(":nome_user", $this->nome_user);
         $stmt->bindParam(":email_user", $this->email_user);
         $stmt->bindParam(":senha_user", $this->senha_user);
+        $stmt->bindParam(":uid_firebase", $this->uid_firebase);
+        $stmt->bindParam(":photoURL", $this->photoURL);
 
         if ($stmt->execute()) {
             return true;
@@ -74,6 +96,7 @@ class User {
             SET 
                 nome_user = :nome_user,
                 email_user = :email_user,
+                senha_user = :senha_user,
             WHERE id_user = :id_user
         ";
     
@@ -83,7 +106,7 @@ class User {
 
         $stmt->bindParam(":nome_user", $this->nome_user);
         $stmt->bindParam(":email_user", $this->email_user);
- //       $stmt->bindParam(":senha_user", $this->senha_user);
+        $stmt->bindParam(":senha_user", $this->senha_user);
     
         // Executar a query
         return $stmt->execute();

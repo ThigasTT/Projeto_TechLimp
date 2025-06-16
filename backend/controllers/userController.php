@@ -56,13 +56,25 @@ class UserController {
         }
     }
 
+    public function GetUsersByEmail() {
+
+        $email_user = $_GET["email_user"];
+        $usuario = $this->user->getByEmail($email_user);
+
+        if ($usuario) {
+           echo json_encode([$usuario]); // retorna array com 1 usuário
+        } else {
+           echo json_encode([]); // retorna array vazio (não achou)
+        }
+    }
+
     // Criar um novo usuário
 public function createUser() {
     // Obter os dados enviados no corpo da requisição
     $data = json_decode(file_get_contents('php://input'), true);
 
     // Verificar se os dados necessários estão presentes
-    if (!isset($data['nome_user'], $data['email_user'], $data['senha_user'])) {
+    if (!isset($data['nome_user'], $data['email_user'])) {
         echo json_encode(["success" => false, "message" => "Dados incompletos para criar usuário."]);
         return;
     }
@@ -71,7 +83,8 @@ public function createUser() {
     $this->user->nome_user = $data['nome_user'];
     $this->user->email_user = $data['email_user'];
     $this->user->senha_user = password_hash($data['senha_user'], PASSWORD_DEFAULT); // Criptografar a senha
-
+    $this->user->uid_firebase = $data['UID_firebase'];
+    $this->user->photoURL = $data['photoURL'];
 
 
     if ($this->user->create()) {
@@ -130,7 +143,7 @@ public function createUser() {
         $this->user->id_user = $data->id_user;
         $this->user->nome_user = $data->nome_user;
         $this->user->email_user = $data->email_user;
-    //    $this->user->senha_user = $data->senha_user;
+        $this->user->senha_user = password_hash($data['senha_user'], PASSWORD_DEFAULT); // Criptografar a senha;
     
     
      

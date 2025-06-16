@@ -17,7 +17,7 @@ create table if not exists Usuario(
 id_user int auto_increment,
 nome_user varchar (50) not null,
 email_user varchar (50) not null,
-senha_user varchar(100) not null,
+senha_user varchar(100),
 UID_firebase varchar(100),
 photoURL varchar(100),
 primary key (id_user)

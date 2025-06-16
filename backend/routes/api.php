@@ -49,7 +49,7 @@ if ($path[0] === "users") {
     } elseif ($requestMethod === "DELETE") {
         $controller->deleteUser();
     } else {
-        echo json_encode(["message" => "Método não suportado para usuários."]);
+        echo json_encode(["message" => "Metodo nao suportado para usuarios."]);
     }
 }
 //rota para login
@@ -57,8 +57,10 @@ elseif($path[0] === "login"){
     $controller = new UserController();
     if($requestMethod === "POST"){
         $controller->loginUser();
+    }else if($requestMethod === "GET"){
+        $controller->GetUsersByEmail();
     }else{
-         echo json_encode(["message" => "Método não suportado para login."]);
+        echo json_encode(["message" => "Metodo nao suportado para login."]);
     }
 }
 
@@ -73,7 +75,7 @@ elseif ($path[0] === "ceps") {
      elseif ($requestMethod === "POST") {
         $controller->salvarCep(); // Salva o CEP enviado
     } else {
-        echo json_encode(["message" => "Método não suportado para CEPs."]);
+        echo json_encode(["message" => "Metodo nao suportado para CEPs."]);
     }
 }
 
