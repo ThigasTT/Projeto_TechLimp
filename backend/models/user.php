@@ -13,25 +13,26 @@ class User {
     }
 
     // Obter todos os usuários (com informações do CEP)
-    public function getAll() {
-        $query = "
-            SELECT 
-                id_user, 
-                nome_user, 
-                email_user,  
-            FROM usuario 
-        ";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    }
+ public function getAll() {
+    $query = "
+        SELECT 
+            id_user, 
+            nome_user, 
+            email_user
+        FROM Usuario
+    ";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+    
 
     // Criar um novo usuário
     public function create() {
         $query = "
             INSERT INTO usuario
             (nome_user, email_user, senha_user) 
-            VALUES (:nome_user, :email_user, :senha_user,)
+            VALUES (:nome_user, :email_user, :senha_user)
         ";
         $stmt = $this->conn->prepare($query);
 
@@ -54,7 +55,7 @@ class User {
             SET 
                 nome_user = :nome_user,
                 email_user = :email_user,
-                senha_user = :senha_user,
+                senha_user = :senha_user
             WHERE id_user = :id_user
         ";
     

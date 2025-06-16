@@ -20,7 +20,6 @@ function normalize(size: number) {
   return Math.round(PixelRatio.roundToNearestPixel(newSize));
 }
 
-// Substitua pelo seu local padrão
 const DEFAULT_LOCATION = { latitude: -23.6815319, longitude: -46.6209645 };
 export default function MapScreen() {
   const navigation = useNavigation();
@@ -33,7 +32,6 @@ export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
   const sheetRef = useRef<BottomSheet>(null);
 
-  // NOVO: Centralizar mapa e buscar pontos próximos à localização do usuário ao abrir o app
   React.useEffect(() => {
     (async () => {
       setLoading(true);
@@ -53,7 +51,7 @@ export default function MapScreen() {
         };
         setLastLocation(userLoc);
 
-        // Atualize marcador do usuário
+        // Atualiza marcador do usuário
         setMarkers((prev) => [
           ...prev.filter((m) => m.id !== "user"),
           {
@@ -87,7 +85,7 @@ export default function MapScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Busca local pelo Google Places
+  // Busca local
   async function handleSearch() {
     if (!search.trim()) return;
     setLoading(true);
@@ -134,7 +132,7 @@ export default function MapScreen() {
     }
   }
 
-  // Buscar pontos de coleta próximos usando Google Places Nearby Search
+  // Busca pontos de coleta próximos
   // AGORA aceita parâmetro opcional de localização para reuso
   async function fetchNearbyRecyclingPoints(locationParam?: { latitude: number, longitude: number }, mapFitMarkers?: boolean) {
     setLoading(true);
