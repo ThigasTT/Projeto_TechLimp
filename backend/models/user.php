@@ -12,19 +12,19 @@ class User {
         $this->conn = $db;
     }
 
-    // Obter todos os usuários
-    public function getAll() {
-        $query = "
-            SELECT 
-                id_user, 
-                nome_user, 
-                email_user
-            FROM usuario 
-        ";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    }
+// Obter todos os usuários
+public function getAll() {
+    $query = "
+        SELECT 
+            id_user, 
+            nome_user, 
+            email_user
+        FROM usuario 
+    ";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
 
     public function getById($id) {
         $query =
@@ -96,7 +96,7 @@ class User {
             SET 
                 nome_user = :nome_user,
                 email_user = :email_user,
-                senha_user = :senha_user,
+                senha_user = :senha_user
             WHERE id_user = :id_user
         ";
     

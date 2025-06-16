@@ -20,8 +20,8 @@ function normalize(size: number) {
   return Math.round(PixelRatio.roundToNearestPixel(newSize));
 }
 
-// Substitua pelo seu local padrão
 const DEFAULT_LOCATION = { latitude: -23.6815319, longitude: -46.6209645 };
+
 export default function MapScreen() {
   const navigation = useNavigation();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -31,9 +31,8 @@ export default function MapScreen() {
   const [lastLocation, setLastLocation] = useState(DEFAULT_LOCATION);
 
   const mapRef = useRef<MapView>(null);
-  const sheetRef = useRef<BottomSheet>(null);
+  const bottomSheetRef = useRef<any>(null);
 
-  // NOVO: Centralizar mapa e buscar pontos próximos à localização do usuário ao abrir o app
   React.useEffect(() => {
     (async () => {
       setLoading(true);
@@ -53,7 +52,7 @@ export default function MapScreen() {
         };
         setLastLocation(userLoc);
 
-        // Atualize marcador do usuário
+        // Atualiza marcador do usuário
         setMarkers((prev) => [
           ...prev.filter((m) => m.id !== "user"),
           {
@@ -87,7 +86,7 @@ export default function MapScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Busca local pelo Google Places
+  // Busca local
   async function handleSearch() {
     if (!search.trim()) return;
     setLoading(true);
@@ -114,7 +113,8 @@ export default function MapScreen() {
             longitude: place.geometry.location.lng,
             title: place.name || search,
             description: place.formatted_address || "",
-            type: "coleta"
+            type: "coleta",
+            ...place // inclui outros dados se tiver
           }
         ]);
         setLastLocation({ latitude: place.geometry.location.lat, longitude: place.geometry.location.lng });
@@ -123,6 +123,12 @@ export default function MapScreen() {
           longitude: place.geometry.location.lng,
           latitudeDelta: 0.012,
           longitudeDelta: 0.012,
+        });
+        // Abre o bottomsheet com informações do local pesquisado
+        bottomSheetRef.current?.abrirDetalhesDoLocal({
+          ...place,
+          latitude: place.geometry.location.lat,
+          longitude: place.geometry.location.lng,
         });
       } else {
         Alert.alert("Nenhum resultado", "Não foi possível encontrar o local pesquisado.");
@@ -134,14 +140,12 @@ export default function MapScreen() {
     }
   }
 
-  // Buscar pontos de coleta próximos usando Google Places Nearby Search
-  // AGORA aceita parâmetro opcional de localização para reuso
+  // Busca pontos de coleta próximos
   async function fetchNearbyRecyclingPoints(locationParam?: { latitude: number, longitude: number }, mapFitMarkers?: boolean) {
     setLoading(true);
     try {
       const loc = locationParam || lastLocation;
 
-      // Função para buscar pontos em um raio específico
       const fetchPointsInRadius = async (radius: number) => {
         const response = await axios.get(
           "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
@@ -157,10 +161,7 @@ export default function MapScreen() {
         return response.data.results || [];
       };
 
-      // 1. Tenta com 3km (3000m)
       let points = await fetchPointsInRadius(3000);
-
-      // 2. Se não achou, tenta com 5km (5000m)
       if (!points.length) {
         points = await fetchPointsInRadius(5000);
       }
@@ -172,7 +173,8 @@ export default function MapScreen() {
           longitude: place.geometry.location.lng,
           title: place.name,
           description: place.vicinity,
-          type: "coleta"
+          type: "coleta",
+          ...place // inclui outros dados para exibir detalhes/fotos
         }));
         setMarkers((prev) => [
           ...prev.filter((m) => m.type !== "coleta"),
@@ -203,7 +205,6 @@ export default function MapScreen() {
     }
   }
 
-  // Centralizar no usuário e buscar pontos de coleta próximos
   async function handleCenterOnUser() {
     try {
       setLoading(true);
@@ -235,7 +236,6 @@ export default function MapScreen() {
           type: "usuario"
         },
       ]);
-      // Busca pontos de coleta próximos
       await fetchNearbyRecyclingPoints(userLoc);
     } catch (e) {
       Alert.alert("Erro", "Não foi possível obter sua localização.");
@@ -244,9 +244,18 @@ export default function MapScreen() {
     }
   }
 
-  // Botão para buscar ecopontos e ajustar mapa para mostrar todos
   async function handleFetchNearbyEcopointsAndFit() {
     await fetchNearbyRecyclingPoints(lastLocation, true);
+  }
+
+  // Novo: ao clicar no marcador, abre o detalhe no BottomSheet
+  function handleMarkerPress(marker: any) {
+    // Passa objeto completo, incluindo photos, name, rating, etc
+    bottomSheetRef.current?.abrirDetalhesDoLocal({
+      ...marker,
+      latitude: marker.latitude,
+      longitude: marker.longitude,
+    });
   }
 
   return (
@@ -265,6 +274,7 @@ export default function MapScreen() {
         value={search}
         onChange={setSearch}
         onSearch={handleSearch}
+        onFocus={() => bottomSheetRef.current?.abrirRecomendacoes()}
       />
 
       <MapView
@@ -287,6 +297,7 @@ export default function MapScreen() {
             coordinate={{ latitude: m.latitude, longitude: m.longitude }}
             title={m.title}
             description={m.description}
+            onPress={() => handleMarkerPress(m)} // <-- Mostra o detalhe ao clicar!
           >
             <Image
               source={
@@ -319,7 +330,32 @@ export default function MapScreen() {
         <Ionicons name="settings-sharp" size={26} color="#39A28D" />
       </TouchableOpacity>
 
-      <BottomSheetContent onFetchNearby={fetchNearbyRecyclingPoints} />
+      <BottomSheetContent
+        ref={bottomSheetRef}
+        lastLocation={lastLocation}
+        onSelectPlace={(place) => {
+          mapRef.current?.animateToRegion({
+            latitude: place.latitude,
+            longitude: place.longitude,
+            latitudeDelta: 0.012,
+            longitudeDelta: 0.012,
+          });
+          setMarkers((prev) => [
+            ...prev.filter((m) => m.id !== place.place_id),
+            {
+              id: place.place_id,
+              latitude: place.latitude,
+              longitude: place.longitude,
+              title: place.name,
+              description: place.address,
+              type: "coleta",
+              photos: place.photos,
+              rating: place.rating,
+              vicinity: place.vicinity,
+            },
+          ]);
+        }}
+      />
     </View>
   );
 }
