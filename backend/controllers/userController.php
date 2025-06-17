@@ -154,6 +154,32 @@ public function createUser() {
         }
     }
 
+    public function uploadFoto() {
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
+        $foto = $_FILES['foto'];
+        $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
+        $permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (in_array($extensao, $permitidas)) {
+            $novo_nome = uniqid() . '.' . $extensao;
+            $caminho = 'uploads/' . $novo_nome;
+
+            if (move_uploaded_file($foto['tmp_name'], $caminho)) {
+               $this->user->photoURL = $caminho;
+               $this->user->updateUser();
+
+                echo json_encode(['success' => true, 'foto' => $caminho]);
+            } else {
+                echo json_encode(['error' => 'Falha ao mover o arquivo.']);
+            }
+        } else {
+            echo json_encode(['error' => 'Extensão não permitida.']);
+        }
+    } else {
+        echo json_encode(['error' => 'Nenhum arquivo enviado.']);
+    }
+}
+
 
 // Deletar um usuário
 public function deleteUser() {
