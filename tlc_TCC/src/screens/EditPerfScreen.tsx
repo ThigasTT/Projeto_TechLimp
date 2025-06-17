@@ -146,6 +146,7 @@ export default function EditProfileScreen() {
                   style={styles.input}
                   value={password}
                   onChangeText={setPassword}
+                    secureTextEntry 
                   placeholder="Digite sua senha"
                   placeholderTextColor="#666"
                   keyboardType="phone-pad"
