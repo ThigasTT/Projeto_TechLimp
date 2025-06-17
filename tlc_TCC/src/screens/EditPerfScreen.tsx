@@ -12,6 +12,7 @@ export default function EditProfileScreen() {
   const {
     name, setName,
     email, setEmail,
+    password, setPassword,
     profileImage, setProfileImage
   } = useUser(); // Usa o contexto para tudo
 
@@ -37,9 +38,10 @@ export default function EditProfileScreen() {
     const id_user = await AsyncStorage.getItem('id_user');
     try {
       const dadosEditar = {
-        id_user:id_user,
+        id_user:Number(id_user),
         nome_user:name,
-        email_user:email
+        email_user:email,
+        senha_user:password,
       }
 
       const respostaEdit = await updateUser(dadosEditar);
@@ -54,6 +56,16 @@ export default function EditProfileScreen() {
     }
     navigation.goBack();
   };
+
+  useEffect(() => {
+  const setData = async () => {
+     let nome = await AsyncStorage.getItem('nome_user');
+     let email = await AsyncStorage.getItem('email_user');
+     setName(nome);
+     setEmail(email);
+   }
+   setData();
+  }, [])
 
   return (
     <KeyboardAvoidingView
@@ -127,20 +139,20 @@ export default function EditProfileScreen() {
               </View>
             </View>
 
-           {/*<View style={styles.inputGroup}>
-              <Text style={styles.label}>Telefone</Text>
+           <View style={styles.inputGroup}>
+              <Text style={styles.label}>senha</Text>
               <View style={styles.inputWrapper}>
                 <TextInput
                   style={styles.input}
-                  value={phone}
-                  onChangeText={setPhone}
-                  placeholder="Digite seu telefone"
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder="Digite sua senha"
                   placeholderTextColor="#666"
                   keyboardType="phone-pad"
                 />
                 <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
               </View>
-            </View>*/}
+            </View>
 
            {/*<View style={styles.inputGroup}>
               <Text style={styles.label}>Endereço</Text>

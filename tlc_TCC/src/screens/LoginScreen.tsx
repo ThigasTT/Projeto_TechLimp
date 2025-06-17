@@ -146,6 +146,7 @@ await AsyncStorage.setItem('id_user', String(id_user));;
         try {
           const userData = usuario.data[0]
         console.log("userData", userData);
+        await AsyncStorage.setItem('id_user',String(userData.id_user)??'');
         await AsyncStorage.setItem('nome_user', userData.nome_user??'');
         await AsyncStorage.setItem('email_user', userData.email_user??'');
         await AsyncStorage.setItem('photoURL', userData.photoURL??'');

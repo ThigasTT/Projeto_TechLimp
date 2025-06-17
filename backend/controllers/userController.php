@@ -143,8 +143,8 @@ public function createUser() {
         $this->user->id_user = $data->id_user;
         $this->user->nome_user = $data->nome_user;
         $this->user->email_user = $data->email_user;
-        $this->user->senha_user = password_hash($data['senha_user'], PASSWORD_DEFAULT); // Criptografar a senha;
-    
+        $this->user->senha_user = password_hash($data->senha_user, PASSWORD_DEFAULT); // Criptografar a senha;
+
     
      
         if ($this->user->updateUser()) {

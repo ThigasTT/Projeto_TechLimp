@@ -97,7 +97,6 @@ public function getAll() {
                 nome_user = :nome_user,
                 email_user = :email_user,
                 senha_user = :senha_user,
-                photoURL = :photo
             WHERE id_user = :id_user
         ";
     

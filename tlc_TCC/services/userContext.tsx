@@ -7,6 +7,8 @@ interface UserContextType {
   setEmail: (email: string) => void;
   phone: string;
   setPhone: (phone: string) => void;
+  password: string;
+  setPassword: (password :string) => void;
   address: string;
   setAddress: (address: string) => void;
   profileImage: string | null;
@@ -19,6 +21,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
 
@@ -31,6 +34,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setEmail,
         phone,
         setPhone,
+        password,
+        setPassword,
         address,
         setAddress,
         profileImage,
