@@ -56,7 +56,7 @@ export default function EditProfileScreen() {
     }
     navigation.goBack();
   };
-
+{/*
   useEffect(() => {
   const setData = async () => {
      let nome = await AsyncStorage.getItem('nome_user');
@@ -65,7 +65,7 @@ export default function EditProfileScreen() {
      setEmail(email);
    }
    setData();
-  }, [])
+  }, [])*/}
 
   return (
     <KeyboardAvoidingView

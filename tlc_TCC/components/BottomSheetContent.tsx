@@ -44,7 +44,7 @@ const CustomBackground = (props: BottomSheetBackgroundProps) => (
   />
 );
 
-type SheetMode = "DICAS" | "DETAIL" | "SEARCH" | "RECOMMEND";
+type SheetMode = "DICAS" | "DETAIL" | "RECOMMEND";
 
 const BottomSheetContent = forwardRef(function BottomSheetContent(
   {
@@ -84,8 +84,7 @@ const BottomSheetContent = forwardRef(function BottomSheetContent(
   const snapPoints = useMemo(() => {
     switch (sheetMode) {
       case "DETAIL": return ["35%", "80%"];
-      case "SEARCH": return ["40%", "90%"];
-      case "RECOMMEND": return ["40%", "90%"];
+      case "RECOMMEND": return ["40%", "80%"];
       default: return ["20%", "50%", "85%"];
     }
   }, [sheetMode]);
@@ -102,7 +101,7 @@ const BottomSheetContent = forwardRef(function BottomSheetContent(
         {
           params: {
             location: `${lastLocation.latitude},${lastLocation.longitude}`,
-            radius: 2000,
+            radius: 5000,
             keyword: "e-lixo,PEV,lixo eletrônico,descarte de lixo eletrônico,eletrônicos",
             key: GOOGLE_MAPS_API_KEY,
           },
@@ -140,14 +139,7 @@ const BottomSheetContent = forwardRef(function BottomSheetContent(
     bottomSheetRef.current?.snapToIndex(0);
   }
 
-  function iniciarBusca() {
-    setSheetMode("SEARCH");
-    setSearch("");
-    setSearchResults([]);
-    setSelectedDica(null);
-    setSelectedPlace(null);
-    bottomSheetRef.current?.expand();
-  }
+
 
   function buscar() {
     setSearchResults([
@@ -156,11 +148,7 @@ const BottomSheetContent = forwardRef(function BottomSheetContent(
     ]);
   }
 
-  function selecionarResultado(r: any) {
-    setSelectedDica({ titulo: r.nome, texto: r.endereco, fonte: "" });
-    setSelectedPlace(null);
-    setSheetMode("DETAIL");
-  }
+
 
   // Mantido para seleção de local a partir da lista (RECOMMEND)
   function handleSelectPlace(place: any) {
@@ -236,9 +224,6 @@ const BottomSheetContent = forwardRef(function BottomSheetContent(
               </TouchableOpacity>
             </View>
           ))}
-          <TouchableOpacity style={styles.botao} onPress={iniciarBusca}>
-            <Text style={styles.textoBotao}>Buscar Ecopontos</Text>
-          </TouchableOpacity>
         </ScrollView>
       )}
 
@@ -285,33 +270,6 @@ const BottomSheetContent = forwardRef(function BottomSheetContent(
               </Text>
             </TouchableOpacity>
           ) : null}
-        </ScrollView>
-      )}
-
-      {/* Busca manual (mock) */}
-      {sheetMode === "SEARCH" && (
-        <ScrollView style={styles.searchContainer}>
-          <TouchableOpacity onPress={voltarParaDicas}>
-            <Text style={styles.voltar}>◀ Voltar</Text>
-          </TouchableOpacity>
-          <Text style={styles.titulo}>Buscar Ecopontos</Text>
-          <TextInput
-            value={search}
-            placeholder="Digite o nome ou endereço"
-            onChangeText={setSearch}
-            style={styles.input}
-            placeholderTextColor="#bbb"
-          />
-          <Button title="Buscar" onPress={buscar} color="#00A86B" />
-          <View style={{ marginTop: 16 }}>
-            {searchResults.length === 0 && <Text style={{ color: "#fff" }}>Nenhum resultado ainda.</Text>}
-            {searchResults.map((r) => (
-              <TouchableOpacity key={r.id} onPress={() => selecionarResultado(r)} style={styles.resultCard}>
-                <Text style={{ color: "#00A86B", fontWeight: "bold", fontSize: 16 }}>{r.nome}</Text>
-                <Text style={{ color: "#eee" }}>{r.endereco}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
         </ScrollView>
       )}
     </BottomSheet>
