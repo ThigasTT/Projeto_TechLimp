@@ -36,9 +36,9 @@ class UserController {
     }
 
      public function GetUsersByID() {
-
-        $data = json_decode(file_get_contents('php://input'), true);
-        $stmt = $this->user->getById($data['id_user']);
+       $data = $_GET['id_user'];
+       echo json_encode(["id_user back: "=> $data]);
+        $stmt = $this->user->getById($data);
         $num = $stmt->rowCount();
 
         if ($num > 0) {
@@ -113,7 +113,8 @@ public function createUser() {
                     "user"=>[
                         "id_user"=> $user["id_user"],
                         "nome_user"=> $user["nome_user"],
-                        "email_user"=> $user["email_user"]                   
+                        "email_user"=> $user["email_user"],
+                        "photoURL"=> $user['photoURL'],                   
                         ]
                     ]);
             }else{

@@ -96,7 +96,7 @@ public function getAll() {
             SET 
                 nome_user = :nome_user,
                 email_user = :email_user,
-                senha_user = :senha_user,
+                senha_user = :senha_user
             WHERE id_user = :id_user
         ";
     
@@ -107,7 +107,7 @@ public function getAll() {
         $stmt->bindParam(":nome_user", $this->nome_user);
         $stmt->bindParam(":email_user", $this->email_user);
         $stmt->bindParam(":senha_user", $this->senha_user);
-        $stmt->bindParam(":photo", $this->photoURL);
+     //   $stmt->bindParam(":photo", $this->photoURL);
         // Executar a query
         return $stmt->execute();
     }

@@ -25,6 +25,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { createUser, getUsersbyEmail, loginUser } from '../../services/userService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useUser } from '../../services/userContext';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -39,8 +40,13 @@ const redirectUri = AuthSession.makeRedirectUri({
 });
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const {
+    name, setName,
+    email, setEmail,
+    password, setPassword,
+    profileImage, setProfileImage
+  } = useUser();
+
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'Map'>>();
 
@@ -77,7 +83,7 @@ export default function LoginScreen() {
   }, [response]);
 
 const handleLogin = async () => {
-    if (email === '' || senha === '') {
+    if (email === '' || password === '') {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
     }else{
@@ -87,14 +93,15 @@ const handleLogin = async () => {
     try {
       const dadosLogin = {
         email_user:email,
-        senha_user:senha
+        senha_user:password
       }
       const resposta = await loginUser(dadosLogin);
       console.log("resposta do backend:", resposta);
-       // Verifique se a resposta é sucesso
     if (resposta.data?.success) {
        const id_user = resposta.data.user.id_user;
-await AsyncStorage.setItem('id_user', String(id_user));;
+    await AsyncStorage.setItem('id_user', String(id_user));
+    setName(resposta.data.user.nome_user);
+    setProfileImage(resposta.data.user.photoURL);
      navigation.navigate('Map');
     } else {
       Alert.alert('Erro', resposta.data.message || 'Falha ao fazer login');
@@ -135,21 +142,22 @@ await AsyncStorage.setItem('id_user', String(id_user));;
         console.log("resposta para criar usuario",resposta)
           const respostaGet = await getUsersbyEmail(email_user);
               await AsyncStorage.setItem('id_user', respostaGet.data.id_user??'');
-              await AsyncStorage.setItem('nome_user', user.displayName??'');
-              await AsyncStorage.setItem('email_user', user.email??'');
-              await AsyncStorage.setItem('photoURL', user.photoURL??'');
+              setName(user.displayName??'');
+              setEmail(user.email??'');
+              setProfileImage(user.photoURL??'');
               await AsyncStorage.setItem('uid', user.uid??'');
          } catch (error: any) {
           console.log("erro")
          };
         }else{
         try {
-          const userData = usuario.data[0]
+          const userData = usuario.data[0];
         console.log("userData", userData);
         await AsyncStorage.setItem('id_user',String(userData.id_user)??'');
-        await AsyncStorage.setItem('nome_user', userData.nome_user??'');
-        await AsyncStorage.setItem('email_user', userData.email_user??'');
-        await AsyncStorage.setItem('photoURL', userData.photoURL??'');
+        setName(userData.nome_user??'');
+        setEmail(userData.email_user??'');
+        setProfileImage(userData.photoURL??'');
+        console.log("Informacoes: ", userData.photoURL, userData.nome_user);
         await AsyncStorage.setItem('uid', userData.uid_firebase??'');
         } catch (error:any) {
           Alert.alert("erro: ", error);
@@ -201,7 +209,6 @@ await AsyncStorage.setItem('id_user', String(id_user));;
             style={styles.input}
             placeholder="Email"
             placeholderTextColor="#228b22"
-            value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
@@ -212,8 +219,7 @@ await AsyncStorage.setItem('id_user', String(id_user));;
             placeholder="Senha"
             placeholderTextColor="#228b22"
             secureTextEntry
-            value={senha}
-            onChangeText={setSenha}
+            onChangeText={setPassword}
           />
 
           <Text style={styles.signupText}>

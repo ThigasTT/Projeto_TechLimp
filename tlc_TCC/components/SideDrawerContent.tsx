@@ -15,14 +15,16 @@ type SideDrawerContentProps = {
 
 export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDrawerContentProps) {
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const { name,setName, profileImage,setProfileImage } = useUser();
+  const { name,setName, profileImage,setProfileImage, email, setEmail } = useUser();
 
   //buscar o nome no bd
-  const handleGetName =  async () => {
+  /* const handleGetName =  async () => {
   try {
-    const resposta = await getUsers();
+    const id_user = await AsyncStorage.getItem('id_user');
+    const resposta = await getUsers(Number(id_user));
     setName(resposta.data.nome_user);
-    console.log("resposta do backend:", resposta )
+    console.log("id usuario: ", id_user );
+    console.log("resposta do backend: para puxar usuario: ", resposta );
     if(resposta.data.success){
       return true;
     }else{
@@ -36,7 +38,7 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
       console.log('Erro', errorMessage);
       return false;
     }
-  }
+  } */
 
   const getNameGoogle = async () => {
    const name = await AsyncStorage.getItem('nome_user');
@@ -50,15 +52,8 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
   }
 
   useEffect(() => {
- const handleSubmit = async () => {
-    await getImage();
-    const nomeAPI = await handleGetName();
-    if(!nomeAPI){
-      await getNameGoogle();
-    }
-  };
-  handleSubmit();
-  },[]);
+    console.log("profileImage: ",profileImage);
+  },[]); 
 
   return (
     <View style={styles.drawer}>

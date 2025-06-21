@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import BottomSheetContent from "../../components/BottomSheetContent";
 import SearchBar from "../../components/SearchBar";
 import SideDrawerContent from "../../components/SideDrawerContent";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GOOGLE_MAPS_API_KEY = Constants.expoConfig?.extra?.googleMapsApiKey;
 
@@ -264,7 +265,10 @@ export default function MapScreen() {
         <View style={styles.drawerOverlay}>
           <SideDrawerContent
             onClose={() => setDrawerOpen(false)}
-            onLogout={() => navigation.navigate("Login")}
+            onLogout={async () =>{
+              await AsyncStorage.clear();
+               navigation.navigate("Login");
+              }}
             onAbout={() => Linking.openURL('http://192.168.0.15:5500/site_Tech_Limp/index%20(1).html')}
           />
         </View>

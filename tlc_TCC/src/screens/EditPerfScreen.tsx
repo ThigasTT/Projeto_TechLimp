@@ -146,10 +146,10 @@ export default function EditProfileScreen() {
                   style={styles.input}
                   value={password}
                   onChangeText={setPassword}
-                    secureTextEntry 
                   placeholder="Digite sua senha"
                   placeholderTextColor="#666"
-                  keyboardType="phone-pad"
+                  secureTextEntry
+               //   keyboardType="phone-pad"
                 />
                 <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
               </View>
