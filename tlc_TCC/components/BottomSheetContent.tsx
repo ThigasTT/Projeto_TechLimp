@@ -290,13 +290,13 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 2,
+  
   },
   closeButtonText: {
     color: "#fff",
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold",
-    top: -1,
+    top: -2,
   },
   contentContainer: {
     paddingHorizontal: 16,
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#00A86B',
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     alignSelf: 'center',

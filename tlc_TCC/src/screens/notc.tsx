@@ -71,19 +71,19 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   titulo: {
-    color: '#00A86B',
+    color: '#0bba64',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
   },
   card: {
-    backgroundColor: '#29e263',
+    backgroundColor: '#0bba64',
     borderRadius: 12,
     marginBottom: 20,
     overflow: 'hidden',
   },
   textoContainer: {
-    backgroundColor: '#00A86B',
+    backgroundColor: '#0bba64',
     padding: 16,
     alignItems: 'center',
   },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   botao: {
-    backgroundColor: '#00A86B',
+    backgroundColor: '#0bba64',
     padding: 12,
     borderRadius: 10,
     alignItems: 'center',

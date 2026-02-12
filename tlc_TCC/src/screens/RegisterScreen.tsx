@@ -92,7 +92,7 @@ try {
       >
         <View style={styles.innerContainer}>
           <Image
-            source={require('../../assets/images/Logo.png')} 
+            source={require('../../assets/Logo.png')} 
             style={styles.logo}
           />
 
@@ -100,16 +100,16 @@ try {
           <Text style={styles.txt}>Nome</Text>
           <TextInput 
             style={styles.input} 
-            placeholder="Nome *" 
-            placeholderTextColor="#228b22" 
+            placeholder="Nome" 
+            placeholderTextColor="#0bba64" 
             value={nome} 
             onChangeText={setNome}
           />
           <Text style={styles.txt}>Email</Text>
           <TextInput 
             style={styles.input} 
-            placeholder="Email *" 
-            placeholderTextColor="#228b22" 
+            placeholder="Email" 
+            placeholderTextColor="#0bba64" 
             value={email} 
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -118,8 +118,8 @@ try {
           <Text style={styles.txt}>Senha</Text>
           <TextInput 
             style={styles.input} 
-            placeholder="Senha *" 
-            placeholderTextColor="#228b22" 
+            placeholder="Senha" 
+            placeholderTextColor="#0bba64" 
             secureTextEntry 
             value={senha} 
             onChangeText={setSenha} 
@@ -128,7 +128,7 @@ try {
           <TextInput 
             style={styles.input} 
             placeholder="Telefone" 
-            placeholderTextColor="#228b22" 
+            placeholderTextColor="#0bba64" 
             value={telefone} 
             onChangeText={setTelefone}
             keyboardType="phone-pad"
@@ -137,7 +137,7 @@ try {
           <TextInput 
             style={styles.input} 
             placeholder="CEP" 
-            placeholderTextColor="#228b22" 
+            placeholderTextColor="#0bba64" 
             value={cep} 
             onChangeText={setCep}
             keyboardType="numeric"
@@ -146,7 +146,7 @@ try {
           <TextInput 
             style={styles.input} 
             placeholder="Número" 
-            placeholderTextColor="#228b22" 
+            placeholderTextColor="#0bba64" 
             value={numero} 
             onChangeText={setNumero}
             keyboardType="numeric"
@@ -155,7 +155,7 @@ try {
           <TextInput 
             style={styles.input} 
             placeholder="Complemento (Opcional)" 
-            placeholderTextColor="#228b22" 
+            placeholderTextColor="#0bba64" 
             value={complemento} 
             onChangeText={setComplemento} 
           />*/}
@@ -201,11 +201,12 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 300,
-    height: 150,
+    height: 200,
     marginBottom: 20,
+    marginTop: 50
   },
   button: {
-    backgroundColor: '#29e263',
+    backgroundColor: '#0bba64',
     paddingVertical: 12,
     borderRadius: 12,
     marginTop: 30,
@@ -256,7 +257,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MadimiOne',
   },
   section: {
-    color: '#5cff9b',
+    color: '#0bba64',
     fontSize: 32,
     marginBottom: 10,
     marginTop: 15,
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
     borderColor: '#5cff9b',
     borderRadius: 10,
     padding: 12,
-    color: '#5cff9b',
+    color: '#0bba64',
     fontSize: 20,
     marginBottom: 5,
     fontFamily: 'MadimiOne',

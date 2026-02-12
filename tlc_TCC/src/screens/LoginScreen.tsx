@@ -52,8 +52,8 @@ export default function LoginScreen() {
 
   // Configuração do Login com Google
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId: '1017515796520-01p1gtitf5ej4jpn11bck2n1gut08g5s.apps.googleusercontent.com',
-    androidClientId: '1017515796520-7o3k0poksim3fk3hn9nmo6c4hjpifkdu.apps.googleusercontent.com',
+    clientId: '1017515796520-01p1gtitf5ej4jpn11bck2n1gut08g5s.apps.googleusercontent.com', // Substitua pelo seu Client ID do Google
+    androidClientId: 'Y1017515796520-7o3k0poksim3fk3hn9nmo6c4hjpifkdu.apps.googleusercontent.com', // Substitua pelo seu Android Client ID do Google
     scopes: ['openid', 'profile', 'email'],
   });
 
@@ -201,14 +201,14 @@ const handleLogin = async () => {
       >
         <View style={styles.innerContainer}>
           <Image
-            source={require('../../assets/images/Logo.png')}
+            source={require('../../assets/Logo.png')}
             style={styles.logo}
           />
 
           <TextInput
             style={styles.input}
             placeholder="Email"
-            placeholderTextColor="#228b22"
+            placeholderTextColor="#0bba64"
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
@@ -217,7 +217,7 @@ const handleLogin = async () => {
           <TextInput
             style={styles.input}
             placeholder="Senha"
-            placeholderTextColor="#228b22"
+            placeholderTextColor="#0bba64"
             secureTextEntry
             onChangeText={setPassword}
           />
@@ -271,8 +271,9 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 300,
-    height: 150,
-    marginBottom: 20,
+    height: 200,
+    marginBottom: 60,
+    marginTop: 40
   },
   input: {
     width: '100%',
@@ -280,7 +281,7 @@ const styles = StyleSheet.create({
     borderColor: '#5cff9b',
     borderRadius: 15,
     padding: 12,
-    color: '#5cff9b',
+    color: '#0bba64',
     fontSize: 20,
     marginBottom: 10,
     fontFamily: 'MadimiOne',
@@ -316,7 +317,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MadimiOne',
   },
   button: {
-    backgroundColor: '#29e263',
+    backgroundColor: '#0bba64',
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 12,

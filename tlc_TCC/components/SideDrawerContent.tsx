@@ -58,7 +58,7 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
   return (
     <View style={styles.drawer}>
       <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-        <Ionicons name="arrow-back" size={24} color="#39A28D" />
+        <Ionicons name="arrow-back" size={24} color="#0bba64" />
       </TouchableOpacity>
       <View style={styles.profile}>
         {profileImage ? (
@@ -67,7 +67,7 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
             style={{ width: 90, height: 90, borderRadius: 45, marginBottom: 10 }}
           />
         ) : (
-          <Ionicons name="person-circle" size={90} color="#39A28D" />
+          <Ionicons name="person-circle" size={90} color="#0bba64" />
         )}
         <Text style={styles.name}>{name ?? "Seu nome"}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={{ marginTop: 8 }}>
@@ -76,11 +76,11 @@ export default function SideDrawerContent({ onClose, onLogout, onAbout }: SideDr
       </View>
       <View style={styles.footer}>
         <TouchableOpacity style={styles.drawerBtn} onPress={onLogout}>
-          <Ionicons name="log-out-outline" size={24} color="#39A28D" />
+          <Ionicons name="log-out-outline" size={24} color="#0bba64" />
           <Text style={styles.btnText}>Sair</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.drawerBtn} onPress={onAbout}>
-          <Ionicons name="information-circle-outline" size={24} color="#39A28D" />
+          <Ionicons name="information-circle-outline" size={24} color="#0bba64" />
           <Text style={styles.btnText}>Sobre nós</Text>
         </TouchableOpacity>
       </View>
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   },
   closeBtn: { position: "absolute", top: 60, right: 20, zIndex: 1, padding: 10 },
   profile: { alignItems: "center", marginTop: 32, marginBottom: 32 },
-  name: { color: "#39A28D", fontSize: 22, fontFamily: "MadimiOne" },
-  edit: { color: "#39A28D", marginTop: 4, textDecorationLine: "underline", fontFamily: "MadimiOne" },
+  name: { color: "#0bba64", fontSize: 22, fontFamily: "MadimiOne" },
+  edit: { color: "#0bba64", marginTop: 4, textDecorationLine: "underline", fontFamily: "MadimiOne" },
   footer: { position: "absolute", bottom: 36, left: 10, width: "90%" },
   drawerBtn: {
     flexDirection: "row",
@@ -108,5 +108,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 10,
   },
-  btnText: { color: "#39A28D", marginLeft: 10, fontSize: 17, fontFamily: "MadimiOne" }, 
+  btnText: { color: "#0bba64", marginLeft: 10, fontSize: 17, fontFamily: "MadimiOne" }, 
 });

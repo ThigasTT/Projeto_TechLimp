@@ -320,18 +320,18 @@ export default function MapScreen() {
 
       {loading && (
         <View style={styles.loadingOverlay}>
-          <ActivityIndicator size="large" color="#39A28D" />
+          <ActivityIndicator size="large" color="#0bba64" />
         </View>
       )}
 
       <TouchableOpacity style={styles.fabLeft} onPress={handleCenterOnUser}>
-        <MaterialIcons name="location-pin" size={30} color="#39A28D" />
+        <MaterialIcons name="location-pin" size={30} color="#0bba64" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.fabEco} onPress={handleFetchNearbyEcopointsAndFit}>
-        <MaterialIcons name="recycling" size={26} color="#39A28D" />
+        <MaterialIcons name="recycling" size={26} color="#0bba64" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.fabRight} onPress={() => setDrawerOpen(true)}>
-        <Ionicons name="settings-sharp" size={26} color="#39A28D" />
+        <Ionicons name="settings-sharp" size={26} color="#0bba64" />
       </TouchableOpacity>
 
       <BottomSheetContent

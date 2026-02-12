@@ -12,7 +12,7 @@ type Props = {
 export default function SearchBar({ value, onChange, onSearch, onFocus }: Props) {
   return (
     <View style={styles.container}>
-      <Ionicons name="search" size={22} color="#39A28D" style={styles.icon} />
+      <Ionicons name="search" size={22} color="#0bba64" style={styles.icon} />
       <TextInput
         style={styles.input}
         placeholder="Pesquise aqui"
@@ -25,7 +25,7 @@ export default function SearchBar({ value, onChange, onSearch, onFocus }: Props)
       />
       <Image
         style={styles.logo}
-        source={require("../assets/images/Logo.png")}
+        source={require("../assets/Logo.png")}
         resizeMode="contain"
       />
     </View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 40,
     marginHorizontal: 18,
-    borderRadius: 16,
+    borderRadius: 24,
     height: 44,
     zIndex: 20,
   },
@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
   logo: {
-    width: 85,
-    height: 75,
-    marginRight: 10,
+    width: 75,
+    height: 65,
   },
 });

@@ -4,9 +4,14 @@
     "slug": "techlimp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.techlimp.tlctcc",
@@ -16,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -27,7 +32,7 @@
     },
     "web": {
       "bundler": "metro",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/favicon.png"
     },
     "scheme": "techlimp",
     "plugins": [
@@ -39,7 +44,7 @@
       "typedRoutes": true
     },
     "extra": {
-      "googleMapsApiKey": "AIzaSyCuDnr5yC3bqZhwqvF2nZLfkTPDlNBGm-Y",
+      "googleMapsApiKey": "AIzaSyCuDnr5yC3bqZhwqvF2nZLfkTPDlNBGm-Y", 
       "router": {},
       "eas": {
         "projectId": "fe3fa9d8-62ee-4e56-b3b1-ebd39a25047d"

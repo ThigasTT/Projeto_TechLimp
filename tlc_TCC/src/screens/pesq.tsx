@@ -25,18 +25,18 @@ export default function SearchScreen() {
     <View style={styles.container}>
       {/* Barra de pesquisa */}
       <View style={styles.searchBar}>
-        <Feather name="search" size={20} color="#2cc56f" />
+        <Feather name="search" size={20} color="#0bba64" />
         <TextInput
           style={styles.input}
           placeholder="Pesquise aqui"
-          placeholderTextColor="#36e08f"
+          placeholderTextColor="#0bba64"
           value={search}
           onChangeText={setSearch}
           onSubmitEditing={handleSearch}
           returnKeyType="search"
         />
         <TouchableOpacity onPress={handleSearch}>
-          <Feather name="send" size={24} color="#2cc56f" />
+          <Feather name="send" size={24} color="#0bba64" />
         </TouchableOpacity>
       </View>
 
@@ -49,7 +49,7 @@ export default function SearchScreen() {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Feather name="map-pin" size={24} color="#2cc56f" />
+            <Feather name="map-pin" size={24} color="#0bba64" />
             <Text style={styles.itemText}>{item}</Text>
           </View>
         )}
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderWidth: 2,
-    borderColor: '#2cc56f',
+    borderColor: '#0bba64',
     marginBottom: 20,
   },
   input: {
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MadimiOne',
   },
   recentTitle: {
-    color: '#2cc56f',
+    color: '#0bba64',
     fontSize: 16,
     marginBottom: 10,
     fontFamily: 'MadimiOne',

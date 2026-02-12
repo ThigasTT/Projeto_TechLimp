@@ -79,7 +79,7 @@ export default function EditProfileScreen() {
               onPress={() => navigation.goBack()}
               style={styles.backButton}
             >
-              <Feather name="arrow-left" size={24} color="#29e263" />
+              <Feather name="arrow-left" size={24} color="#0bba64" />
             </TouchableOpacity>
             <Text style={styles.title}>Editar Perfil</Text>
           </View>
@@ -98,7 +98,7 @@ export default function EditProfileScreen() {
                     </TouchableOpacity>
                   </>
                 ) : (
-                  <Feather name="user" size={36} color="#29e263" />
+                  <Feather name="user" size={36} color="#0bba64" />
                 )}
               </View>
             </TouchableOpacity>
@@ -120,7 +120,7 @@ export default function EditProfileScreen() {
                   placeholder="Digite seu nome"
                   placeholderTextColor="#666"
                 />
-                <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
+                <Feather name="edit-2" size={18} color="#0bba64" style={styles.editIcon} />
               </View>
             </View>
 
@@ -135,7 +135,7 @@ export default function EditProfileScreen() {
                   placeholderTextColor="#666"
                   keyboardType="email-address"
                 />
-                <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
+                <Feather name="edit-2" size={18} color="#0bba64" style={styles.editIcon} />
               </View>
             </View>
 
@@ -151,7 +151,7 @@ export default function EditProfileScreen() {
                   secureTextEntry
                //   keyboardType="phone-pad"
                 />
-                <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
+                <Feather name="edit-2" size={18} color="#0bba64" style={styles.editIcon} />
               </View>
             </View>
 
@@ -165,7 +165,7 @@ export default function EditProfileScreen() {
                   placeholder="Digite seu endereço"
                   placeholderTextColor="#666"
                 />
-                <Feather name="edit-2" size={18} color="#29e263" style={styles.editIcon} />
+                <Feather name="edit-2" size={18} color="#0bba64" style={styles.editIcon} />
               </View>
             </View>*/}
           </View>
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   title: {
-    color: '#29e263',
+    color: '#0bba64',
     marginLeft: 10,
     top: 30,
     fontSize: 20,
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   changePhotoText: {
-    color: '#29e263',
+    color: '#0bba64',
     fontSize: 14,
     fontFamily: 'MadimiOne',
   },
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    color: '#29e263',
+    color: '#0bba64',
     fontSize: 14,
     marginBottom: 8,
     fontWeight: '600',
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   saveButton: {
-    backgroundColor: '#29e263',
+    backgroundColor: '#0bba64',
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: 'center',
