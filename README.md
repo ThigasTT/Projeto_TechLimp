@@ -123,4 +123,4 @@ O descarte inadequado de resíduos eletrônicos é responsável por sérios dano
 
 ---
 
-<p align="center">Desenvolvido com 💚 por Lucas Brito Chagas & Thiago | ETEC JK — 2025</p>
+<p align="center">Desenvolvido com 💚 pelo grupo TechLimp | ETEC JK — 2025</p>
