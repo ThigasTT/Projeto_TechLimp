@@ -6,7 +6,7 @@
 
 ---
 
-## 📱 Sobre o Projeto
+##  Sobre o Projeto
 
 O **TechLimp** é um aplicativo mobile desenvolvido como Trabalho de Conclusão de Curso (TCC) do curso Técnico em Desenvolvimento de Sistemas da **ETEC Juscelino Kubitschek de Oliveira**.
 
@@ -14,7 +14,7 @@ O projeto nasceu da necessidade de facilitar o descarte correto de lixo eletrôn
 
 ---
 
-## 🎯 Objetivo
+##  Objetivo
 
 Auxiliar a população no descarte responsável de resíduos eletrônicos, prezando pela:
 
@@ -24,7 +24,7 @@ Auxiliar a população no descarte responsável de resíduos eletrônicos, preza
 
 ---
 
-## 🚀 Funcionalidades
+##  Funcionalidades
 
 - 📍 Mapa interativo com pontos de coleta de e-lixo próximos ao usuário
 - 🔎 Busca e filtragem de pontos por localização
@@ -33,7 +33,7 @@ Auxiliar a população no descarte responsável de resíduos eletrônicos, preza
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 | Camada | Tecnologia |
 |--------|------------|
@@ -47,7 +47,7 @@ Auxiliar a população no descarte responsável de resíduos eletrônicos, preza
 
 ---
 
-## 📂 Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
 Projeto_TechLimp/
@@ -62,7 +62,7 @@ Projeto_TechLimp/
 └── package.json
 ```
 
-> ⚠️ A estrutura acima é ilustrativa. Consulte os arquivos do repositório para a estrutura real.
+>  A estrutura acima é ilustrativa. Consulte os arquivos do repositório para a estrutura real.
 
 ---
 
@@ -98,7 +98,7 @@ Configure as variáveis de ambiente com as credenciais do seu banco de dados MyS
 
 ---
 
-## 👥 Equipe
+##  Equipe
 
 Projeto desenvolvido em equipe como TCC do curso Técnico em Desenvolvimento de Sistemas.
 
@@ -113,13 +113,13 @@ Projeto desenvolvido em equipe como TCC do curso Técnico em Desenvolvimento de 
 
 ---
 
-## 📄 Licença
+##  Licença
 
 Este projeto foi desenvolvido para fins educacionais como parte do TCC da ETEC JK. Sinta-se à vontade para utilizá-lo como referência.
 
 ---
 
-## 🌱 Impacto Social
+##  Impacto Social
 
 O descarte inadequado de resíduos eletrônicos é responsável por sérios danos ao meio ambiente, contaminando solo e água com metais pesados como chumbo e mercúrio. O TechLimp busca ser uma ferramenta acessível para que qualquer pessoa possa fazer sua parte de forma simples e prática.
 
