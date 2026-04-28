@@ -1,4 +1,6 @@
-# ♻️ TechLimp
+<p align="center">
+  <img src="tlc_TCC/assets/Logo.png" alt="TechLimp Logo" width="400"/>
+</p>
 
 > Aplicativo mobile para descarte consciente de resíduos eletrônicos — conectando pessoas a pontos de coleta próximos e promovendo sustentabilidade.
 
